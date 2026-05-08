@@ -4,794 +4,773 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>SIM - Sistema Integrado Madrugada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
     <style>
-        :root {
-            --color-primary: #d32f2f;
-            --color-primary-dark: #b71c1c;
-            --color-primary-hover: #c62828;
-            --color-page: #d1d5db;
-            --color-surface: #ffffff;
-            --color-text: #2c3e50;
-            --color-muted: #7f8c8d;
-            --color-border: #e0e0e0;
-            --color-highlight: #ffebee;
-            --color-field: #fafafa;
-            --shadow-soft: 0 18px 42px rgba(44, 62, 80, 0.12);
-            --shadow-card: 0 10px 24px rgba(44, 62, 80, 0.10);
-            --radius-panel: 20px;
-            --radius-card: 16px;
-            --radius-control: 12px;
-            --transition: 0.3s ease;
-            --icon-color: #2c3e50;
+        /* Custom smooth shadows and depth */
+        .card-pressable {
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.2s ease;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            min-height: 100%;
-        }
-
-        body {
-            min-height: 100vh;
-            background: var(--color-page);
-            color: var(--color-text);
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-            padding: 25px 15px;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button,
-        input,
-        select,
-        textarea {
-            font: inherit;
-        }
-
-        :focus-visible {
-            outline: 3px solid rgba(211, 47, 47, 0.22);
-            outline-offset: 3px;
-        }
-
-        .page {
-            width: min(100%, 1400px);
-            margin: 0 auto;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 20px 25px;
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-panel);
-            box-shadow: var(--shadow-soft);
-        }
-
-        .header__badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            flex: 0 0 56px;
-            border-radius: 18px;
-            background: var(--color-highlight);
-            color: var(--color-primary-dark);
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 0;
-        }
-
-        .header h1 {
-            color: var(--color-primary-dark);
-            font-size: 24px;
-            line-height: 1.2;
-            letter-spacing: 0;
-        }
-
-        .header p {
-            margin-top: 6px;
-            color: var(--color-muted);
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .app-shell {
-            padding: 25px;
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-panel);
-            box-shadow: var(--shadow-soft);
-        }
-
-        .search-container {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--color-field);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-control);
-            font-size: 14px;
-            transition: all var(--transition);
-        }
-
-        .search-box:focus {
-            background: #ffffff;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.12);
-            outline: none;
-        }
-
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .tab-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 42px;
-            gap: 8px;
-            padding: 10px 20px;
-            border: 1px solid transparent;
-            border-radius: var(--radius-control);
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 700;
-            background: #f3f4f6;
-            color: var(--color-text);
-            transition: all var(--transition);
-        }
-
-        .tab-btn:hover,
-        .tab-btn.active {
-            background: var(--color-primary);
-            color: #ffffff;
+        .card-pressable:hover {
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
             transform: translateY(-1px);
-            box-shadow: 0 8px 18px rgba(211, 47, 47, 0.22);
         }
-
-        .tab-pane {
+        .card-pressable:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 3px 8px rgba(15, 23, 42, 0.15);
+        }
+        .tab-active {
+            background: white;
+            color: #1f2937;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.02);
+            border-left: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+            border-top: 1px solid #e5e7eb;
+        }
+        .accordion-transition {
+            transition: all 0.2s ease-out;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
             display: none;
-            animation: fade 0.3s ease;
         }
-
-        .tab-pane.active-pane {
-            display: block;
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-
-        @keyframes fade {
-            from {
-                opacity: 0;
-                transform: translateY(6px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .category-section {
-            margin-bottom: 32px;
-        }
-
-        .category-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--color-primary-dark);
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--color-border);
-        }
-
-        .grid-icons {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .icon-card {
-            display: flex;
-            min-height: 120px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 20px 15px;
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-card);
-            color: var(--color-text);
-            text-align: center;
-            text-decoration: none;
-            box-shadow: 0 6px 16px rgba(44, 62, 80, 0.07);
-            transition: all var(--transition);
-            cursor: pointer;
-        }
-
-        .icon-card:hover {
-            background: var(--color-highlight);
-            border-color: rgba(211, 47, 47, 0.35);
-            box-shadow: var(--shadow-card);
-            transform: translateY(-2px);
-        }
-
-        .icon-card i {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            background: var(--color-highlight);
-            color: var(--icon-color);
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 500;
-        }
-
-        .icon-card span {
-            color: var(--color-text);
-            font-size: 13px;
-            font-weight: 700;
-            line-height: 1.25;
-            word-break: break-word;
-        }
-
-        .icon-card small {
-            color: var(--color-muted);
-            font-size: 11px;
-            line-height: 1.35;
-        }
-
-        .nested-section {
-            margin-left: 20px;
-            margin-top: 16px;
-            margin-bottom: 24px;
-            padding-left: 16px;
-            border-left: 2px solid var(--color-border);
-        }
-
-        .nested-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: 12px;
-            padding: 6px 12px;
-            background: var(--color-field);
-            border-radius: var(--radius-control);
-            display: inline-block;
-        }
-
-        .subgrid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .subcard {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-card);
-            text-decoration: none;
-            color: var(--color-text);
-            transition: all var(--transition);
-        }
-
-        .subcard:hover {
-            background: var(--color-highlight);
-            border-color: rgba(211, 47, 47, 0.35);
-            transform: translateX(4px);
-        }
-
-        .subcard i {
-            width: 32px;
-            height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--color-highlight);
-            border-radius: 10px;
-            color: var(--icon-color);
-            font-size: 18px;
-            font-style: normal;
-            flex-shrink: 0;
-        }
-
-        .subcard-info {
-            flex: 1;
-            text-align: left;
-        }
-
-        .subcard-info strong {
-            font-size: 13px;
-            display: block;
-        }
-
-        .subcard-info small {
-            font-size: 10px;
-            color: var(--color-muted);
-        }
-
-        .footer {
-            margin-top: 20px;
-            padding: 15px;
-            color: var(--color-muted);
-            font-size: 12px;
-            line-height: 1.45;
-            text-align: center;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: var(--color-muted);
-            font-size: 14px;
-        }
-
-        @media (max-width: 680px) {
-            body {
-                padding: 15px 10px;
-            }
-
-            .header,
-            .app-shell {
-                padding: 20px;
-                border-radius: 16px;
-            }
-
-            .header {
-                align-items: flex-start;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .tabs {
-                width: 100%;
-            }
-
-            .tab-btn {
-                flex: 1;
-                min-width: auto;
-            }
-
-            .grid-icons,
-            .subgrid {
-                grid-template-columns: 1fr;
-            }
-
-            .nested-section {
-                margin-left: 8px;
-                padding-left: 8px;
-            }
+        .fade-in {
+            animation: fadeIn 0.25s ease-out;
         }
     </style>
 </head>
-<body>
-<div class="page">
-    <header class="header">
-        <div class="header__badge">SIM</div>
-        <div>
-            <h1>⚡ SIM</h1>
-            <p>Sistema Integrado Madrugada — tudo que sua operação precisa</p>
-        </div>
-    </header>
+<body class="bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 min-h-screen">
 
-    <main class="app-shell">
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Buscar links por nome, categoria ou URL...">
-        </div>
-
-        <nav class="tabs" id="tabsNav" aria-label="Categorias do sistema"></nav>
-
-        <div id="contentContainer"></div>
-    </main>
-
-    <footer class="footer">
-        SIM - Sistema Integrado Madrugada • operação mais ágil e organizada
-    </footer>
-</div>
+<div id="root"></div>
 
 <script>
-    const appData = {
-        "appName": "SIM",
-        "appSubtitle": "Sistema Integrado Madrugada — tudo que sua operação precisa",
-        "categories": [
-            { "title": "Social", "items": [
-                { "title": "Teams", "url": "https://teams.microsoft.com/v2/" },
-                { "title": "IDMBR", "url": "https://idmbr.claro.com.br/identity/faces/home?_afrLoop=3173601957531017&_adf.ctrl-state=evg4tvhee_87" },
-                { "title": "Outlook", "url": "https://outlook.office365.com/mail/" },
-                { "title": "N5923221", "url": "https://www.linkedin.com/in/kelly-lira-442005253/" },
-                { "title": "Contact Center Claro", "url": "https://cc.claro.com.br/" },
-                { "title": "Instantâneo do agente", "url": "https://home-c47.nice-incontact.com/inContact/Manage/Reports/CustomReports/AgentSnapshot.aspx" },
-                { "title": "Recrutamento & Seleção", "url": "https://projetos.plural-edtech.com/clientes/claro/implementacao-gupy/recrutamento-e-selecao-gestor-e-bp/" }
-            ]},
-            { "title": "Portais", "items": [
-                { "title": "Portal SCR", "url": "http://10.29.5.216/scr/ui-newsletter.php" },
-                { "title": "Orhganiza", "url": "https://pontodigital.claro.com.br/entrar" },
-                { "title": "Denúncias", "url": "https://denuncias.americamovil.com/" },
-                { "title": "Portal Claro", "url": "http://portalclarobrasil/" },
-                { "title": "Rhevolution", "url": "https://portalrh.claro.com.br/ords/rhportal/rhlgweb.show" },
-                { "title": "Cursos e Trilhas", "url": "https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_adf.ctrl-state=eqvx7jj5m_142&fnd=%3B%3B%3B%3Bfalse%3B256%3B%3B%3B&_afrLoop=3873689643141437" },
-                { "title": "Escalonamentos", "url": "http://10.29.5.216/book_mdu/city_search_system/index.php?q=" },
-                { "title": "Jira Service Management", "url": "https://clarobr.atlassian.net/servicedesk/customer/user/login?destination=portals" }
-            ]},
-            { "title": "RES", "items": [
-                { "title": "Ferramentas", "items": [
-                    { "title": "TOA", "url": "https://clarosa.etadirect.com/" },
-                    { "title": "SGO", "url": "https://outage.claro.com.br/" },
-                    { "title": "OSS 1", "url": "http://200.169.116.155//portal/#/login" },
-                    { "title": "OSS 2", "url": "https://portal-oss.nocclaro.com.br/singlesignon/logon/?urlBack=https%3a%2f%2fportal-oss.nocclaro.com.br%2fportal%2f#/login" },
-                    { "title": "Centreon", "url": "http://201.17.47.202/centreon/login" },
-                    { "title": "Eficiência", "url": "http://eficiencia.virtua.com.br/Terminal/Mapa/index.html" },
-                    { "title": "New Monitor", "url": "https://newmonitor.claro.com.br/user/login.php" },
-                    { "title": "Visium Hfc", "url": "http://201.55.234.76/Consultas_/index" },
-                    { "title": "Visium Gpon", "url": "http://201.55.234.76:8080/ConsultasGPON_/index" },
-                    { "title": "New Datacenter", "url": "http://newdatacenter.com.br/#" },
-                    { "title": "Critel", "url": "http://200.255.253.12/grb/critel/" },
-                    { "title": "SCM", "url": "http://scm.rjo.virtua.com.br/scm/index.php" },
-                    { "title": "SIR (NET)", "url": "http://sir.nt.embratel.com.br/index.cfm?nofoc=yes" },
-                    { "title": "NET SMS", "url": "https://netsmsapp.claro.com.br/Citrix/NetsmsEPSWeb/" },
-                    { "title": "Qualinet", "url": "http://qualinet.netservicos.corp/?" }
-                ]},
-                { "title": "Xpertrack", "items": [
-                    { "title": "Bahia", "items": [
-                        { "title": "Aracajú", "url": "http://xpertrak.aju.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Salvador", "url": "http://xpertrak.sdr.virtua.com.br/pathtrak/main/view.html#/dashboard" }
-                    ]},
-                    { "title": "Minas", "items": [
-                        { "title": "Ipatinga", "url": "http://xpertrak.iig.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Vila Velha", "url": "http://xpertrak.vva.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Contagem", "url": "http://xpertrak.cem.virtua.com.br/pathtrak/login/view.html#/login" },
-                        { "title": "Uberlândia", "url": "http://xpertrak.ula.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Juiz de Fora", "url": "http://xpertrak.jfa.virtua.com.br/pathtrak/login/view.html#/login" },
-                        { "title": "Belo Horizonte", "url": "http://xpertrak.bhz.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Governador Valadares", "url": "http://xpertrak.gvs.virtua.com.br/pathtrak/main/view.html" }
-                    ]},
-                    { "title": "Norte", "items": [
-                        { "title": "Belém", "url": "http://xpertrak.blm.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Manaus", "url": "http://xpertrak.mns.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "São Luís", "url": "http://xpertrak.sls.virtua.com.br/pathtrak/main/view.html#/dashboard" }
-                    ]},
-                    { "title": "Nordeste", "items": [
-                        { "title": "Maceió", "url": "http://xpertrak.mco.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Teresina", "url": "http://xpertrak.tsa.virtua.com.br/pathtrak/main/view.html" },
-                        { "title": "Fortaleza", "url": "http://xpertrak.fla.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "João Pessoa", "url": "http://xpertrak.jpa.virtua.com.br/pathtrak/main/view.html" }
-                    ]},
-                    { "title": "Rio Interior", "items": [
-                        { "title": "Niterói", "url": "https://xpertrak.nri.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Macaé", "url": "https://xpertrak.mce.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Vitória", "url": "http://xpertrak.vta.virtua.com.br/pathtrak/main/view.html" },
-                        { "title": "Mesquita", "url": "https://xpertrak.mesq.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Petrópolis", "url": "http://xpertrak.pts.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Nova Iguaçu", "url": "https://xpertrak.niu.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "São Gonçalo", "url": "http://xpertrak.sgo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Rio das Ostras", "url": "http://xpertrak.rios.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Volta Redonda", "url": "https://xpertrak.vrd.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Campos dos Goytacazes", "url": "http://xpertrak.cpdg.virtua.com.br/pathtrak/main/view.html#/dashboard" }
-                    ]},
-                    { "title": "Centro Oeste", "items": [
-                        { "title": "Dourados", "url": "http://xpertrak.dos.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Porto Velho", "url": "http://xpertrak.pvo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "Campo Grande", "url": "http://xpertrak.cpe.virtua.com.br/pathtrak/pnm/view.html#/node/health?node=155997" }
-                    ]},
-                    { "title": "Rio de Janeiro", "items": [
-                        { "title": "RJO - 1", "url": "https://xpertrak-1.rjo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
-                        { "title": "RJO - 2", "url": "https://xpertrak-2.rjo.virtua.com.br/pathtrak/login/view.html#/login" }
-                    ]}
-                ]}
-            ]},
-            { "title": "EMP", "items": [
-                { "title": "NM (EBT)", "url": "http://newmonitor.virtua.com.br/user/login.php#" },
-                { "title": "SIT (EBT)", "url": "http://arcos.nocclarobrasil.com.br/Arcos/SitDefault.aspx" },
-                { "title": "SIR (EBT)", "url": "http://10.13.54.150:20020/index.cfm?nofoc=yes" },
-                { "title": "GRB (EBT)", "url": "http://200.255.253.12/grb/topologia_rede/www/index.php" },
-                { "title": "Critel (EBT)", "url": "http://www-critel.embratel.net.br/critel/" },
-                { "title": "ATENA (EBT)", "url": "http://atena/Olimpo/Consulta.aspx" }
-            ]},
-            { "title": "DEV", "items": [
-                { "title": "GPT", "url": "https://chatgpt.com/" },
-                { "title": "Claude", "url": "https://claude.ai/onboarding" },
-                { "title": "Github", "url": "https://github.com/lirapin/portal-qoe/blob/main/index.html" },
-                { "title": "jsonbin", "url": "https://jsonbin.io/app/bins" },
-                { "title": "Deepseek", "url": "https://chat.deepseek.com/" },
-                { "title": "Github (Download)", "url": "https://download-directory.github.io/" }
-            ]},
-            { "title": "ALL", "items": [
-                { "title": "Produtividade COP Rede", "url": "https://dashboard-indicadores-cop-production.up.railway.app/" },
-                { "title": "Gerador de mensagens", "url": "https://lirapin.github.io/gerador-de-mensagens/" },
-                { "title": "Guia de processos", "url": "https://lirapin.github.io/informativos/" },
-                { "title": "Sistema de falhas", "url": "https://lirapin.github.io/comunicador-de-falhas/" },
-                { "title": "Calculadora", "url": "https://lirapin.github.io/prazo-incidentes/" },
-                { "title": "PORTAL QOE", "url": "https://nlsoarez.github.io/portalqoe/" },
-                { "title": "Divisão", "url": "https://nlsoarez.github.io/divisao-equipe-madrugada/" }
-            ]},
-            { "title": "$", "items": [
-                { "title": "Fundação Telos", "url": "https://www.fundacaotelos.com.br/" }
-            ]}
-        ]
+    // Lucide icons setup
+    const lucideIcons = window.lucide;
+    
+    // Data structure
+    const bookmarkData = [
+        {
+            type: "folder",
+            name: "Social",
+            children: [
+                { type: "link", name: "Nice", url: "https://cc.claro.com.br/" },
+                { type: "link", name: "Teams", url: "https://teams.microsoft.com/v2/" },
+                { type: "link", name: "Outlook", url: "https://outlook.office365.com/mail/" },
+                { type: "link", name: "WhatsApp", url: "https://web.whatsapp.com/" },
+                { type: "link", name: "Oportunidades", url: "https://projetos.plural-edtech.com/clientes/claro/implementacao-gupy/recrutamento-e-selecao-gestor-e-bp/" }
+            ]
+        },
+        {
+            type: "folder",
+            name: "Portais",
+            children: [
+                { type: "link", name: "Orhganiza", url: "https://pontodigital.claro.com.br/entrar" },
+                { type: "link", name: "Portal SCR", url: "http://10.29.5.216/scr/ui-newsletter.php" },
+                { type: "link", name: "Portal Claro", url: "http://portalclarobrasil/" },
+                { type: "link", name: "Rhevolution", url: "https://portalrh.claro.com.br/ords/rhportal/rhlgweb.show" },
+                { type: "link", name: "Jira Service Desk", url: "https://clarobr.atlassian.net/servicedesk/customer/user/login?destination=portals" }
+            ]
+        },
+        {
+            type: "folder",
+            name: "Residencial",
+            children: [
+                {
+                    type: "folder",
+                    name: "Ferramentas",
+                    children: [
+                        { type: "link", name: "TOA", url: "https://clarosa.etadirect.com/" },
+                        { type: "link", name: "SGO", url: "https://outage.claro.com.br/" },
+                        { type: "link", name: "OSS", url: "http://200.169.116.155//portal/#/login" },
+                        { type: "link", name: "Centreon", url: "http://201.17.47.202/centreon/login" },
+                        { type: "link", name: "Eficiência", url: "http://eficiencia.virtua.com.br/Terminal/Mapa/index.html" },
+                        { type: "link", name: "New Monitor", url: "https://newmonitor.claro.com.br/user/login.php" },
+                        { type: "link", name: "Visium Hfc", url: "http://201.55.234.76/Consultas_/index" },
+                        { type: "link", name: "Visium Gpon", url: "http://201.55.234.76:8080/ConsultasGPON_/index" },
+                        { type: "link", name: "New Datacenter", url: "http://newdatacenter.com.br/#" },
+                        { type: "link", name: "Critel", url: "http://200.255.253.12/grb/critel/" },
+                        { type: "link", name: "SCM", url: "http://scm.rjo.virtua.com.br/scm/index.php" },
+                        { type: "link", name: "SIR", url: "http://sir.nt.embratel.com.br/index.cfm?nofoc=yes" },
+                        { type: "link", name: "NET SMS", url: "https://netsmsapp.claro.com.br/Citrix/NetsmsEPSWeb/" },
+                        { type: "link", name: "Qualinet", url: "http://qualinet.netservicos.corp/?" }
+                    ]
+                },
+                {
+                    type: "folder",
+                    name: "Xpertrack",
+                    children: [
+                        {
+                            type: "folder",
+                            name: "Bahia",
+                            children: [
+                                { type: "link", name: "Aracajú", url: "http://xpertrak.aju.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Salvador", url: "http://xpertrak.sdr.virtua.com.br/pathtrak/main/view.html#/dashboard" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Minas",
+                            children: [
+                                { type: "link", name: "Ipatinga", url: "http://xpertrak.iig.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Vila Velha", url: "http://xpertrak.vva.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Contagem", url: "http://xpertrak.cem.virtua.com.br/pathtrak/login/view.html#/login" },
+                                { type: "link", name: "Uberlândia", url: "http://xpertrak.ula.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Juiz de Fora", url: "http://xpertrak.jfa.virtua.com.br/pathtrak/login/view.html#/login" },
+                                { type: "link", name: "Belo Horizonte", url: "http://xpertrak.bhz.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Governador Valadares", url: "http://xpertrak.gvs.virtua.com.br/pathtrak/main/view.html" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Norte",
+                            children: [
+                                { type: "link", name: "Belém", url: "http://xpertrak.blm.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Manaus", url: "http://xpertrak.mns.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "São Luís", url: "http://xpertrak.sls.virtua.com.br/pathtrak/main/view.html#/dashboard" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Nordeste",
+                            children: [
+                                { type: "link", name: "Maceió", url: "http://xpertrak.mco.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Teresina", url: "http://xpertrak.tsa.virtua.com.br/pathtrak/main/view.html" },
+                                { type: "link", name: "Fortaleza", url: "http://xpertrak.fla.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "João Pessoa", url: "http://xpertrak.jpa.virtua.com.br/pathtrak/main/view.html" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Rio Interior",
+                            children: [
+                                { type: "link", name: "Niterói", url: "https://xpertrak.nri.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Macaé", url: "https://xpertrak.mce.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Vitória", url: "http://xpertrak.vta.virtua.com.br/pathtrak/main/view.html" },
+                                { type: "link", name: "Mesquita", url: "https://xpertrak.mesq.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Petrópolis", url: "http://xpertrak.pts.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Nova Iguaçu", url: "https://xpertrak.niu.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "São Gonçalo", url: "http://xpertrak.sgo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Rio das Ostras", url: "http://xpertrak.rios.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Volta Redonda", url: "https://xpertrak.vrd.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Campos dos Goytacazes", url: "http://xpertrak.cpdg.virtua.com.br/pathtrak/main/view.html#/dashboard" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Centro Oeste",
+                            children: [
+                                { type: "link", name: "Dourados", url: "http://xpertrak.dos.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Porto Velho", url: "http://xpertrak.pvo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "Campo Grande", url: "http://xpertrak.cpe.virtua.com.br/pathtrak/pnm/view.html#/node/health?node=155997" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Rio de Janeiro",
+                            children: [
+                                { type: "link", name: "RJO - 1", url: "https://xpertrak-1.rjo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                                { type: "link", name: "RJO - 2", url: "https://xpertrak-2.rjo.virtua.com.br/pathtrak/login/view.html#/login" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    type: "folder",
+                    name: "Nagios",
+                    children: [
+                        {
+                            type: "folder",
+                            name: "Nagios Bahia",
+                            children: [
+                                { type: "link", name: "Aracajú", url: "http://gerencia.aju.virtua.com.br/" },
+                                { type: "link", name: "Vitória da Conquista", url: "http://gerencia.vca.virtua.com.br/" },
+                                { type: "link", name: "Salvador | Lauro de Freitas", url: "http://gerencia.sdr.virtua.com.br/" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Nagios Oeste",
+                            children: [
+                                { type: "link", name: "Palmas", url: "http://gerencia.pmj.virtua.com.br/" },
+                                { type: "link", name: "Brasília", url: "http://gerencia.bsb.virtua.com.br/" },
+                                { type: "link", name: "Anapólis", url: "http://gerencia.ans.virtua.com.br/" },
+                                { type: "link", name: "Dourados", url: "http://gerencia.dos.virtua.com.br/" },
+                                { type: "link", name: "Rio Branco", url: "http://gerencia.rbo.virtua.com.br/" },
+                                { type: "link", name: "Porto Velho", url: "http://gerencia.pvo.virtua.com.br/" },
+                                { type: "link", name: "Rondonópolis", url: "http://gerencia.roi.virtua.com.br/" },
+                                { type: "link", name: "Campo Grande", url: "http://gerencia.cpe.virtua.com.br/" },
+                                { type: "link", name: "Cuiabá | Várzea Grande", url: "http://gerencia.cba.virtua.com.br/" },
+                                { type: "link", name: "Goiânia | Aparecida de Goiânia", url: "http://gerencia.goi.virtua.com.br/" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Nagios Norte",
+                            children: [
+                                { type: "link", name: "Manaus", url: "http://gerencia.mns.virtua.com.br/" },
+                                { type: "link", name: "São Luis", url: "http://gerencia.sls.virtua.com.br/" },
+                                { type: "link", name: "Belém | Ananindeua", url: "http://gerencia.blm.virtua.com.br/" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Nagios Nordeste",
+                            children: [
+                                { type: "link", name: "Belém", url: "http://gerencia.blm.virtua.com.br/" },
+                                { type: "link", name: "Maceió", url: "http://gerencia.mco.virtua.com.br/" },
+                                { type: "link", name: "Manaus", url: "http://gerencia.mns.virtua.com.br/" },
+                                { type: "link", name: "Teresina", url: "http://gerencia.tsa.virtua.com.br/" },
+                                { type: "link", name: "Fortaleza", url: "http://gerencia.fla.virtua.com.br/" },
+                                { type: "link", name: "Rio de Janeiro", url: "http://201.17.0.109/" },
+                                { type: "link", name: "Campina Grande", url: "http://187.183.192.12/" },
+                                { type: "link", name: "Natal | Parnamirim", url: "http://gerencia.ntl.virtua.com.br/" },
+                                { type: "link", name: "João Pessoa | Cabedelo", url: "http://gerencia.jpa.virtua.com.br/" },
+                                { type: "link", name: "Recife | Olinda | Paulista | Jaboatão | Caruaru", url: "http://gerencia.rce.virtua.com.br/" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    type: "folder",
+                    name: "Fontes",
+                    children: [
+                        {
+                            type: "folder",
+                            name: "Fontes Bahia",
+                            children: [
+                                { type: "link", name: "Aracajú", url: "http://fontes.aju.virtua.com.br/" },
+                                { type: "link", name: "Vitória da Conquista", url: "http://fontes.vca.virtua.com.br/" },
+                                { type: "link", name: "Salvador | Lauro de Freitas", url: "http://186.207.160.20/nagios_fontes/" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Fontes Oeste",
+                            children: [
+                                { type: "link", name: "Palmas", url: "http://fontes.pmj.virtua.com.br/" },
+                                { type: "link", name: "Brasília", url: "http://fontes.bsb.virtua.com.br/" },
+                                { type: "link", name: "Anapólis", url: "http://fontes.ans.virtua.com.br/" },
+                                { type: "link", name: "Dourados", url: "http://gerencia.dos.virtua.com.br/" },
+                                { type: "link", name: "Rio Branco", url: "http://fontes.rbo.virtua.com.br/" },
+                                { type: "link", name: "Porto Velho", url: "http://fontes.pvo.virtua.com.br/" },
+                                { type: "link", name: "Rondonopólis", url: "http://fontes.roi.virtua.com.br/" },
+                                { type: "link", name: "Campo Grande", url: "http://fontes.cpe.virtua.com.br/" },
+                                { type: "link", name: "Cuiabá | Várzea Grande", url: "http://187.123.29.92/" },
+                                { type: "link", name: "Goiânia | Aparecida de Goiânia", url: "http://fontes.goi.virtua.com.br/" }
+                            ]
+                        },
+                        { type: "folder", name: "Minas Gerais", children: [] },
+                        {
+                            type: "folder",
+                            name: "Fontes Norte",
+                            children: [
+                                { type: "link", name: "Manaus", url: "http://fontes.mns.virtua.com.br/" },
+                                { type: "link", name: "São Luis", url: "http://fontes.sls.virtua.com.br/" },
+                                { type: "link", name: "Belém | Ananindeua", url: "http://fontes.blm.virtua.com.br/" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Fontes Nordeste",
+                            children: [
+                                { type: "link", name: "Maceió", url: "http://187.65.0.18/" },
+                                { type: "link", name: "Caruaru", url: "http://fontes.cru.virtua.com.br/" },
+                                { type: "link", name: "Teresina", url: "http://fontes.tsa.virtua.com.br/" },
+                                { type: "link", name: "Fortaleza", url: "http://fontes.fla.virtua.com.br/" },
+                                { type: "link", name: "Campina Grande", url: "http://187.183.192.11/" },
+                                { type: "link", name: "Natal | Parnamirim", url: "http://fontes.ntl.virtua.com.br/" },
+                                { type: "link", name: "João Pessoa | Cabedelo", url: "http://187.64.0.25/" },
+                                { type: "link", name: "Recife | Olinda | Paulista | Jaboatão", url: "http://fontes.rce.virtua.com.br/" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    type: "folder",
+                    name: "Atlas",
+                    children: [
+                        {
+                            type: "folder",
+                            name: "Atlas Bahia",
+                            children: [
+                                { type: "link", name: "Aracajú", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Salvador", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Lauro de Freitas", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Vitória da Conquista", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Atlas Oeste",
+                            children: [
+                                { type: "link", name: "Palmas", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Brasília", url: "http://asnet01.globocabo.com.br:1030/sigsantos/SSO" },
+                                { type: "link", name: "Cuiabá", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Goiânia", url: "http://asnet01.globocabo.com.br:1030/sigsantos/SSO" },
+                                { type: "link", name: "Anápolis", url: "http://asnet01.globocabo.com.br/sigsantos/SOEN0002?pSessao=10087871811&pModulo=5" },
+                                { type: "link", name: "Dourados", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Rio Branco", url: "http://5.16.8.82/sigmaisp/SSO" },
+                                { type: "link", name: "Porto Velho", url: "http://5.16.8.82/sigmaisp/SSO" },
+                                { type: "link", name: "Rondonopólis", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Várzea Grande", url: "http://asnet01.globocabo.com.br:1030/sigsoc/SSO" },
+                                { type: "link", name: "Campo Grande", url: "http://5.16.8.82/sigmaisp/SSO" },
+                                { type: "link", name: "Aparecida de Goiânia", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Atlas Norte",
+                            children: [
+                                { type: "link", name: "Belém", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Manaus", url: "http://asnet01.globocabo.com.br/sigabc/SSO" },
+                                { type: "link", name: "São Luis", url: "http://asnet01.globocabo.com.br:1030/sigsoc/SSO" },
+                                { type: "link", name: "Ananindeua", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Atlas Minas",
+                            children: [
+                                { type: "link", name: "Betim", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Sabará", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Ipatinga", url: "http://asnet01.netservicos.corp/sigmaisp/SSO" },
+                                { type: "link", name: "Uberaba", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Contagem", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Nova Lima", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Uberlândia", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Sete Lagoas", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Juiz de Fora", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Teófilo Otoni", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Belo Horizonte", url: "http://asnet01.globocabo.com.br/netbh/SSO" },
+                                { type: "link", name: "Conselheiro Lafaiete", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Governador Valadares", url: "http://asnet01.netservicos.corp/sigmaisp/SSO" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Atlas Vitória",
+                            children: [
+                                { type: "link", name: "Serra", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Vitória", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Cariacica", url: "http://5.16.8.82/sigmaisp/SSO" },
+                                { type: "link", name: "Vila Velha", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Cachoeiro de Itapemirim", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Atlas Nordeste",
+                            children: [
+                                { type: "link", name: "Natal", url: "http://asnet01.globocabo.com.br/sigsoc/GRRE0401_NOTIFICACAO?pSessao=03248581729" },
+                                { type: "link", name: "Recife", url: "http://asnet01.globocabo.com.br/sigabc/SSO" },
+                                { type: "link", name: "Olinda", url: "http://asnet01.globocabo.com.br/sigabc/SSO" },
+                                { type: "link", name: "Maceió", url: "http://asnet01.globocabo.com.br/sigsoc/GRRE0401_NOTIFICACAO?pSessao=03248581729" },
+                                { type: "link", name: "Paulista", url: "http://asnet01.globocabo.com.br/sigabc/SSO" },
+                                { type: "link", name: "Caruaru", url: "http://asnet01.globocabo.com.br/sigmaisp/GRRE0401_NOTIFICACAO?pSessao=03250311729" },
+                                { type: "link", name: "Teresina", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Fortaleza", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Cabedelo", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Parnamirim", url: "http://asnet01.globocabo.com.br/sigsoc/GRRE0401_NOTIFICACAO?pSessao=03248581729" },
+                                { type: "link", name: "João Pessoa", url: "http://asnet01.globocabo.com.br/sigsoc/GRRE0401_NOTIFICACAO?pSessao=03248581729" },
+                                { type: "link", name: "Campina Grande", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Jaboatão dos Guararapes", url: "http://asnet01.globocabo.com.br/sigabc/SSO" }
+                            ]
+                        },
+                        {
+                            type: "folder",
+                            name: "Atlas Rio | Rio Interior",
+                            children: [
+                                { type: "link", name: "Rio de Janeiro", url: "http://asnet01.globocabo.com.br/sigsantos/SSO" },
+                                { type: "link", name: "Macaé", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Niterói", url: "http://asnet01.globocabo.com.br/sigsantos/SSO" },
+                                { type: "link", name: "Resende", url: "http://5.16.8.82/sigabc/SSO" },
+                                { type: "link", name: "Nilópolis", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Mesquita", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Petrópolis", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Teresópolis", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Barra Mansa", url: "http://5.16.8.82/sigabc/SSO" },
+                                { type: "link", name: "São Gonçalo", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Nova Iguaçu", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Belford Roxo", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Volta Redonda", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Rio das Ostras", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Nova Friburgo", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" },
+                                { type: "link", name: "Duque de Caxias", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "São João de Meriti", url: "http://asnet01.globocabo.com.br/sigsoc/SSO" },
+                                { type: "link", name: "Campos dos Goytacazes", url: "http://asnet01.globocabo.com.br/sigmaisp/SSO" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            type: "folder",
+            name: "Empresarial",
+            children: [
+                { type: "link", name: "New Monitor", url: "http://newmonitor.virtua.com.br/user/login.php#" },
+                { type: "link", name: "SIT", url: "http://arcos.nocclarobrasil.com.br/Arcos/SitDefault.aspx" },
+                { type: "link", name: "SIR", url: "http://10.13.54.150:20020/index.cfm?nofoc=yes" },
+                { type: "link", name: "GRB", url: "http://200.255.253.12/grb/topologia_rede/www/index.php" },
+                { type: "link", name: "Critel", url: "http://www-critel.embratel.net.br/critel/" },
+                { type: "link", name: "Atena", url: "http://atena/Olimpo/Consulta.aspx" }
+            ]
+        },
+        {
+            type: "folder",
+            name: "Nexus",
+            children: [
+                { type: "link", name: "Copilot", url: "https://m365.cloud.microsoft/chat" },
+                { type: "link", name: "Cursos e trilhas", url: "https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_adf.ctrl-state=eqvx7jj5m_142&fnd=%3B%3B%3B%3Bfalse%3B256%3B%3B%3B&_afrLoop=3873689643141437" }
+            ]
+        },
+        {
+            type: "folder",
+            name: "SIM",
+            children: [
+                { type: "link", name: "Guia de processos", url: "https://lirapin.github.io/informativos/" },
+                { type: "link", name: "Comunicador de falhas", url: "https://lirapin.github.io/comunicador-de-falhas/" },
+                { type: "link", name: "Gerador de mensagens", url: "https://lirapin.github.io/gerador-de-mensagens/" },
+                { type: "link", name: "Dashboard de produtividade", url: "https://dashboard-indicadores-cop-production.up.railway.app/" },
+                { type: "link", name: "Calendário de divisão de tarefas", url: "https://nlsoarez.github.io/divisao-equipe-madrugada/" }
+            ]
+        }
+    ];
+
+    // Search index builder
+    const buildSearchIndex = (items, path = []) => {
+        let results = [];
+        items.forEach(item => {
+            if (item.type === 'link') {
+                results.push({ name: item.name, url: item.url, path: [...path] });
+            } else if (item.type === 'folder' && item.children) {
+                results.push(...buildSearchIndex(item.children, [...path, item.name]));
+            }
+        });
+        return results;
     };
 
-    function getIconForTitle(title) {
+    const searchIndex = buildSearchIndex(bookmarkData);
+    const categories = bookmarkData.filter(item => item.type === 'folder');
+
+    // Helper to normalize text
+    const normalizeText = (text) => {
+        return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    };
+
+    // Icon mapping for categories
+    const getCategoryIcon = (name) => {
         const icons = {
-            'Teams': '💬', 'Outlook': '📧', 'Contact Center Claro': '🎧', 'Portal SCR': '📰',
-            'Orhganiza': '⏱️', 'Denúncias': '⚠️', 'Portal Claro': '🌐', 'Rhevolution': '👥',
-            'Cursos e Trilhas': '📚', 'Jira Service Management': '🎫', 'GPT': '🤖', 'Claude': '🧠',
-            'Github': '🐙', 'Deepseek': '🔍', 'Produtividade COP Rede': '📊', 'Gerador de mensagens': '✍️',
-            'Guia de processos': '📖', 'Sistema de falhas': '⚠️', 'Calculadora': '🧮', 'PORTAL QOE': '📡',
-            'Divisão': '📅', 'TOA': '🔧', 'SGO': '📡', 'OSS 1': '🖥️', 'OSS 2': '🖥️',
-            'Centreon': '📊', 'Eficiência': '⚡', 'New Monitor': '👁️', 'Visium Hfc': '📡',
-            'Visium Gpon': '📡', 'New Datacenter': '🏢', 'Critel': '🔍', 'SCM': '📋',
-            'SIR (NET)': '📡', 'NET SMS': '💬', 'Qualinet': '✅', 'NM (EBT)': '📊',
-            'SIT (EBT)': '📡', 'SIR (EBT)': '📡', 'GRB (EBT)': '🗺️', 'ATENA (EBT)': '🛡️'
+            'Social': 'MessageCircle',
+            'Portais': 'LayoutGrid',
+            'Residencial': 'Home',
+            'Empresarial': 'Building2',
+            'Nexus': 'Sparkles',
+            'SIM': 'Activity'
         };
-        return icons[title] || '🔗';
-    }
+        return icons[name] || 'LayoutGrid';
+    };
 
-    function renderItems(items, container) {
-        if (!items || items.length === 0) return;
+    // Icon mapping for folders
+    const getFolderIcon = (name) => {
+        const icons = {
+            'Ferramentas': 'Wrench',
+            'Xpertrack': 'Network',
+            'Nagios': 'Activity',
+            'Fontes': 'FileText',
+            'Atlas': 'LayoutGrid'
+        };
+        return icons[name] || 'Folder';
+    };
+
+    // Bookmark Card Component
+    const BookmarkCard = ({ name, url }) => {
+        const [Icon, setIcon] = React.useState(null);
         
-        items.forEach(item => {
-            if (item.items && item.items.length > 0) {
-                const nestedDiv = document.createElement('div');
-                nestedDiv.className = 'nested-section';
-                const nestedTitle = document.createElement('div');
-                nestedTitle.className = 'nested-title';
-                nestedTitle.innerHTML = `📁 ${item.title}`;
-                nestedDiv.appendChild(nestedTitle);
-                
-                const subgrid = document.createElement('div');
-                subgrid.className = 'subgrid';
-                
-                function processSubItems(subItems, parentGrid) {
-                    subItems.forEach(sub => {
-                        if (sub.url) {
-                            const card = document.createElement('a');
-                            card.href = sub.url;
-                            card.target = '_blank';
-                            card.rel = 'noopener noreferrer';
-                            card.className = 'subcard';
-                            card.innerHTML = `
-                                <i>${getIconForTitle(sub.title)}</i>
-                                <div class="subcard-info">
-                                    <strong>${sub.title}</strong>
-                                    <small>${sub.url.length > 40 ? sub.url.substring(0, 40) + '...' : sub.url}</small>
-                                </div>
-                            `;
-                            parentGrid.appendChild(card);
-                        } else if (sub.items) {
-                            const subNestedDiv = document.createElement('div');
-                            subNestedDiv.className = 'nested-section';
-                            const subNestedTitle = document.createElement('div');
-                            subNestedTitle.className = 'nested-title';
-                            subNestedTitle.innerHTML = `📂 ${sub.title}`;
-                            subNestedDiv.appendChild(subNestedTitle);
-                            const subSubgrid = document.createElement('div');
-                            subSubgrid.className = 'subgrid';
-                            processSubItems(sub.items, subSubgrid);
-                            subNestedDiv.appendChild(subSubgrid);
-                            parentGrid.parentElement?.appendChild(subNestedDiv);
-                        }
-                    });
-                }
-                
-                processSubItems(item.items, subgrid);
-                nestedDiv.appendChild(subgrid);
-                container.appendChild(nestedDiv);
-            } else if (item.url) {
-                const card = document.createElement('a');
-                card.href = item.url;
-                card.target = '_blank';
-                card.rel = 'noopener noreferrer';
-                card.className = 'icon-card';
-                card.innerHTML = `
-                    <i>${getIconForTitle(item.title)}</i>
-                    <span>${item.title}</span>
-                    <small>${item.url.length > 35 ? item.url.substring(0, 35) + '...' : item.url}</small>
-                `;
-                container.appendChild(card);
+        React.useEffect(() => {
+            if (lucideIcons && lucideIcons.ExternalLink) {
+                setIcon(() => lucideIcons.ExternalLink);
             }
-        });
-    }
+        }, []);
+        
+        const handleClick = () => {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        };
+        
+        return React.createElement('button', {
+            onClick: handleClick,
+            className: "group w-full text-left rounded-2xl border border-gray-200/80 bg-white/90 px-5 py-4 card-pressable cursor-pointer w-full"
+        }, [
+            React.createElement('div', { key: 'content', className: "flex items-center justify-between" }, [
+                React.createElement('span', { key: 'name', className: "font-medium text-gray-800 text-sm group-hover:text-gray-900 transition-colors" }, name),
+                Icon && React.createElement(Icon, { key: 'icon', className: "w-3.5 h-3.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" })
+            ])
+        ]);
+    };
 
-    function renderCategory(category) {
-        const section = document.createElement('div');
-        section.className = 'category-section';
+    // Folder Accordion Component (recursive)
+    const FolderAccordion = ({ folder, level = 0 }) => {
+        const [isOpen, setIsOpen] = React.useState(true);
+        const [Icon, setIcon] = React.useState(null);
+        const [ChevronDownIcon, setChevronDownIcon] = React.useState(null);
+        const [ChevronRightIcon, setChevronRightIcon] = React.useState(null);
         
-        const title = document.createElement('h3');
-        title.className = 'category-title';
-        title.textContent = category.title;
-        section.appendChild(title);
+        React.useEffect(() => {
+            if (lucideIcons) {
+                const iconName = getFolderIcon(folder.name);
+                setIcon(() => lucideIcons[iconName] || lucideIcons.Folder);
+                setChevronDownIcon(() => lucideIcons.ChevronDown);
+                setChevronRightIcon(() => lucideIcons.ChevronRight);
+            }
+        }, [folder.name]);
         
-        const grid = document.createElement('div');
-        grid.className = 'grid-icons';
+        if (!folder.children || folder.children.length === 0) return null;
         
-        if (category.items) {
-            category.items.forEach(item => {
-                if (item.url) {
-                    const card = document.createElement('a');
-                    card.href = item.url;
-                    card.target = '_blank';
-                    card.rel = 'noopener noreferrer';
-                    card.className = 'icon-card';
-                    card.innerHTML = `
-                        <i>${getIconForTitle(item.title)}</i>
-                        <span>${item.title}</span>
-                        <small>${item.url.length > 35 ? item.url.substring(0, 35) + '...' : item.url}</small>
-                    `;
-                    grid.appendChild(card);
-                } else if (item.items) {
-                    const nestedDiv = document.createElement('div');
-                    nestedDiv.className = 'nested-section';
-                    const nestedTitle = document.createElement('div');
-                    nestedTitle.className = 'nested-title';
-                    nestedTitle.innerHTML = `📁 ${item.title}`;
-                    nestedDiv.appendChild(nestedTitle);
-                    
-                    const subgrid = document.createElement('div');
-                    subgrid.className = 'subgrid';
-                    
-                    item.items.forEach(subItem => {
-                        if (subItem.url) {
-                            const subcard = document.createElement('a');
-                            subcard.href = subItem.url;
-                            subcard.target = '_blank';
-                            subcard.rel = 'noopener noreferrer';
-                            subcard.className = 'subcard';
-                            subcard.innerHTML = `
-                                <i>${getIconForTitle(subItem.title)}</i>
-                                <div class="subcard-info">
-                                    <strong>${subItem.title}</strong>
-                                    <small>${subItem.url.length > 40 ? subItem.url.substring(0, 40) + '...' : subItem.url}</small>
-                                </div>
-                            `;
-                            subgrid.appendChild(subcard);
-                        } else if (subItem.items) {
-                            const deepNestedDiv = document.createElement('div');
-                            deepNestedDiv.className = 'nested-section';
-                            const deepNestedTitle = document.createElement('div');
-                            deepNestedTitle.className = 'nested-title';
-                            deepNestedTitle.innerHTML = `📂 ${subItem.title}`;
-                            deepNestedDiv.appendChild(deepNestedTitle);
-                            const deepSubgrid = document.createElement('div');
-                            deepSubgrid.className = 'subgrid';
-                            
-                            subItem.items.forEach(deepItem => {
-                                if (deepItem.url) {
-                                    const deepCard = document.createElement('a');
-                                    deepCard.href = deepItem.url;
-                                    deepCard.target = '_blank';
-                                    deepCard.rel = 'noopener noreferrer';
-                                    deepCard.className = 'subcard';
-                                    deepCard.innerHTML = `
-                                        <i>${getIconForTitle(deepItem.title)}</i>
-                                        <div class="subcard-info">
-                                            <strong>${deepItem.title}</strong>
-                                            <small>${deepItem.url.length > 40 ? deepItem.url.substring(0, 40) + '...' : deepItem.url}</small>
-                                        </div>
-                                    `;
-                                    deepSubgrid.appendChild(deepCard);
-                                }
-                            });
-                            deepNestedDiv.appendChild(deepSubgrid);
-                            subgrid.appendChild(deepNestedDiv);
-                        }
-                    });
-                    nestedDiv.appendChild(subgrid);
-                    grid.appendChild(nestedDiv);
-                }
-            });
+        return React.createElement('div', {
+            key: folder.name,
+            className: "mb-3",
+            style: { marginLeft: level > 0 ? '24px' : '0' }
+        }, [
+            React.createElement('button', {
+                key: 'header',
+                onClick: () => setIsOpen(!isOpen),
+                className: "w-full flex items-center justify-between gap-2 px-4 py-3 rounded-2xl bg-gray-50/80 border border-gray-200/60 hover:bg-gray-100/80 transition-all duration-200"
+            }, [
+                React.createElement('div', { key: 'left', className: "flex items-center gap-2" }, [
+                    Icon && React.createElement(Icon, { key: 'icon', className: "w-4 h-4 text-gray-600" }),
+                    React.createElement('span', { key: 'name', className: "font-semibold text-gray-800 text-sm" }, folder.name),
+                    React.createElement('span', { key: 'count', className: "text-xs text-gray-400" }, `(${folder.children.length})`)
+                ]),
+                isOpen && ChevronDownIcon && React.createElement(ChevronDownIcon, { key: 'chevron', className: "w-4 h-4 text-gray-500" }),
+                !isOpen && ChevronRightIcon && React.createElement(ChevronRightIcon, { key: 'chevron', className: "w-4 h-4 text-gray-500" })
+            ]),
+            isOpen && React.createElement('div', { key: 'children', className: "mt-3 space-y-2" }, 
+                folder.children.map((child, idx) => {
+                    if (child.type === 'link') {
+                        return React.createElement(BookmarkCard, { key: idx, name: child.name, url: child.url });
+                    } else if (child.type === 'folder') {
+                        return React.createElement(FolderAccordion, { key: idx, folder: child, level: level + 1 });
+                    }
+                    return null;
+                })
+            )
+        ]);
+    };
+
+    // Category Section Component
+    const CategorySection = ({ category }) => {
+        const [Icon, setIcon] = React.useState(null);
+        
+        React.useEffect(() => {
+            if (lucideIcons) {
+                const iconName = getCategoryIcon(category.name);
+                setIcon(() => lucideIcons[iconName]);
+            }
+        }, [category.name]);
+        
+        return React.createElement('div', { className: "mb-8 fade-in" }, [
+            React.createElement('div', { key: 'header', className: "flex items-center gap-3 mb-4" }, [
+                React.createElement('div', { key: 'icon-wrapper', className: "p-2 rounded-xl bg-gray-100 text-gray-700" }, [
+                    Icon && React.createElement(Icon, { key: 'icon', className: "w-5 h-5" })
+                ]),
+                React.createElement('h2', { key: 'title', className: "text-xl font-bold text-gray-800" }, category.name)
+            ]),
+            React.createElement('div', { key: 'content', className: "space-y-2" },
+                category.children.map((child, idx) => {
+                    if (child.type === 'link') {
+                        return React.createElement(BookmarkCard, { key: idx, name: child.name, url: child.url });
+                    } else if (child.type === 'folder') {
+                        return React.createElement(FolderAccordion, { key: idx, folder: child });
+                    }
+                    return null;
+                })
+            )
+        ]);
+    };
+
+    // Search Results Component
+    const SearchResults = ({ searchTerm }) => {
+        const normalizedSearch = normalizeText(searchTerm);
+        const [SearchIcon, setSearchIcon] = React.useState(null);
+        
+        React.useEffect(() => {
+            if (lucideIcons) {
+                setSearchIcon(() => lucideIcons.Search);
+            }
+        }, []);
+        
+        const results = React.useMemo(() => {
+            if (!normalizedSearch) return [];
+            return searchIndex.filter(item => normalizeText(item.name).includes(normalizedSearch));
+        }, [normalizedSearch]);
+        
+        if (results.length === 0) {
+            return React.createElement('div', { className: "text-center py-16" }, [
+                SearchIcon && React.createElement(SearchIcon, { key: 'icon', className: "w-12 h-12 text-gray-300 mx-auto mb-3" }),
+                React.createElement('p', { key: 'message', className: "text-gray-500" }, `Nenhuma ferramenta encontrada para "${searchTerm}"`)
+            ]);
         }
         
-        section.appendChild(grid);
-        return section;
-    }
+        return React.createElement('div', { className: "fade-in" }, [
+            React.createElement('div', { key: 'header', className: "mb-6" }, [
+                React.createElement('h2', { key: 'title', className: "text-lg font-semibold text-gray-800" }, 
+                    `Resultados para "${searchTerm}" (${results.length})`
+                )
+            ]),
+            React.createElement('div', { key: 'results', className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" },
+                results.map((result, idx) => {
+                    const handleClick = () => window.open(result.url, '_blank', 'noopener,noreferrer');
+                    const [ExternalIcon, setExternalIcon] = React.useState(null);
+                    React.useEffect(() => {
+                        if (lucideIcons) setExternalIcon(() => lucideIcons.ExternalLink);
+                    }, []);
+                    
+                    return React.createElement('button', {
+                        key: idx,
+                        onClick: handleClick,
+                        className: "group text-left rounded-2xl border border-gray-200/80 bg-white/90 px-5 py-4 card-pressable cursor-pointer"
+                    }, [
+                        React.createElement('div', { key: 'container', className: "flex items-center justify-between gap-3" }, [
+                            React.createElement('div', { key: 'info', className: "flex-1 min-w-0" }, [
+                                React.createElement('div', { key: 'name', className: "font-medium text-gray-800 text-sm truncate" }, result.name),
+                                result.path.length > 0 && React.createElement('div', { key: 'path', className: "text-xs text-gray-400 mt-1 truncate" }, result.path.join(' › '))
+                            ]),
+                            ExternalIcon && React.createElement(ExternalIcon, { key: 'icon', className: "w-3.5 h-3.5 text-gray-400 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" })
+                        ])
+                    ]);
+                })
+            )
+        ]);
+    };
 
-    let currentSearchTerm = '';
-    let currentCategory = 'Social';
-
-    function renderAll(searchTerm = '') {
-        const container = document.getElementById('contentContainer');
-        container.innerHTML = '';
+    // Category Tabs Component
+    const CategoryTabs = ({ activeCategory, onSelect }) => {
+        const [icons, setIcons] = React.useState({});
         
-        const category = appData.categories.find(c => c.title === currentCategory);
-        if (!category) return;
-        
-        if (searchTerm) {
-            const filteredItems = filterItemsBySearch(category.items, searchTerm);
-            if (filteredItems.length === 0) {
-                container.innerHTML = '<div class="no-results">🔍 Nenhum resultado encontrado para "' + searchTerm + '"</div>';
-            } else {
-                const filteredCategory = { ...category, items: filteredItems };
-                const renderedSection = renderCategory(filteredCategory);
-                container.appendChild(renderedSection);
+        React.useEffect(() => {
+            if (lucideIcons) {
+                const iconMap = {};
+                categories.forEach(cat => {
+                    const iconName = getCategoryIcon(cat.name);
+                    iconMap[cat.name] = lucideIcons[iconName];
+                });
+                setIcons(iconMap);
             }
-        } else {
-            const renderedSection = renderCategory(category);
-            container.appendChild(renderedSection);
-        }
-    }
-
-    function filterItemsBySearch(items, term) {
-        const lowerTerm = term.toLowerCase();
-        const result = [];
+        }, []);
         
-        items.forEach(item => {
-            if (item.url && (item.title.toLowerCase().includes(lowerTerm) || item.url.toLowerCase().includes(lowerTerm))) {
-                result.push(item);
-            } else if (item.items) {
-                const filteredSubItems = filterItemsBySearch(item.items, term);
-                if (filteredSubItems.length > 0) {
-                    result.push({ ...item, items: filteredSubItems });
-                }
+        return React.createElement('div', { className: "border-b border-gray-200/60 mb-8" }, [
+            React.createElement('div', { key: 'tabs', className: "flex gap-1 overflow-x-auto pb-0 scrollbar-hide" },
+                categories.map((cat, idx) => {
+                    const Icon = icons[cat.name];
+                    const isActive = activeCategory === cat.name;
+                    return React.createElement('button', {
+                        key: idx,
+                        onClick: () => onSelect(cat.name),
+                        className: `flex items-center gap-2 px-5 py-3 text-sm font-medium rounded-t-2xl transition-all whitespace-nowrap
+                            ${isActive 
+                                ? 'bg-white text-gray-800 shadow-[0_-2px_8px_rgba(0,0,0,0.02)] border-x border-t border-gray-200' 
+                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50/80'
+                            }`
+                    }, [
+                        Icon && React.createElement(Icon, { key: 'icon', className: "w-4 h-4" }),
+                        cat.name
+                    ]);
+                })
+            )
+        ]);
+    };
+
+    // Header Component
+    const Header = ({ onSearch }) => {
+        const [searchInput, setSearchInput] = React.useState('');
+        const [SparklesIcon, setSparklesIcon] = React.useState(null);
+        const [SearchIcon, setSearchIcon] = React.useState(null);
+        const [ShieldIcon, setShieldIcon] = React.useState(null);
+        const [LogOutIcon, setLogOutIcon] = React.useState(null);
+        
+        React.useEffect(() => {
+            if (lucideIcons) {
+                setSparklesIcon(() => lucideIcons.Sparkles);
+                setSearchIcon(() => lucideIcons.Search);
+                setShieldIcon(() => lucideIcons.Shield);
+                setLogOutIcon(() => lucideIcons.LogOut);
             }
-        });
+        }, []);
         
-        return result;
-    }
-
-    function initTabs() {
-        const tabsNav = document.getElementById('tabsNav');
-        tabsNav.innerHTML = '';
+        const handleSearch = (value) => {
+            setSearchInput(value);
+            onSearch(value);
+        };
         
-        appData.categories.forEach(cat => {
-            const button = document.createElement('button');
-            button.className = 'tab-btn' + (currentCategory === cat.title ? ' active' : '');
-            button.textContent = cat.title;
-            button.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                currentCategory = cat.title;
-                renderAll(currentSearchTerm);
-            });
-            tabsNav.appendChild(button);
-        });
-    }
+        return React.createElement('header', { className: "bg-white/95 backdrop-blur-sm border-b border-gray-200/60 sticky top-0 z-10" }, [
+            React.createElement('div', { key: 'container', className: "max-w-7xl mx-auto px-6 py-4" }, [
+                React.createElement('div', { key: 'flex', className: "flex flex-col md:flex-row md:items-center md:justify-between gap-4" }, [
+                    React.createElement('div', { key: 'logo', className: "flex items-center gap-3" }, [
+                        React.createElement('div', { key: 'badge', className: "p-2.5 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg" }, [
+                            SparklesIcon && React.createElement(SparklesIcon, { key: 'icon', className: "w-6 h-6 text-white" })
+                        ]),
+                        React.createElement('div', { key: 'text', className: "flex flex-col" }, [
+                            React.createElement('h1', { key: 'title', className: "text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent" }, "SIM"),
+                            React.createElement('p', { key: 'subtitle', className: "text-xs text-gray-500 mt-0.5" }, "Sistema Integrado Madrugada")
+                        ])
+                    ]),
+                    React.createElement('div', { key: 'actions', className: "flex items-center gap-3" }, [
+                        React.createElement('div', { key: 'search', className: "relative flex-1 md:w-80" }, [
+                            SearchIcon && React.createElement(SearchIcon, { key: 'icon', className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" }),
+                            React.createElement('input', {
+                                key: 'input',
+                                type: "text",
+                                value: searchInput,
+                                onChange: (e) => handleSearch(e.target.value),
+                                placeholder: "Buscar ferramentas...",
+                                className: "w-full pl-9 pr-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50/80 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300/50 focus:bg-white transition-all"
+                            })
+                        ]),
+                        React.createElement('button', { key: 'admin', className: "p-2.5 rounded-2xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all shadow-[0_2px_4px_rgba(0,0,0,0.02),inset_0_1px_0_rgba(255,255,255,0.8)] active:translate-y-[1px]" }, [
+                            ShieldIcon && React.createElement(ShieldIcon, { key: 'icon', className: "w-4 h-4 text-gray-600" })
+                        ]),
+                        React.createElement('button', { key: 'logout', className: "p-2.5 rounded-2xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all shadow-[0_2px_4px_rgba(0,0,0,0.02),inset_0_1px_0_rgba(255,255,255,0.8)] active:translate-y-[1px]" }, [
+                            LogOutIcon && React.createElement(LogOutIcon, { key: 'icon', className: "w-4 h-4 text-gray-600" })
+                        ])
+                    ])
+                ])
+            ])
+        ]);
+    };
 
-    function initSearch() {
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            currentSearchTerm = e.target.value;
-            renderAll(currentSearchTerm);
-        });
-    }
+    // Main App Component
+    const App = () => {
+        const [activeCategory, setActiveCategory] = React.useState('Residencial');
+        const [searchTerm, setSearchTerm] = React.useState('');
+        
+        const currentCategoryData = categories.find(c => c.name === activeCategory);
+        
+        return React.createElement('div', { className: "min-h-screen" }, [
+            React.createElement(Header, { key: 'header', onSearch: setSearchTerm }),
+            React.createElement('main', { key: 'main', className: "max-w-7xl mx-auto px-6 py-8" }, [
+                searchTerm ? 
+                    React.createElement(SearchResults, { key: 'results', searchTerm: searchTerm }) :
+                    React.createElement(React.Fragment, { key: 'content' }, [
+                        React.createElement(CategoryTabs, { key: 'tabs', activeCategory: activeCategory, onSelect: setActiveCategory }),
+                        currentCategoryData && React.createElement(CategorySection, { key: 'section', category: currentCategoryData })
+                    ])
+            ])
+        ]);
+    };
 
-    function init() {
-        initTabs();
-        initSearch();
-        renderAll('');
-    }
-
-    init();
+    // Render the app
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
 </script>
 </body>
 </html>
