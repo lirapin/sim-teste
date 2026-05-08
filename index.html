@@ -22,6 +22,7 @@
             --radius-card: 16px;
             --radius-control: 12px;
             --transition: 0.3s ease;
+            --icon-color: #2c3e50;
         }
 
         * {
@@ -44,6 +45,7 @@
 
         a {
             color: inherit;
+            text-decoration: none;
         }
 
         button,
@@ -59,7 +61,7 @@
         }
 
         .page {
-            width: min(100%, 900px);
+            width: min(100%, 1400px);
             margin: 0 auto;
         }
 
@@ -112,6 +114,29 @@
             box-shadow: var(--shadow-soft);
         }
 
+        .search-container {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--color-field);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-control);
+            font-size: 14px;
+            transition: all var(--transition);
+        }
+
+        .search-box:focus {
+            background: #ffffff;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.12);
+            outline: none;
+        }
+
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -121,26 +146,21 @@
             border-bottom: 1px solid var(--color-border);
         }
 
-        .tab-btn,
-        .btn {
+        .tab-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             min-height: 42px;
             gap: 8px;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: 1px solid transparent;
             border-radius: var(--radius-control);
             cursor: pointer;
             font-size: 14px;
             font-weight: 700;
-            text-decoration: none;
-            transition: background-color var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
-        }
-
-        .tab-btn {
             background: #f3f4f6;
             color: var(--color-text);
+            transition: all var(--transition);
         }
 
         .tab-btn:hover,
@@ -149,32 +169,6 @@
             color: #ffffff;
             transform: translateY(-1px);
             box-shadow: 0 8px 18px rgba(211, 47, 47, 0.22);
-        }
-
-        .tab-btn.active {
-            border-color: var(--color-primary-dark);
-        }
-
-        .btn--primary {
-            background: var(--color-primary);
-            color: #ffffff;
-        }
-
-        .btn--primary:hover {
-            background: var(--color-primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 18px rgba(211, 47, 47, 0.24);
-        }
-
-        .btn--secondary {
-            background: #f3f4f6;
-            color: var(--color-text);
-            border-color: var(--color-border);
-        }
-
-        .btn--secondary:hover {
-            background: #e5e7eb;
-            transform: translateY(-1px);
         }
 
         .tab-pane {
@@ -191,22 +185,35 @@
                 opacity: 0;
                 transform: translateY(6px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
+        .category-section {
+            margin-bottom: 32px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-border);
+        }
+
         .grid-icons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .icon-card {
             display: flex;
-            min-height: 132px;
+            min-height: 120px;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -219,7 +226,8 @@
             text-align: center;
             text-decoration: none;
             box-shadow: 0 6px 16px rgba(44, 62, 80, 0.07);
-            transition: border-color var(--transition), background-color var(--transition), box-shadow var(--transition), transform var(--transition);
+            transition: all var(--transition);
+            cursor: pointer;
         }
 
         .icon-card:hover {
@@ -237,202 +245,98 @@
             height: 44px;
             border-radius: 14px;
             background: var(--color-highlight);
-            color: var(--color-primary);
+            color: var(--icon-color);
             font-size: 24px;
             font-style: normal;
+            font-weight: 500;
         }
 
         .icon-card span {
             color: var(--color-text);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             line-height: 1.25;
+            word-break: break-word;
         }
 
         .icon-card small {
             color: var(--color-muted);
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1.35;
         }
 
-        .workflow-steps {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid var(--color-border);
+        .nested-section {
+            margin-left: 20px;
+            margin-top: 16px;
+            margin-bottom: 24px;
+            padding-left: 16px;
+            border-left: 2px solid var(--color-border);
         }
 
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-            gap: 15px;
-        }
-
-        .step-item {
-            position: relative;
-            display: flex;
-            min-height: 150px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 20px 15px 18px;
-            background: var(--color-field);
-            border: 1px solid var(--color-border);
-            border-left: 4px solid var(--color-primary);
-            border-radius: var(--radius-card);
+        .nested-title {
+            font-size: 15px;
+            font-weight: 600;
             color: var(--color-text);
-            text-align: center;
+            margin-bottom: 12px;
+            padding: 6px 12px;
+            background: var(--color-field);
+            border-radius: var(--radius-control);
+            display: inline-block;
+        }
+
+        .subgrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .subcard {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-card);
             text-decoration: none;
-            transition: background-color var(--transition), box-shadow var(--transition), transform var(--transition);
+            color: var(--color-text);
+            transition: all var(--transition);
         }
 
-        .step-item:hover {
+        .subcard:hover {
             background: var(--color-highlight);
-            box-shadow: var(--shadow-card);
-            transform: translateY(-2px);
+            border-color: rgba(211, 47, 47, 0.35);
+            transform: translateX(4px);
         }
 
-        .step-number {
-            position: absolute;
-            top: 12px;
-            left: 12px;
+        .subcard i {
+            width: 32px;
+            height: 32px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 30px;
-            height: 30px;
+            background: var(--color-highlight);
             border-radius: 10px;
-            background: var(--color-primary);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 800;
-        }
-
-        .step-item i {
-            margin-top: 12px;
-            color: var(--color-primary);
-            font-size: 28px;
+            color: var(--icon-color);
+            font-size: 18px;
             font-style: normal;
+            flex-shrink: 0;
         }
 
-        .step-item strong {
-            color: var(--color-text);
-            font-size: 14px;
-            line-height: 1.25;
-        }
-
-        .step-desc {
-            color: var(--color-muted);
-            font-size: 12px;
-            line-height: 1.35;
-        }
-
-        .form-group {
-            display: grid;
-            gap: 8px;
-        }
-
-        .form-label {
-            color: var(--color-text);
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .form-control,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            min-height: 42px;
-            padding: 10px 12px;
-            background: var(--color-field);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-control);
-            color: var(--color-text);
-            font-size: 14px;
-            transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
-        }
-
-        .form-textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
-
-        .form-control:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            background: #ffffff;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.12);
-            outline: none;
-        }
-
-        .table-wrap {
-            width: 100%;
-            overflow-x: auto;
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-card);
-        }
-
-        .data-table {
-            width: 100%;
-            min-width: 640px;
-            border-collapse: collapse;
-            background: var(--color-surface);
-            color: var(--color-text);
-            font-size: 14px;
-        }
-
-        .data-table th {
-            padding: 13px 15px;
-            background: var(--color-primary);
-            color: #ffffff;
+        .subcard-info {
+            flex: 1;
             text-align: left;
         }
 
-        .data-table td {
-            padding: 13px 15px;
-            border-bottom: 1px solid var(--color-border);
+        .subcard-info strong {
+            font-size: 13px;
+            display: block;
         }
 
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .data-table tbody tr:hover {
-            background: var(--color-highlight);
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 20;
-            display: grid;
-            place-items: center;
-            padding: 20px;
-            background: rgba(17, 24, 39, 0.58);
-        }
-
-        .modal {
-            width: min(100%, 520px);
-            padding: 25px;
-            background: var(--color-surface);
-            border-radius: var(--radius-panel);
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
-        }
-
-        .toast {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            z-index: 30;
-            max-width: min(360px, calc(100vw - 30px));
-            padding: 15px 20px;
-            background: var(--color-surface);
-            border-left: 4px solid var(--color-primary);
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-soft);
-            color: var(--color-text);
-            font-size: 14px;
+        .subcard-info small {
+            font-size: 10px;
+            color: var(--color-muted);
         }
 
         .footer {
@@ -442,6 +346,13 @@
             font-size: 12px;
             line-height: 1.45;
             text-align: center;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--color-muted);
+            font-size: 14px;
         }
 
         @media (max-width: 680px) {
@@ -463,20 +374,23 @@
                 font-size: 22px;
             }
 
-            .tabs,
-            .tab-btn,
-            .btn {
+            .tabs {
                 width: 100%;
             }
 
+            .tab-btn {
+                flex: 1;
+                min-width: auto;
+            }
+
             .grid-icons,
-            .steps-container {
+            .subgrid {
                 grid-template-columns: 1fr;
             }
 
-            .icon-card,
-            .step-item {
-                min-height: 118px;
+            .nested-section {
+                margin-left: 8px;
+                padding-left: 8px;
             }
         }
     </style>
@@ -492,137 +406,13 @@
     </header>
 
     <main class="app-shell">
-        <nav class="tabs" aria-label="Categorias do sistema">
-            <button class="tab-btn active" type="button" data-tab="social">
-                <i aria-hidden="true">💬</i> Social
-            </button>
-            <button class="tab-btn" type="button" data-tab="portais">
-                <i aria-hidden="true">🗂️</i> Portais
-            </button>
-            <button class="tab-btn" type="button" data-tab="ferramentas">
-                <i aria-hidden="true">🛠️</i> Ferramentas
-            </button>
-        </nav>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Buscar links por nome, categoria ou URL...">
+        </div>
 
-        <section id="social" class="tab-pane active-pane" aria-label="Links sociais">
-            <div class="grid-icons">
-                <a href="https://teams.microsoft.com/v2/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">💬</i>
-                    <span>Microsoft Teams</span>
-                    <small>chat/meetings</small>
-                </a>
-                <a href="https://outlook.office365.com/mail/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">📧</i>
-                    <span>E-mail</span>
-                    <small>Outlook</small>
-                </a>
-                <a href="https://cc.claro.com.br/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">🎧</i>
-                    <span>Nice</span>
-                    <small>Central Claro</small>
-                </a>
-            </div>
-        </section>
+        <nav class="tabs" id="tabsNav" aria-label="Categorias do sistema"></nav>
 
-        <section id="portais" class="tab-pane" aria-label="Portais corporativos">
-            <div class="grid-icons">
-                <a href="http://10.29.5.216/scr/ui-newsletter.php" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">📰</i>
-                    <span>SCR</span>
-                    <small>Newsletter</small>
-                </a>
-                <a href="https://pontodigital.claro.com.br/login" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">⏱️</i>
-                    <span>Ponto Digital</span>
-                    <small>marcação</small>
-                </a>
-                <a href="http://portalclarobrasil/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">🌐</i>
-                    <span>Portal Claro</span>
-                    <small>intranet</small>
-                </a>
-                <a href="https://portalrh.claro.com.br/ords/rhportal/rhlgweb.show" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">👥</i>
-                    <span>Portal RH</span>
-                    <small>recursos humanos</small>
-                </a>
-                <a href="https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_adf.ctrl-state=eqvx7jj5m_142&amp;fnd=%3B%3B%3B%3Bfalse%3B256%3B%3B%3B&amp;_afrLoop=3873689643141437" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">📚</i>
-                    <span>Trilhas</span>
-                    <small>Oracle HCM</small>
-                </a>
-                <a href="https://clarobr.atlassian.net/servicedesk/customer/user/login?destination=portals" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">🎫</i>
-                    <span>Jira</span>
-                    <small>service desk</small>
-                </a>
-            </div>
-        </section>
-
-        <section id="ferramentas" class="tab-pane" aria-label="Ferramentas do fluxo de trabalho">
-            <div class="grid-icons">
-                <a href="https://pontodigital.claro.com.br/entrar" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">🕒</i>
-                    <span>Bater Ponto</span>
-                    <small>início expediente</small>
-                </a>
-                <a href="https://nlsoarez.github.io/divisao-equipe-madrugada/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">📅</i>
-                    <span>Calendário</span>
-                    <small>divisão do dia</small>
-                </a>
-                <a href="https://lirapin.github.io/comunicador-de-falhas/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">⚠️</i>
-                    <span>Comunicador</span>
-                    <small>registro de falhas</small>
-                </a>
-                <a href="https://lirapin.github.io/gerador-de-mensagens/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">✍️</i>
-                    <span>Gerador Msgs</span>
-                    <small>mensagens prontas</small>
-                </a>
-                <a href="https://dashboard-indicadores-cop-production.up.railway.app/" target="_blank" rel="noopener noreferrer" class="icon-card">
-                    <i aria-hidden="true">📊</i>
-                    <span>Indicadores</span>
-                    <small>dashboard COP</small>
-                </a>
-            </div>
-
-            <div class="workflow-steps" aria-label="Fluxo diário">
-                <div class="steps-container">
-                    <a class="step-item" href="https://pontodigital.claro.com.br/entrar" target="_blank" rel="noopener noreferrer">
-                        <span class="step-number">1</span>
-                        <i aria-hidden="true">⏱️</i>
-                        <strong>Bater o ponto</strong>
-                        <span class="step-desc">início do turno</span>
-                    </a>
-                    <a class="step-item" href="https://nlsoarez.github.io/divisao-equipe-madrugada/" target="_blank" rel="noopener noreferrer">
-                        <span class="step-number">2</span>
-                        <i aria-hidden="true">📅</i>
-                        <strong>Ver calendário</strong>
-                        <span class="step-desc">divisão da madrugada</span>
-                    </a>
-                    <a class="step-item" href="https://lirapin.github.io/comunicador-de-falhas/" target="_blank" rel="noopener noreferrer">
-                        <span class="step-number">3</span>
-                        <i aria-hidden="true">⚠️</i>
-                        <strong>Registrar falhas</strong>
-                        <span class="step-desc">conforme atende área</span>
-                    </a>
-                    <a class="step-item" href="https://lirapin.github.io/gerador-de-mensagens/" target="_blank" rel="noopener noreferrer">
-                        <span class="step-number">4</span>
-                        <i aria-hidden="true">✍️</i>
-                        <strong>Gerar mensagens</strong>
-                        <span class="step-desc">comunicar equipe</span>
-                    </a>
-                    <a class="step-item" href="https://dashboard-indicadores-cop-production.up.railway.app/" target="_blank" rel="noopener noreferrer">
-                        <span class="step-number">5</span>
-                        <i aria-hidden="true">📊</i>
-                        <strong>Consultar indicadores</strong>
-                        <span class="step-desc">performance/erros</span>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <div id="contentContainer"></div>
     </main>
 
     <footer class="footer">
@@ -631,20 +421,377 @@
 </div>
 
 <script>
-    const tabs = document.querySelectorAll('.tab-btn');
-    const panes = document.querySelectorAll('.tab-pane');
+    const appData = {
+        "appName": "SIM",
+        "appSubtitle": "Sistema Integrado Madrugada — tudo que sua operação precisa",
+        "categories": [
+            { "title": "Social", "items": [
+                { "title": "Teams", "url": "https://teams.microsoft.com/v2/" },
+                { "title": "IDMBR", "url": "https://idmbr.claro.com.br/identity/faces/home?_afrLoop=3173601957531017&_adf.ctrl-state=evg4tvhee_87" },
+                { "title": "Outlook", "url": "https://outlook.office365.com/mail/" },
+                { "title": "N5923221", "url": "https://www.linkedin.com/in/kelly-lira-442005253/" },
+                { "title": "Contact Center Claro", "url": "https://cc.claro.com.br/" },
+                { "title": "Instantâneo do agente", "url": "https://home-c47.nice-incontact.com/inContact/Manage/Reports/CustomReports/AgentSnapshot.aspx" },
+                { "title": "Recrutamento & Seleção", "url": "https://projetos.plural-edtech.com/clientes/claro/implementacao-gupy/recrutamento-e-selecao-gestor-e-bp/" }
+            ]},
+            { "title": "Portais", "items": [
+                { "title": "Portal SCR", "url": "http://10.29.5.216/scr/ui-newsletter.php" },
+                { "title": "Orhganiza", "url": "https://pontodigital.claro.com.br/entrar" },
+                { "title": "Denúncias", "url": "https://denuncias.americamovil.com/" },
+                { "title": "Portal Claro", "url": "http://portalclarobrasil/" },
+                { "title": "Rhevolution", "url": "https://portalrh.claro.com.br/ords/rhportal/rhlgweb.show" },
+                { "title": "Cursos e Trilhas", "url": "https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_adf.ctrl-state=eqvx7jj5m_142&fnd=%3B%3B%3B%3Bfalse%3B256%3B%3B%3B&_afrLoop=3873689643141437" },
+                { "title": "Escalonamentos", "url": "http://10.29.5.216/book_mdu/city_search_system/index.php?q=" },
+                { "title": "Jira Service Management", "url": "https://clarobr.atlassian.net/servicedesk/customer/user/login?destination=portals" }
+            ]},
+            { "title": "RES", "items": [
+                { "title": "Ferramentas", "items": [
+                    { "title": "TOA", "url": "https://clarosa.etadirect.com/" },
+                    { "title": "SGO", "url": "https://outage.claro.com.br/" },
+                    { "title": "OSS 1", "url": "http://200.169.116.155//portal/#/login" },
+                    { "title": "OSS 2", "url": "https://portal-oss.nocclaro.com.br/singlesignon/logon/?urlBack=https%3a%2f%2fportal-oss.nocclaro.com.br%2fportal%2f#/login" },
+                    { "title": "Centreon", "url": "http://201.17.47.202/centreon/login" },
+                    { "title": "Eficiência", "url": "http://eficiencia.virtua.com.br/Terminal/Mapa/index.html" },
+                    { "title": "New Monitor", "url": "https://newmonitor.claro.com.br/user/login.php" },
+                    { "title": "Visium Hfc", "url": "http://201.55.234.76/Consultas_/index" },
+                    { "title": "Visium Gpon", "url": "http://201.55.234.76:8080/ConsultasGPON_/index" },
+                    { "title": "New Datacenter", "url": "http://newdatacenter.com.br/#" },
+                    { "title": "Critel", "url": "http://200.255.253.12/grb/critel/" },
+                    { "title": "SCM", "url": "http://scm.rjo.virtua.com.br/scm/index.php" },
+                    { "title": "SIR (NET)", "url": "http://sir.nt.embratel.com.br/index.cfm?nofoc=yes" },
+                    { "title": "NET SMS", "url": "https://netsmsapp.claro.com.br/Citrix/NetsmsEPSWeb/" },
+                    { "title": "Qualinet", "url": "http://qualinet.netservicos.corp/?" }
+                ]},
+                { "title": "Xpertrack", "items": [
+                    { "title": "Bahia", "items": [
+                        { "title": "Aracajú", "url": "http://xpertrak.aju.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Salvador", "url": "http://xpertrak.sdr.virtua.com.br/pathtrak/main/view.html#/dashboard" }
+                    ]},
+                    { "title": "Minas", "items": [
+                        { "title": "Ipatinga", "url": "http://xpertrak.iig.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Vila Velha", "url": "http://xpertrak.vva.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Contagem", "url": "http://xpertrak.cem.virtua.com.br/pathtrak/login/view.html#/login" },
+                        { "title": "Uberlândia", "url": "http://xpertrak.ula.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Juiz de Fora", "url": "http://xpertrak.jfa.virtua.com.br/pathtrak/login/view.html#/login" },
+                        { "title": "Belo Horizonte", "url": "http://xpertrak.bhz.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Governador Valadares", "url": "http://xpertrak.gvs.virtua.com.br/pathtrak/main/view.html" }
+                    ]},
+                    { "title": "Norte", "items": [
+                        { "title": "Belém", "url": "http://xpertrak.blm.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Manaus", "url": "http://xpertrak.mns.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "São Luís", "url": "http://xpertrak.sls.virtua.com.br/pathtrak/main/view.html#/dashboard" }
+                    ]},
+                    { "title": "Nordeste", "items": [
+                        { "title": "Maceió", "url": "http://xpertrak.mco.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Teresina", "url": "http://xpertrak.tsa.virtua.com.br/pathtrak/main/view.html" },
+                        { "title": "Fortaleza", "url": "http://xpertrak.fla.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "João Pessoa", "url": "http://xpertrak.jpa.virtua.com.br/pathtrak/main/view.html" }
+                    ]},
+                    { "title": "Rio Interior", "items": [
+                        { "title": "Niterói", "url": "https://xpertrak.nri.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Macaé", "url": "https://xpertrak.mce.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Vitória", "url": "http://xpertrak.vta.virtua.com.br/pathtrak/main/view.html" },
+                        { "title": "Mesquita", "url": "https://xpertrak.mesq.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Petrópolis", "url": "http://xpertrak.pts.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Nova Iguaçu", "url": "https://xpertrak.niu.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "São Gonçalo", "url": "http://xpertrak.sgo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Rio das Ostras", "url": "http://xpertrak.rios.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Volta Redonda", "url": "https://xpertrak.vrd.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Campos dos Goytacazes", "url": "http://xpertrak.cpdg.virtua.com.br/pathtrak/main/view.html#/dashboard" }
+                    ]},
+                    { "title": "Centro Oeste", "items": [
+                        { "title": "Dourados", "url": "http://xpertrak.dos.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Porto Velho", "url": "http://xpertrak.pvo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "Campo Grande", "url": "http://xpertrak.cpe.virtua.com.br/pathtrak/pnm/view.html#/node/health?node=155997" }
+                    ]},
+                    { "title": "Rio de Janeiro", "items": [
+                        { "title": "RJO - 1", "url": "https://xpertrak-1.rjo.virtua.com.br/pathtrak/main/view.html#/dashboard" },
+                        { "title": "RJO - 2", "url": "https://xpertrak-2.rjo.virtua.com.br/pathtrak/login/view.html#/login" }
+                    ]}
+                ]}
+            ]},
+            { "title": "EMP", "items": [
+                { "title": "NM (EBT)", "url": "http://newmonitor.virtua.com.br/user/login.php#" },
+                { "title": "SIT (EBT)", "url": "http://arcos.nocclarobrasil.com.br/Arcos/SitDefault.aspx" },
+                { "title": "SIR (EBT)", "url": "http://10.13.54.150:20020/index.cfm?nofoc=yes" },
+                { "title": "GRB (EBT)", "url": "http://200.255.253.12/grb/topologia_rede/www/index.php" },
+                { "title": "Critel (EBT)", "url": "http://www-critel.embratel.net.br/critel/" },
+                { "title": "ATENA (EBT)", "url": "http://atena/Olimpo/Consulta.aspx" }
+            ]},
+            { "title": "DEV", "items": [
+                { "title": "GPT", "url": "https://chatgpt.com/" },
+                { "title": "Claude", "url": "https://claude.ai/onboarding" },
+                { "title": "Github", "url": "https://github.com/lirapin/portal-qoe/blob/main/index.html" },
+                { "title": "jsonbin", "url": "https://jsonbin.io/app/bins" },
+                { "title": "Deepseek", "url": "https://chat.deepseek.com/" },
+                { "title": "Github (Download)", "url": "https://download-directory.github.io/" }
+            ]},
+            { "title": "ALL", "items": [
+                { "title": "Produtividade COP Rede", "url": "https://dashboard-indicadores-cop-production.up.railway.app/" },
+                { "title": "Gerador de mensagens", "url": "https://lirapin.github.io/gerador-de-mensagens/" },
+                { "title": "Guia de processos", "url": "https://lirapin.github.io/informativos/" },
+                { "title": "Sistema de falhas", "url": "https://lirapin.github.io/comunicador-de-falhas/" },
+                { "title": "Calculadora", "url": "https://lirapin.github.io/prazo-incidentes/" },
+                { "title": "PORTAL QOE", "url": "https://nlsoarez.github.io/portalqoe/" },
+                { "title": "Divisão", "url": "https://nlsoarez.github.io/divisao-equipe-madrugada/" }
+            ]},
+            { "title": "$", "items": [
+                { "title": "Fundação Telos", "url": "https://www.fundacaotelos.com.br/" }
+            ]}
+        ]
+    };
 
-    tabs.forEach((button) => {
-        button.addEventListener('click', () => {
-            const tabId = button.getAttribute('data-tab');
+    function getIconForTitle(title) {
+        const icons = {
+            'Teams': '💬', 'Outlook': '📧', 'Contact Center Claro': '🎧', 'Portal SCR': '📰',
+            'Orhganiza': '⏱️', 'Denúncias': '⚠️', 'Portal Claro': '🌐', 'Rhevolution': '👥',
+            'Cursos e Trilhas': '📚', 'Jira Service Management': '🎫', 'GPT': '🤖', 'Claude': '🧠',
+            'Github': '🐙', 'Deepseek': '🔍', 'Produtividade COP Rede': '📊', 'Gerador de mensagens': '✍️',
+            'Guia de processos': '📖', 'Sistema de falhas': '⚠️', 'Calculadora': '🧮', 'PORTAL QOE': '📡',
+            'Divisão': '📅', 'TOA': '🔧', 'SGO': '📡', 'OSS 1': '🖥️', 'OSS 2': '🖥️',
+            'Centreon': '📊', 'Eficiência': '⚡', 'New Monitor': '👁️', 'Visium Hfc': '📡',
+            'Visium Gpon': '📡', 'New Datacenter': '🏢', 'Critel': '🔍', 'SCM': '📋',
+            'SIR (NET)': '📡', 'NET SMS': '💬', 'Qualinet': '✅', 'NM (EBT)': '📊',
+            'SIT (EBT)': '📡', 'SIR (EBT)': '📡', 'GRB (EBT)': '🗺️', 'ATENA (EBT)': '🛡️'
+        };
+        return icons[title] || '🔗';
+    }
 
-            tabs.forEach((tab) => tab.classList.remove('active'));
-            button.classList.add('active');
-
-            panes.forEach((pane) => pane.classList.remove('active-pane'));
-            document.getElementById(tabId).classList.add('active-pane');
+    function renderItems(items, container) {
+        if (!items || items.length === 0) return;
+        
+        items.forEach(item => {
+            if (item.items && item.items.length > 0) {
+                const nestedDiv = document.createElement('div');
+                nestedDiv.className = 'nested-section';
+                const nestedTitle = document.createElement('div');
+                nestedTitle.className = 'nested-title';
+                nestedTitle.innerHTML = `📁 ${item.title}`;
+                nestedDiv.appendChild(nestedTitle);
+                
+                const subgrid = document.createElement('div');
+                subgrid.className = 'subgrid';
+                
+                function processSubItems(subItems, parentGrid) {
+                    subItems.forEach(sub => {
+                        if (sub.url) {
+                            const card = document.createElement('a');
+                            card.href = sub.url;
+                            card.target = '_blank';
+                            card.rel = 'noopener noreferrer';
+                            card.className = 'subcard';
+                            card.innerHTML = `
+                                <i>${getIconForTitle(sub.title)}</i>
+                                <div class="subcard-info">
+                                    <strong>${sub.title}</strong>
+                                    <small>${sub.url.length > 40 ? sub.url.substring(0, 40) + '...' : sub.url}</small>
+                                </div>
+                            `;
+                            parentGrid.appendChild(card);
+                        } else if (sub.items) {
+                            const subNestedDiv = document.createElement('div');
+                            subNestedDiv.className = 'nested-section';
+                            const subNestedTitle = document.createElement('div');
+                            subNestedTitle.className = 'nested-title';
+                            subNestedTitle.innerHTML = `📂 ${sub.title}`;
+                            subNestedDiv.appendChild(subNestedTitle);
+                            const subSubgrid = document.createElement('div');
+                            subSubgrid.className = 'subgrid';
+                            processSubItems(sub.items, subSubgrid);
+                            subNestedDiv.appendChild(subSubgrid);
+                            parentGrid.parentElement?.appendChild(subNestedDiv);
+                        }
+                    });
+                }
+                
+                processSubItems(item.items, subgrid);
+                nestedDiv.appendChild(subgrid);
+                container.appendChild(nestedDiv);
+            } else if (item.url) {
+                const card = document.createElement('a');
+                card.href = item.url;
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
+                card.className = 'icon-card';
+                card.innerHTML = `
+                    <i>${getIconForTitle(item.title)}</i>
+                    <span>${item.title}</span>
+                    <small>${item.url.length > 35 ? item.url.substring(0, 35) + '...' : item.url}</small>
+                `;
+                container.appendChild(card);
+            }
         });
-    });
+    }
+
+    function renderCategory(category) {
+        const section = document.createElement('div');
+        section.className = 'category-section';
+        
+        const title = document.createElement('h3');
+        title.className = 'category-title';
+        title.textContent = category.title;
+        section.appendChild(title);
+        
+        const grid = document.createElement('div');
+        grid.className = 'grid-icons';
+        
+        if (category.items) {
+            category.items.forEach(item => {
+                if (item.url) {
+                    const card = document.createElement('a');
+                    card.href = item.url;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+                    card.className = 'icon-card';
+                    card.innerHTML = `
+                        <i>${getIconForTitle(item.title)}</i>
+                        <span>${item.title}</span>
+                        <small>${item.url.length > 35 ? item.url.substring(0, 35) + '...' : item.url}</small>
+                    `;
+                    grid.appendChild(card);
+                } else if (item.items) {
+                    const nestedDiv = document.createElement('div');
+                    nestedDiv.className = 'nested-section';
+                    const nestedTitle = document.createElement('div');
+                    nestedTitle.className = 'nested-title';
+                    nestedTitle.innerHTML = `📁 ${item.title}`;
+                    nestedDiv.appendChild(nestedTitle);
+                    
+                    const subgrid = document.createElement('div');
+                    subgrid.className = 'subgrid';
+                    
+                    item.items.forEach(subItem => {
+                        if (subItem.url) {
+                            const subcard = document.createElement('a');
+                            subcard.href = subItem.url;
+                            subcard.target = '_blank';
+                            subcard.rel = 'noopener noreferrer';
+                            subcard.className = 'subcard';
+                            subcard.innerHTML = `
+                                <i>${getIconForTitle(subItem.title)}</i>
+                                <div class="subcard-info">
+                                    <strong>${subItem.title}</strong>
+                                    <small>${subItem.url.length > 40 ? subItem.url.substring(0, 40) + '...' : subItem.url}</small>
+                                </div>
+                            `;
+                            subgrid.appendChild(subcard);
+                        } else if (subItem.items) {
+                            const deepNestedDiv = document.createElement('div');
+                            deepNestedDiv.className = 'nested-section';
+                            const deepNestedTitle = document.createElement('div');
+                            deepNestedTitle.className = 'nested-title';
+                            deepNestedTitle.innerHTML = `📂 ${subItem.title}`;
+                            deepNestedDiv.appendChild(deepNestedTitle);
+                            const deepSubgrid = document.createElement('div');
+                            deepSubgrid.className = 'subgrid';
+                            
+                            subItem.items.forEach(deepItem => {
+                                if (deepItem.url) {
+                                    const deepCard = document.createElement('a');
+                                    deepCard.href = deepItem.url;
+                                    deepCard.target = '_blank';
+                                    deepCard.rel = 'noopener noreferrer';
+                                    deepCard.className = 'subcard';
+                                    deepCard.innerHTML = `
+                                        <i>${getIconForTitle(deepItem.title)}</i>
+                                        <div class="subcard-info">
+                                            <strong>${deepItem.title}</strong>
+                                            <small>${deepItem.url.length > 40 ? deepItem.url.substring(0, 40) + '...' : deepItem.url}</small>
+                                        </div>
+                                    `;
+                                    deepSubgrid.appendChild(deepCard);
+                                }
+                            });
+                            deepNestedDiv.appendChild(deepSubgrid);
+                            subgrid.appendChild(deepNestedDiv);
+                        }
+                    });
+                    nestedDiv.appendChild(subgrid);
+                    grid.appendChild(nestedDiv);
+                }
+            });
+        }
+        
+        section.appendChild(grid);
+        return section;
+    }
+
+    let currentSearchTerm = '';
+    let currentCategory = 'Social';
+
+    function renderAll(searchTerm = '') {
+        const container = document.getElementById('contentContainer');
+        container.innerHTML = '';
+        
+        const category = appData.categories.find(c => c.title === currentCategory);
+        if (!category) return;
+        
+        if (searchTerm) {
+            const filteredItems = filterItemsBySearch(category.items, searchTerm);
+            if (filteredItems.length === 0) {
+                container.innerHTML = '<div class="no-results">🔍 Nenhum resultado encontrado para "' + searchTerm + '"</div>';
+            } else {
+                const filteredCategory = { ...category, items: filteredItems };
+                const renderedSection = renderCategory(filteredCategory);
+                container.appendChild(renderedSection);
+            }
+        } else {
+            const renderedSection = renderCategory(category);
+            container.appendChild(renderedSection);
+        }
+    }
+
+    function filterItemsBySearch(items, term) {
+        const lowerTerm = term.toLowerCase();
+        const result = [];
+        
+        items.forEach(item => {
+            if (item.url && (item.title.toLowerCase().includes(lowerTerm) || item.url.toLowerCase().includes(lowerTerm))) {
+                result.push(item);
+            } else if (item.items) {
+                const filteredSubItems = filterItemsBySearch(item.items, term);
+                if (filteredSubItems.length > 0) {
+                    result.push({ ...item, items: filteredSubItems });
+                }
+            }
+        });
+        
+        return result;
+    }
+
+    function initTabs() {
+        const tabsNav = document.getElementById('tabsNav');
+        tabsNav.innerHTML = '';
+        
+        appData.categories.forEach(cat => {
+            const button = document.createElement('button');
+            button.className = 'tab-btn' + (currentCategory === cat.title ? ' active' : '');
+            button.textContent = cat.title;
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentCategory = cat.title;
+                renderAll(currentSearchTerm);
+            });
+            tabsNav.appendChild(button);
+        });
+    }
+
+    function initSearch() {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value;
+            renderAll(currentSearchTerm);
+        });
+    }
+
+    function init() {
+        initTabs();
+        initSearch();
+        renderAll('');
+    }
+
+    init();
 </script>
 </body>
 </html>
