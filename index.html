@@ -44,9 +44,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
             transition: all 0.2s ease;
         }
-        .emoji-icon { font-size: 34px; line-height: 1; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+        .icon-wrapper::before {
+            content: "";
+            position: absolute;
+            width: 48px;
+            height: 42px;
+            background: rgba(244, 63, 94, 0.14);
+            border-radius: 47% 53% 45% 55% / 58% 42% 54% 46%;
+            transform: rotate(-8deg);
+            filter: blur(0.2px);
+            z-index: 0;
+        }
+        .app-card:hover .icon-wrapper::before, .folder-card:hover .icon-wrapper::before {
+            background: rgba(244, 63, 94, 0.2);
+            transform: rotate(6deg) scale(1.06);
+        }
+        .emoji-icon { font-size: 34px; line-height: 1; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
         .app-card:hover .emoji-icon, .folder-card:hover .emoji-icon { transform: scale(1.08); }
         .brand-icon {
             width: 42px;
@@ -57,25 +73,14 @@
             font-size: 34px;
             line-height: 1;
             filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.14));
+            position: relative;
+            z-index: 1;
         }
         .copilot-logo::before { content: "\1F308"; }
         .onedrive-logo { color: #2563eb; font-size: 40px; text-shadow: 0 5px 10px rgba(37, 99, 235, 0.18); }
         .onedrive-logo::before { content: "\2601"; }
         .app-card:hover .brand-icon, .folder-card:hover .brand-icon { transform: scale(1.08); }
         .app-name { font-size: 13px; font-weight: 600; color: #2c3e50; text-align: center; line-height: 1.3; padding: 0 8px; word-break: break-word; }
-        .folder-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #d32f2f;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 20px;
-            min-width: 28px;
-            text-align: center;
-        }
         .tab-button {
             background: #ffffff;
             color: #2c3e50;
@@ -1112,8 +1117,7 @@
                                         { "name": "São José do Rio Preto", "url": "http://asnet01.netservicos.corp/sigmaisp/GDTL0200_FINALIZA_SESSAO?pSessao=01436512426", "icon": "Link", "type": "link", "emoji": "🗺️" },
                                         { "name": "São José dos Campos", "url": "http://asnet01.globocabo.com.br/sigabc/GDTL0200_FINALIZA_SESSAO?pSessao=01507302426", "icon": "Link", "type": "link", "emoji": "🗺️" },
                                         { "name": "São José dos Pinhais", "url": "http://asnet01.netservicos.corp/sigmaisp/GDTL0200_FINALIZA_SESSAO?pSessao=01436512426", "icon": "Link", "type": "link", "emoji": "🗺️" },
-                                        { "name": "São Leopoldo - Cabo", "url": "http://asnet01.netservicos.corp/sigmaisp/GDTL0200_FINALIZA_SESSAO?pSessao=01436512426", "icon": "Link", "type": "link", "emoji": "🗺️" },
-                                        { "name": "São Leopoldo - Mmds", "url": "http://asnet01.netservicos.corp/netsul/GDTL0200_FINALIZA_SESSAO?pSessao=01418402426", "icon": "Link", "type": "link", "emoji": "🗺️" },
+                                        { "name": "São Leopoldo", "url": "http://asnet01.netservicos.corp/sigmaisp/GDTL0200_FINALIZA_SESSAO?pSessao=01436512426", "icon": "Link", "type": "link", "emoji": "🗺️" },
                                         { "name": "São Lourenço", "url": "http://asnet01.netservicos.corp/netsul/GDTL0200_FINALIZA_SESSAO?pSessao=01418402426", "icon": "Link", "type": "link", "emoji": "🗺️" },
                                         { "name": "São Lourenço do Sul", "url": "http://asnet01.netservicos.corp/netsul/GDTL0200_FINALIZA_SESSAO?pSessao=01418402426", "icon": "Link", "type": "link", "emoji": "🗺️" },
                                         { "name": "São Luís", "url": "http://asnet01.netservicos.corp/sigsoc/GDTL0200_FINALIZA_SESSAO?pSessao=09393602103", "icon": "Link", "type": "link", "emoji": "🗺️" },
@@ -1295,13 +1299,11 @@
 
     const AppCard = ({ item, onFolderOpen }) => {
         const isFolder = item.type === 'folder';
-        const linkCount = isFolder ? countLinks(item) : 0;
         const handleClick = () => {
             if (isFolder && onFolderOpen) onFolderOpen(item);
             else if (item.url) window.open(item.url, '_blank', 'noopener,noreferrer');
         };
         return React.createElement('button', { type: 'button', className: `${isFolder ? 'folder-card' : 'app-card'} fade-in`, onClick: handleClick }, [
-            isFolder && linkCount > 0 && React.createElement('div', { key: 'badge', className: 'folder-badge' }, linkCount),
             React.createElement('div', { key: 'icon', className: 'icon-wrapper' }, React.createElement(EmojiComponent, { item })),
             React.createElement('div', { key: 'name', className: 'app-name' }, item.name.length > 35 ? item.name.substring(0, 32) + '...' : item.name)
         ]);
@@ -1486,8 +1488,8 @@
                                 React.createElement('input', { type: 'text', className: 'search-input', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
                                 searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(IconComponent, { name: 'X', size: 18 }))
                             ]),
-                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn', title: 'Login', 'aria-label': 'Login' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '📩')),
                             React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '☰')),
+                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '📩')),
                             React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '❌'))
                         ])
                     ])
