@@ -79,7 +79,17 @@
         .copilot-logo::before { content: "\1F308"; }
         .onedrive-logo { color: #2563eb; font-size: 40px; text-shadow: 0 5px 10px rgba(37, 99, 235, 0.18); }
         .onedrive-logo::before { content: "\2601"; }
+        .custom-image-icon {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.12));
+        }
+        .custom-image-icon.rounded-brand { border-radius: 12px; }
         .app-card:hover .brand-icon, .folder-card:hover .brand-icon { transform: scale(1.08); }
+        .app-card:hover .custom-image-icon, .folder-card:hover .custom-image-icon { transform: scale(1.08); }
         .app-name { font-size: 13px; font-weight: 600; color: #2c3e50; text-align: center; line-height: 1.3; padding: 0 8px; word-break: break-word; }
         .tab-button {
             background: #ffffff;
@@ -142,6 +152,40 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.25s ease-out; }
         .grid-apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; }
+        .content-title-bar {
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+            padding: 18px 22px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-title-mark {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #d32f2f;
+            border-radius: 6px 10px 7px 11px;
+            transform: rotate(-8deg);
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.18);
+            flex: 0 0 auto;
+        }
+        .content-title-text {
+            color: #d32f2f;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .content-tray {
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.13);
+            padding: 22px;
+            min-height: 220px;
+        }
         .login-card { background: white; border: 1px solid #e0e0e0; border-radius: 24px; box-shadow: 0 18px 45px rgba(44, 62, 80, 0.18); }
         .owl-logo { font-size: 34px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.16)); }
         .top-emoji { font-size: 20px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; }
@@ -198,6 +242,9 @@
             .app-name { font-size: 11px; }
             .icon-wrapper { width: 48px; height: 48px; }
             .tab-button { min-width: 120px; font-size: 12px; padding: 8px 12px; }
+            .content-title-bar { padding: 14px 16px; border-radius: 16px; }
+            .content-title-text { font-size: 17px; }
+            .content-tray { padding: 16px; border-radius: 18px; }
         }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
@@ -236,11 +283,11 @@
                 "type": "folder",
                 "emoji": "✅",
                 "children": [
-                        { "name": "Calendário de divisão de tarefas", "url": "https://nlsoarez.github.io/divisao-equipe-madrugada/", "icon": "Link", "type": "link", "emoji": "📅" },
-                        { "name": "Gerador de mensagens", "url": "https://lirapin.github.io/gerador-de-mensagens/", "icon": "Link", "type": "link", "emoji": "📩" },
-                        { "name": "Comunicador de falhas", "url": "https://lirapin.github.io/comunicador-de-falhas/", "icon": "Link", "type": "link", "emoji": "⚠️" },
-                        { "name": "Dashboard de produtividade", "url": "https://dashboard-indicadores-cop-production.up.railway.app/", "icon": "Link", "type": "link", "emoji": "📊" },
-                        { "name": "Guia de processos", "url": "https://lirapin.github.io/informativos/", "icon": "Link", "type": "link", "emoji": "💡" }
+                        { "name": "Calendário de divisão de tarefas", "url": "https://nlsoarez.github.io/divisao-equipe-madrugada/", "icon": "Link", "type": "link", "emoji": "📅", "image": "assets/icons/icons8-timeline-week-100.png" },
+                        { "name": "Gerador de mensagens", "url": "https://lirapin.github.io/gerador-de-mensagens/", "icon": "Link", "type": "link", "emoji": "📨", "image": "assets/icons/icons8-chat-bubble-100.png" },
+                        { "name": "Comunicador de falhas", "url": "https://lirapin.github.io/comunicador-de-falhas/", "icon": "Link", "type": "link", "emoji": "⚠️", "image": "assets/icons/icons8-error-100.png" },
+                        { "name": "Dashboard de produtividade", "url": "https://dashboard-indicadores-cop-production.up.railway.app/", "icon": "Link", "type": "link", "emoji": "📊", "image": "assets/icons/icons8-combo-chart-100.png" },
+                        { "name": "Guia de processos", "url": "https://lirapin.github.io/informativos/", "icon": "Link", "type": "link", "emoji": "💡", "image": "assets/icons/icons8-light-on-100.png" }
                 ]
         },
         {
@@ -249,11 +296,11 @@
                 "type": "folder",
                 "emoji": "💬",
                 "children": [
-                        { "name": "Nice", "url": "https://cc.claro.com.br/", "icon": "Link", "type": "link", "emoji": "📞" },
-                        { "name": "Teams", "url": "https://teams.microsoft.com/v2/", "icon": "Link", "type": "link", "emoji": "💬" },
-                        { "name": "WhatsApp", "url": "https://web.whatsapp.com/", "icon": "WhatsApp", "type": "link", "emoji": "🗨️" },
-                        { "name": "Outlook", "url": "https://outlook.office365.com/mail/", "icon": "Link", "type": "link", "emoji": "📧" },
-                        { "name": "Oportunidades", "url": "https://projetos.plural-edtech.com/clientes/claro/implementacao-gupy/recrutamento-e-selecao-gestor-e-bp/", "icon": "Link", "type": "link", "emoji": "💡" }
+                        { "name": "Nice", "url": "https://cc.claro.com.br/", "icon": "Link", "type": "link", "emoji": "📞", "image": "assets/icons/nice.svg" },
+                        { "name": "Teams", "url": "https://teams.microsoft.com/v2/", "icon": "Link", "type": "link", "emoji": "💬", "image": "assets/icons/teams.svg", "roundedImage": true },
+                        { "name": "WhatsApp", "url": "https://web.whatsapp.com/", "icon": "WhatsApp", "type": "link", "emoji": "🗨️", "image": "assets/icons/whatsapp.svg" },
+                        { "name": "Outlook", "url": "https://outlook.office365.com/mail/", "icon": "Link", "type": "link", "emoji": "📧", "image": "assets/icons/outlook.svg" },
+                        { "name": "Oportunidades", "url": "https://projetos.plural-edtech.com/clientes/claro/implementacao-gupy/recrutamento-e-selecao-gestor-e-bp/", "icon": "Link", "type": "link", "emoji": "💡", "image": "assets/icons/icons8-light-on-100.png" }
                 ]
         },
         {
@@ -287,13 +334,13 @@
                                         { "name": "OSS", "url": "http://200.169.116.155//portal/#/login", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "Centreon", "url": "http://201.17.47.202/centreon/login", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "Eficiência", "url": "http://eficiencia.virtua.com.br/Terminal/Mapa/index.html", "icon": "Link", "type": "link", "emoji": "🛠️" },
-                                        { "name": "New Monitor", "url": "https://newmonitor.claro.com.br/user/login.php", "icon": "Link", "type": "link", "emoji": "🖥️" },
+                                        { "name": "New Monitor", "url": "https://newmonitor.claro.com.br/user/login.php", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "Visium HFC", "url": "http://201.55.234.76/Consultas_/index", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "Visium GPON", "url": "http://201.55.234.76:8080/ConsultasGPON_/index", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "New Datacenter", "url": "http://newdatacenter.com.br/#", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "Critel", "url": "http://200.255.253.12/grb/critel/", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "SCM", "url": "http://scm.rjo.virtua.com.br/scm/index.php", "icon": "Link", "type": "link", "emoji": "🛠️" },
-                                        { "name": "SIR", "url": "http://sir.nt.embratel.com.br/index.cfm?nofoc=yes", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "SIR", "url": "http://sir.nt.embratel.com.br/index.cfm?nofoc=yes", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "NET SMS", "url": "https://netsmsapp.claro.com.br/Citrix/NetsmsEPSWeb/", "icon": "Link", "type": "link", "emoji": "🛠️" },
                                         { "name": "Qualinet", "url": "http://qualinet.netservicos.corp/?", "icon": "Link", "type": "link", "emoji": "🛠️" }
                                 ]
@@ -384,212 +431,212 @@
                                 "icon": "MonitorCog",
                                 "type": "folder",
                                 "searchableFolder": true,
-                                "emoji": "🖥️",
+                                "emoji": "📈",
                                 "children": [
-                                        { "name": "Águas Lindas de Goiás", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Alagoinha", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Alagoinhas", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Alfenas", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Almenara", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ananindeua", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Anápolis", "url": "http://gerenciaRJO:durh%40m@gerencia.ans.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Angra dos Reis", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Aparecida de Goiânia", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Aquiraz", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Aracaju", "url": "http://gerenciaRJO:durh%40m@gerencia.aju.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Aracruz", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Araguaína", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Araguari", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Arapiraca", "url": "http://gerenciaRJO:durh%40m@gerencia.mco.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Araruama", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Araxá", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Arcos", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ariquemes", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Armação dos Búzios", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Arraial do Cabo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Barbacena", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Barra do Garças", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Barra do Piraí", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Barra Mansa", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Barreiras", "url": "http://gerenciaRJO:durh%40m@gerencia.vca.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Belém", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Belford Roxo", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Belo Horizonte", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Betim", "url": "http://gerenciaRJO:durh%40m@gerencia.bet.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Brasília", "url": "http://gerenciaRJO:durh%40m@gerencia.bsb.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Brasília de Minas", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Cabedelo", "url": "http://gerenciaRJO:durh%40m@gerencia.jpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Cabo Frio", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Cachoeiro de Itapemirim (habilitar proxy)", "url": "http://gerenciaRJO:durh%40m@gerencia.cim.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Cacoal", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Caldas Novas", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Camaçari", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Campina Grande", "url": "http://gerenciaRJO:durh%40m@gerencia.cge.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Campo Grande", "url": "http://gerenciaRJO:durh%40m@gerencia.cpe.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Campos dos Goytacazes", "url": "http://gerenciaRJO:durh%40m@gerencia.cpdg.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Capelinha", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Caratinga", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Cariacica", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Caruaru", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Castanhal", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Cataguases", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Catalão", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Caxias", "url": "http://gerenciaRJO:durh%40m@gerencia.sls.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Colatina", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Conselheiro Lafaiete", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Contagem", "url": "http://gerenciaRJO:durh%40m@gerencia.cem.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Coronel Fabriciano", "url": "http://gerenciaRJO:durh%40m@gerencia.iig.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Cuiabá", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Curvelo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Diamantina", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Divinópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Dourados", "url": "http://gerenciaRJO:durh%40m@gerencia.dos.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Duque de Caxias", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Eunápolis", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Eusébio", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Extrema", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Feira de Santana", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Formiga", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Formosa", "url": "http://gerenciaRJO:durh%40m@gerencia.bsb.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Fortaleza", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Goiânia", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Governador Valadares", "url": "http://gerenciaRJO:durh%40m@gerencia.gvs.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Guaxupé", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Gurupi", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ilhéus", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Imperatriz", "url": "http://gerenciaRJO:durh%40m@gerencia.sls.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ipatinga", "url": "http://gerenciaRJO:durh%40m@gerencia.iig.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Itabira", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Itabuna", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Itaguaí", "url": "http://gerenciaRJO:durh%40m@gerencia.igi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Itajubá", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Itamarandiba", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Itaúna", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ituiutaba", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Itumbiara", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Jaboatão dos Guararapes", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Jataí", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Jequié", "url": "http://gerenciaRJO:durh%40m@gerencia.vca.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ji-Paraná", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "João Monlevade", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "João Pessoa", "url": "http://gerenciaRJO:durh%40m@gerencia.jpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Juazeiro", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Juazeiro do Norte", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Juiz de Fora", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Lagoa da Prata", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Lagoa Santa", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Lauro de Freitas", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Lavras", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Leopoldina", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Lucas do Rio Verde", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Luziânia", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Macaé", "url": "http://gerenciaRJO:durh%40m@gerencia.mce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Macapá (habilitar proxy)", "url": "http://gerencia.mpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Maceió", "url": "http://gerenciaRJO:durh%40m@gerencia.mco.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Manaus", "url": "http://gerenciaRJO:durh%40m@gerencia.mns.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Manhuaçu", "url": "http://gerenciaRJO:durh%40m@gerencia.gvs.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Marabá (habilitar proxy)", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Mariana", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Maricá", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Mata de São João", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Matozinhos", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Mesquita", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Miguel Pereira", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Monte Carmelo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Montes Claros", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Mossoró", "url": "http://gerenciaRJO:durh%40m@gerencia.ntl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Muriaé", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Natal", "url": "http://gerenciaRJO:durh%40m@gerencia.ntl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Naviraí", "url": "http://gerenciaRJO:durh%40m@gerencia.dos.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Nilópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Niterói", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Nova Friburgo", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Nova Iguaçu", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Nova Lima", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Nova Mutum", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Nova Serrana", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Novo Gama", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Olinda", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ouro Preto", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Palmas", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Pará de Minas", "url": "http://gerenciaRJO:durh%40m@gerencia.cem.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Paracatu", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Paragominas", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Paraíba do Sul", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Paraíso do Tocantins", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Parauapebas (habilitar proxy)", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Parnaíba", "url": "http://gerenciaRJO:durh%40m@gerencia.tsa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Parnamirim", "url": "http://gerenciaRJO:durh%40m@gerencia.ntl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Passos", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Patos de Minas", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Patrocínio", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Paulista", "url": "http://gerenciaRJO:durh%40m@gerencia.rce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Pedro Leopoldo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Petrolina", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Petrópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.pts.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Piumhi", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Poços de Caldas", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ponta Porã", "url": "http://gerenciaRJO:durh%40m@gerencia.dos.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ponte Nova", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Porto Real", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Porto Seguro", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Porto Velho", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Pouso Alegre", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Recife", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Resende", "url": "http://gerenciaRJO:durh%40m@gerencia.rsd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Rio Branco", "url": "http://gerenciaRJO:durh%40m@gerencia.rbo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Rio das Ostras", "url": "http://gerenciaRJO:durh%40m@gerencia.mce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Rio de Janeiro", "url": "http://gerenciaRJO:durh%40m@gerencia.rjo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Rio Verde", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Rondonópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.roi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Sabará", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Sacramento", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Salvador", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Santa Cruz de Minas", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Santa Helena de Goiás", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Santa Luzia", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Santa Rita do Sapucaí", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Santana (habilitar proxy)", "url": "http://gerencia.mpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "São Gonçalo", "url": "http://gerenciaRJO:durh%40m@gerencia.sgo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "São João de Meriti", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "São João del Rei", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "São Luís", "url": "http://gerenciaRJO:durh%40m@gerencia.sls.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "São Pedro da Aldeia", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "São Sebastião do Paraíso", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Senador Canedo", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Serra", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Sete Lagoas", "url": "http://gerenciaRJO:durh%40m@gerencia.sla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Sinop", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Sobral", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Sorriso", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Tangará da Serra", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Teixeira de Freitas", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Teófilo Otoni", "url": "http://gerenciaRJO:durh%40m@gerencia.tot.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Teresina", "url": "http://gerenciaRJO:durh%40m@gerencia.tsa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Teresópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.trl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Timon", "url": "http://gerenciaRJO:durh%40m@gerencia.tsa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Timóteo", "url": "http://gerenciaRJO:durh%40m@gerencia.iig.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Três Corações", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Três Lagoas", "url": "http://gerenciaRJO:durh%40m@gerencia.cpe.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Três Rios", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Trindade", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Ubá", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Uberaba", "url": "http://gerenciaRJO:durh%40m@gerencia.ura.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Uberlândia", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Unaí", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Valença", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Valparaíso de Goiás", "url": "http://gerenciaRJO:durh%40m@gerencia.bsb.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Varginha", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Várzea Grande", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Vassouras", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Vera Cruz", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Vespasiano", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Viçosa", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Vila Velha", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Vilhena", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Vitória", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Vitória da Conquista", "url": "http://gerenciaRJO:durh%40m@gerencia.vca.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" },
-                                        { "name": "Volta Redonda", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "🖥️" }
+                                        { "name": "Águas Lindas de Goiás", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Alagoinha", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Alagoinhas", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Alfenas", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Almenara", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ananindeua", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Anápolis", "url": "http://gerenciaRJO:durh%40m@gerencia.ans.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Angra dos Reis", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Aparecida de Goiânia", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Aquiraz", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Aracaju", "url": "http://gerenciaRJO:durh%40m@gerencia.aju.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Aracruz", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Araguaína", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Araguari", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Arapiraca", "url": "http://gerenciaRJO:durh%40m@gerencia.mco.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Araruama", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Araxá", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Arcos", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ariquemes", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Armação dos Búzios", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Arraial do Cabo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Barbacena", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Barra do Garças", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Barra do Piraí", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Barra Mansa", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Barreiras", "url": "http://gerenciaRJO:durh%40m@gerencia.vca.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Belém", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Belford Roxo", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Belo Horizonte", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Betim", "url": "http://gerenciaRJO:durh%40m@gerencia.bet.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Brasília", "url": "http://gerenciaRJO:durh%40m@gerencia.bsb.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Brasília de Minas", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Cabedelo", "url": "http://gerenciaRJO:durh%40m@gerencia.jpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Cabo Frio", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Cachoeiro de Itapemirim (habilitar proxy)", "url": "http://gerenciaRJO:durh%40m@gerencia.cim.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Cacoal", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Caldas Novas", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Camaçari", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Campina Grande", "url": "http://gerenciaRJO:durh%40m@gerencia.cge.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Campo Grande", "url": "http://gerenciaRJO:durh%40m@gerencia.cpe.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Campos dos Goytacazes", "url": "http://gerenciaRJO:durh%40m@gerencia.cpdg.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Capelinha", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Caratinga", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Cariacica", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Caruaru", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Castanhal", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Cataguases", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Catalão", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Caxias", "url": "http://gerenciaRJO:durh%40m@gerencia.sls.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Colatina", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Conselheiro Lafaiete", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Contagem", "url": "http://gerenciaRJO:durh%40m@gerencia.cem.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Coronel Fabriciano", "url": "http://gerenciaRJO:durh%40m@gerencia.iig.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Cuiabá", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Curvelo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Diamantina", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Divinópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Dourados", "url": "http://gerenciaRJO:durh%40m@gerencia.dos.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Duque de Caxias", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Eunápolis", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Eusébio", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Extrema", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Feira de Santana", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Formiga", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Formosa", "url": "http://gerenciaRJO:durh%40m@gerencia.bsb.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Fortaleza", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Goiânia", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Governador Valadares", "url": "http://gerenciaRJO:durh%40m@gerencia.gvs.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Guaxupé", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Gurupi", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ilhéus", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Imperatriz", "url": "http://gerenciaRJO:durh%40m@gerencia.sls.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ipatinga", "url": "http://gerenciaRJO:durh%40m@gerencia.iig.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Itabira", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Itabuna", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Itaguaí", "url": "http://gerenciaRJO:durh%40m@gerencia.igi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Itajubá", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Itamarandiba", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Itaúna", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ituiutaba", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Itumbiara", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Jaboatão dos Guararapes", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Jataí", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Jequié", "url": "http://gerenciaRJO:durh%40m@gerencia.vca.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ji-Paraná", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "João Monlevade", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "João Pessoa", "url": "http://gerenciaRJO:durh%40m@gerencia.jpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Juazeiro", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Juazeiro do Norte", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Juiz de Fora", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Lagoa da Prata", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Lagoa Santa", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Lauro de Freitas", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Lavras", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Leopoldina", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Lucas do Rio Verde", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Luziânia", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Macaé", "url": "http://gerenciaRJO:durh%40m@gerencia.mce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Macapá (habilitar proxy)", "url": "http://gerencia.mpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Maceió", "url": "http://gerenciaRJO:durh%40m@gerencia.mco.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Manaus", "url": "http://gerenciaRJO:durh%40m@gerencia.mns.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Manhuaçu", "url": "http://gerenciaRJO:durh%40m@gerencia.gvs.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Marabá (habilitar proxy)", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Mariana", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Maricá", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Mata de São João", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Matozinhos", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Mesquita", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Miguel Pereira", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Monte Carmelo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Montes Claros", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Mossoró", "url": "http://gerenciaRJO:durh%40m@gerencia.ntl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Muriaé", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Natal", "url": "http://gerenciaRJO:durh%40m@gerencia.ntl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Naviraí", "url": "http://gerenciaRJO:durh%40m@gerencia.dos.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Nilópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Niterói", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Nova Friburgo", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Nova Iguaçu", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Nova Lima", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Nova Mutum", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Nova Serrana", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Novo Gama", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Olinda", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ouro Preto", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Palmas", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Pará de Minas", "url": "http://gerenciaRJO:durh%40m@gerencia.cem.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Paracatu", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Paragominas", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Paraíba do Sul", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Paraíso do Tocantins", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Parauapebas (habilitar proxy)", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Parnaíba", "url": "http://gerenciaRJO:durh%40m@gerencia.tsa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Parnamirim", "url": "http://gerenciaRJO:durh%40m@gerencia.ntl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Passos", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Patos de Minas", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Patrocínio", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Paulista", "url": "http://gerenciaRJO:durh%40m@gerencia.rce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Pedro Leopoldo", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Petrolina", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Petrópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.pts.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Piumhi", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Poços de Caldas", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ponta Porã", "url": "http://gerenciaRJO:durh%40m@gerencia.dos.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ponte Nova", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Porto Real", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Porto Seguro", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Porto Velho", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Pouso Alegre", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Recife", "url": "http://gerenciaRJO:durh%40m@gerencia.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Resende", "url": "http://gerenciaRJO:durh%40m@gerencia.rsd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Rio Branco", "url": "http://gerenciaRJO:durh%40m@gerencia.rbo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Rio das Ostras", "url": "http://gerenciaRJO:durh%40m@gerencia.mce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Rio de Janeiro", "url": "http://gerenciaRJO:durh%40m@gerencia.rjo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Rio Verde", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Rondonópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.roi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Sabará", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Sacramento", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Salvador", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Santa Cruz de Minas", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Santa Helena de Goiás", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Santa Luzia", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Santa Rita do Sapucaí", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Santana (habilitar proxy)", "url": "http://gerencia.mpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "São Gonçalo", "url": "http://gerenciaRJO:durh%40m@gerencia.sgo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "São João de Meriti", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "São João del Rei", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "São Luís", "url": "http://gerenciaRJO:durh%40m@gerencia.sls.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "São Pedro da Aldeia", "url": "http://gerenciaRJO:durh%40m@gerencia.nri.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "São Sebastião do Paraíso", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Senador Canedo", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Serra", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Sete Lagoas", "url": "http://gerenciaRJO:durh%40m@gerencia.sla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Sinop", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Sobral", "url": "http://gerenciaRJO:durh%40m@gerencia.fla.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Sorriso", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Tangará da Serra", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Teixeira de Freitas", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Teófilo Otoni", "url": "http://gerenciaRJO:durh%40m@gerencia.tot.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Teresina", "url": "http://gerenciaRJO:durh%40m@gerencia.tsa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Teresópolis", "url": "http://gerenciaRJO:durh%40m@gerencia.trl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Timon", "url": "http://gerenciaRJO:durh%40m@gerencia.tsa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Timóteo", "url": "http://gerenciaRJO:durh%40m@gerencia.iig.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Três Corações", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Três Lagoas", "url": "http://gerenciaRJO:durh%40m@gerencia.cpe.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Três Rios", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Trindade", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Ubá", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Uberaba", "url": "http://gerenciaRJO:durh%40m@gerencia.ura.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Uberlândia", "url": "http://gerenciaRJO:durh%40m@gerencia.ula.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Unaí", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Valença", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Valparaíso de Goiás", "url": "http://gerenciaRJO:durh%40m@gerencia.bsb.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Varginha", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Várzea Grande", "url": "http://gerenciaRJO:durh%40m@gerencia.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Vassouras", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Vera Cruz", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Vespasiano", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Viçosa", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Vila Velha", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Vilhena", "url": "http://gerenciaRJO:durh%40m@gerencia.pvo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Vitória", "url": "http://gerenciaRJO:durh%40m@gerencia.vta.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Vitória da Conquista", "url": "http://gerenciaRJO:durh%40m@gerencia.vca.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" },
+                                        { "name": "Volta Redonda", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈" }
                                 ]
                         },
                         {
@@ -1225,26 +1272,26 @@
                 "name": "Empresarial",
                 "icon": "Building2",
                 "type": "folder",
-                "emoji": "🏢",
+                "emoji": "🛠️",
                 "children": [
-                        { "name": "SIT", "url": "http://arcos.nocclarobrasil.com.br/Arcos/SitDefault.aspx", "icon": "Link", "type": "link", "emoji": "📊" },
-                        { "name": "SIR", "url": "http://10.13.54.150:20020/index.cfm?nofoc=yes", "icon": "Link", "type": "link", "emoji": "📊" },
-                        { "name": "GRB", "url": "http://200.255.253.12/grb/topologia_rede/www/index.php", "icon": "Link", "type": "link", "emoji": "📊" },
-                        { "name": "Critel", "url": "http://www-critel.embratel.net.br/critel/", "icon": "Link", "type": "link", "emoji": "📊" },
-                        { "name": "Atena", "url": "http://atena/Olimpo/Consulta.aspx", "icon": "Link", "type": "link", "emoji": "📊" },
-                        { "name": "New Monitor", "url": "http://newmonitor.virtua.com.br/user/login.php#", "icon": "Link", "type": "link", "emoji": "📊" }
+                        { "name": "SIT", "url": "http://arcos.nocclarobrasil.com.br/Arcos/SitDefault.aspx", "icon": "Link", "type": "link", "emoji": "🛠️" },
+                        { "name": "SIR", "url": "http://10.13.54.150:20020/index.cfm?nofoc=yes", "icon": "Link", "type": "link", "emoji": "🛠️" },
+                        { "name": "GRB", "url": "http://200.255.253.12/grb/topologia_rede/www/index.php", "icon": "Link", "type": "link", "emoji": "🛠️" },
+                        { "name": "Critel", "url": "http://www-critel.embratel.net.br/critel/", "icon": "Link", "type": "link", "emoji": "🛠️" },
+                        { "name": "Atena", "url": "http://atena/Olimpo/Consulta.aspx", "icon": "Link", "type": "link", "emoji": "🛠️" },
+                        { "name": "New Monitor", "url": "http://newmonitor.virtua.com.br/user/login.php#", "icon": "Link", "type": "link", "emoji": "🛠️" }
                 ]
         },
         {
                 "name": "Conexão Aprender",
                 "icon": "GraduationCap",
                 "type": "folder",
-                "emoji": "📖",
+                "emoji": "📝",
                 "children": [
-                        { "name": "Copilot", "url": "https://m365.cloud.microsoft/chat", "icon": "Link", "type": "link", "emoji": "🔗", "brandIcon": "copilot" },
-                        { "name": "Cursos e trilhas", "url": "https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "✏️" },
-                        { "name": "Conexão Aprender", "url": "https://hdim.fa.us2.oraclecloud.com/fscmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "✏️" },
-                        { "name": "Hub de conhecimento", "url": "https://nlsoarez.github.io/Hubdeconhecimento/", "icon": "Link", "type": "link", "emoji": "✏️" }
+                        { "name": "Copilot", "url": "https://m365.cloud.microsoft/chat", "icon": "Link", "type": "link", "emoji": "📝" },
+                        { "name": "Cursos e trilhas", "url": "https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "📝" },
+                        { "name": "Conexão Aprender", "url": "https://hdim.fa.us2.oraclecloud.com/fscmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "📝" },
+                        { "name": "Hub de conhecimento", "url": "https://nlsoarez.github.io/Hubdeconhecimento/", "icon": "Link", "type": "link", "emoji": "📝" }
                 ]
         }
     ];
@@ -1292,6 +1339,7 @@
     };
 
     const EmojiComponent = ({ item }) => {
+        if (item.image) return React.createElement('img', { className: `custom-image-icon ${item.roundedImage ? 'rounded-brand' : ''}`, src: item.image, alt: '', 'aria-hidden': 'true' });
         if (item.brandIcon === 'copilot') return React.createElement('span', { className: 'brand-icon copilot-logo', 'aria-hidden': 'true' });
         if (item.brandIcon === 'onedrive') return React.createElement('span', { className: 'brand-icon onedrive-logo', 'aria-hidden': 'true' });
         return React.createElement('span', { className: 'emoji-icon', 'aria-hidden': 'true' }, item.emoji || (item.type === 'folder' ? '📁' : '🔗'));
@@ -1434,6 +1482,7 @@
                 React.createElement('div', { key: 'grid', className: 'grid-apps' }, currentCategory.children.map((item, idx) => React.createElement(AppCard, { key: `${item.name}-${idx}`, item, onFolderOpen: openFolder })))
             ]);
         };
+        const contentTitle = searchTerm ? 'Resultados da busca' : activeCategory;
 
         const MessageCenter = ({ user, messages, setMessages, onClose }) => {
             const [target, setTarget] = React.useState('todos');
@@ -1495,7 +1544,13 @@
                     ])
                 )
             ),
-            React.createElement('main', { key: 'main', className: 'max-w-7xl mx-auto px-5 py-8' }, displayContent()),
+            React.createElement('main', { key: 'main', className: 'max-w-7xl mx-auto px-5 py-8' }, [
+                React.createElement('section', { key: 'title', className: 'content-title-bar fade-in' }, [
+                    React.createElement('span', { key: 'mark', className: 'content-title-mark', 'aria-hidden': 'true' }),
+                    React.createElement('h2', { key: 'text', className: 'content-title-text' }, contentTitle)
+                ]),
+                React.createElement('section', { key: 'tray', className: 'content-tray fade-in' }, displayContent())
+            ]),
             showMessages && React.createElement(MessageCenter, { key: 'messages', user, messages, setMessages, onClose: () => setShowMessages(false) })
         ]);
     };

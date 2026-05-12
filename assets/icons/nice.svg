@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Nice">
+  <path fill="#0f172a" d="M50 15c-19.3 0-35 15.7-35 35v13c0 5 4 9 9 9h8V48H24c1-13.5 12.3-24 26-24s25 10.5 26 24h-8v24h6c-3.1 5.2-8.8 8-16.5 8h-7.7a6 6 0 0 0 0 8h7.7C75 88 86 77.8 86 62V50c0-19.3-15.7-35-36-35Z"/>
+  <rect x="12" y="48" width="18" height="26" rx="5" fill="#aeb7d8"/>
+  <rect x="70" y="48" width="18" height="26" rx="5" fill="#aeb7d8"/>
+  <rect x="43" y="80" width="16" height="7" rx="3.5" fill="#aeb7d8"/>
+</svg>

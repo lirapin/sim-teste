@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Teams">
+  <rect width="100" height="100" rx="18" fill="#5558af"/>
+  <path fill="#fff" d="M23 29 58 21v58l-35-8z"/>
+  <path fill="#5558af" d="M32 42h20v8h-6v24h-8V50h-6z"/>
+  <circle cx="70" cy="39" r="8" fill="#fff"/>
+  <circle cx="84" cy="41" r="7" fill="#fff"/>
+  <path fill="#fff" d="M64 52h13v18c0 8-13 8-13 0zM80 53h11v16c0 7-11 7-11 0z"/>
+</svg>

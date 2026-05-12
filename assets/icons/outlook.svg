@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Outlook">
+  <path fill="#0f77bd" d="M42 14h42c5 0 9 4 9 9v54c0 5-4 9-9 9H42z"/>
+  <path fill="#27a8ea" d="M42 24 6 31v38l36 7z"/>
+  <path fill="#fff" d="M65 58 43 41v-9l22 17 28-20v10z"/>
+  <path fill="#fff" d="M25 38c-8 0-14 7-14 17s6 17 14 17 14-7 14-17-6-17-14-17Zm0 8c4 0 6 4 6 9s-2 9-6 9-6-4-6-9 2-9 6-9Z"/>
+</svg>
