@@ -1547,7 +1547,7 @@
                                 React.createElement('input', { type: 'text', className: 'search-input', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
                                 searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(IconComponent, { name: 'X', size: 18 }))
                             ]),
-                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '☰')),
+                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/icons8-cardapio-100.png', alt: '', 'aria-hidden': 'true' })),
                             React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/icons8-aprender-chat-bubble-100.png', alt: '', 'aria-hidden': 'true' })),
                             React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/icons8-cancel-100.png', alt: '', 'aria-hidden': 'true' }))
                         ])
