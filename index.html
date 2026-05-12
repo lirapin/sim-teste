@@ -58,7 +58,9 @@
             line-height: 1;
             filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.14));
         }
-        .copilot-logo::before { content: "🌈"; }
+        .copilot-logo::before { content: "\1F308"; }
+        .onedrive-logo { color: #2563eb; font-size: 40px; text-shadow: 0 5px 10px rgba(37, 99, 235, 0.18); }
+        .onedrive-logo::before { content: "\2601"; }
         .app-card:hover .brand-icon, .folder-card:hover .brand-icon { transform: scale(1.08); }
         .app-name { font-size: 13px; font-weight: 600; color: #2c3e50; text-align: center; line-height: 1.3; padding: 0 8px; word-break: break-word; }
         .folder-badge {
@@ -115,19 +117,7 @@
             transition: all 0.2s ease;
             background: white;
         }
-        .search-input.with-icon { padding-left: 42px; }
         .search-input:focus { outline: none; border-color: #d32f2f; box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1); }
-        .search-leading-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
         .search-button {
             position: absolute;
             right: 6px;
@@ -150,6 +140,23 @@
         .login-card { background: white; border: 1px solid #e0e0e0; border-radius: 24px; box-shadow: 0 18px 45px rgba(44, 62, 80, 0.18); }
         .owl-logo { font-size: 34px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.16)); }
         .top-emoji { font-size: 20px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; }
+        .back-emoji-btn {
+            border: none;
+            background: transparent;
+            color: #2c3e50;
+            cursor: pointer;
+            font-size: 28px;
+            line-height: 1;
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.16s ease;
+            filter: drop-shadow(0 4px 7px rgba(15, 23, 42, 0.12));
+        }
+        .back-emoji-btn:hover { transform: translateX(-2px) scale(1.08); }
+        .brand-copy { display: flex; flex-direction: column; gap: 1px; }
         .city-tools { display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px; }
         .letter-filter { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 3px; }
         .letter-btn {
@@ -225,7 +232,7 @@
                 "emoji": "✅",
                 "children": [
                         { "name": "Calendário de divisão de tarefas", "url": "https://nlsoarez.github.io/divisao-equipe-madrugada/", "icon": "Link", "type": "link", "emoji": "📅" },
-                        { "name": "Gerador de mensagens", "url": "https://lirapin.github.io/gerador-de-mensagens/", "icon": "Link", "type": "link", "emoji": "💌" },
+                        { "name": "Gerador de mensagens", "url": "https://lirapin.github.io/gerador-de-mensagens/", "icon": "Link", "type": "link", "emoji": "📩" },
                         { "name": "Comunicador de falhas", "url": "https://lirapin.github.io/comunicador-de-falhas/", "icon": "Link", "type": "link", "emoji": "⚠️" },
                         { "name": "Dashboard de produtividade", "url": "https://dashboard-indicadores-cop-production.up.railway.app/", "icon": "Link", "type": "link", "emoji": "📊" },
                         { "name": "Guia de processos", "url": "https://lirapin.github.io/informativos/", "icon": "Link", "type": "link", "emoji": "💡" }
@@ -239,8 +246,8 @@
                 "children": [
                         { "name": "Nice", "url": "https://cc.claro.com.br/", "icon": "Link", "type": "link", "emoji": "📞" },
                         { "name": "Teams", "url": "https://teams.microsoft.com/v2/", "icon": "Link", "type": "link", "emoji": "💬" },
-                        { "name": "Outlook", "url": "https://outlook.office365.com/mail/", "icon": "Link", "type": "link", "emoji": "✉️" },
-                        { "name": "WhatsApp", "url": "https://web.whatsapp.com/", "icon": "WhatsApp", "type": "link", "emoji": "💬" },
+                        { "name": "WhatsApp", "url": "https://web.whatsapp.com/", "icon": "WhatsApp", "type": "link", "emoji": "🗨️" },
+                        { "name": "Outlook", "url": "https://outlook.office365.com/mail/", "icon": "Link", "type": "link", "emoji": "📧" },
                         { "name": "Oportunidades", "url": "https://projetos.plural-edtech.com/clientes/claro/implementacao-gupy/recrutamento-e-selecao-gestor-e-bp/", "icon": "Link", "type": "link", "emoji": "💡" }
                 ]
         },
@@ -254,7 +261,7 @@
                         { "name": "Rhevolution", "url": "https://portalrh.claro.com.br/ords/rhportal/rhlgweb.show", "icon": "Link", "type": "link", "emoji": "🔗" },
                         { "name": "Portal SCR", "url": "http://10.29.5.216/scr/ui-newsletter.php", "icon": "Link", "type": "link", "emoji": "🌐" },
                         { "name": "Portal Claro", "url": "http://portalclarobrasil/", "icon": "Link", "type": "link", "emoji": "🌐" },
-                        { "name": "OneDrive", "url": "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?client_id=4765445b-32c6-49b0-83e6-1d93765276ca&redirect_uri=https%3A%2F%2Fm365.cloud.microsoft%2Flandingv2&response_type=code%20id_token&scope=openid%20profile%20https%3A%2F%2Fwww.office.com%2Fv2%2FOfficeHome.All&response_mode=form_post&nonce=639141526875211009&ui_locales=pt-BR&mkt=pt-BR", "icon": "Link", "type": "link", "emoji": "☁️" },
+                        { "name": "OneDrive", "url": "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?client_id=4765445b-32c6-49b0-83e6-1d93765276ca&redirect_uri=https%3A%2F%2Fm365.cloud.microsoft%2Flandingv2&response_type=code%20id_token&scope=openid%20profile%20https%3A%2F%2Fwww.office.com%2Fv2%2FOfficeHome.All&response_mode=form_post&nonce=639141526875211009&ui_locales=pt-BR&mkt=pt-BR", "icon": "Link", "type": "link", "emoji": "☁", "brandIcon": "onedrive" },
                         { "name": "Jira Service Desk", "url": "https://clarobr.atlassian.net/servicedesk/customer/user/login?destination=portals", "icon": "Link", "type": "link", "emoji": "🎫" }
                 ]
         },
@@ -1289,6 +1296,7 @@
 
     const EmojiComponent = ({ item }) => {
         if (item.brandIcon === 'copilot') return React.createElement('span', { className: 'brand-icon copilot-logo', 'aria-hidden': 'true' });
+        if (item.brandIcon === 'onedrive') return React.createElement('span', { className: 'brand-icon onedrive-logo', 'aria-hidden': 'true' });
         return React.createElement('span', { className: 'emoji-icon', 'aria-hidden': 'true' }, item.emoji || (item.type === 'folder' ? '📁' : '🔗'));
     };
 
@@ -1331,10 +1339,7 @@
 
     const CategoryTabs = ({ categories, activeCategory, onSelect }) => {
         return React.createElement('div', { className: 'flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-hide' }, 
-            categories.map(cat => React.createElement('button', { key: cat.name, onClick: () => onSelect(cat.name), className: `tab-button ${activeCategory === cat.name ? 'active' : ''}` }, [
-                React.createElement('span', { key: 'icon', className: 'mr-2', 'aria-hidden': 'true' }, cat.emoji || '📁'),
-                cat.name
-            ]))
+            categories.map(cat => React.createElement('button', { key: cat.name, onClick: () => onSelect(cat.name), className: `tab-button ${activeCategory === cat.name ? 'active' : ''}` }, cat.name))
         );
     };
 
@@ -1373,11 +1378,10 @@
         }, [folder, isSearchableFolder, normalizedFolderSearch, activeLetter]);
         const folderTools = isSearchableFolder && React.createElement('div', { key: 'city-tools', className: 'city-tools fade-in' }, [
             React.createElement('div', { key: 'search', className: 'relative' }, [
-                React.createElement('span', { key: 'icon', className: 'search-leading-icon' }, React.createElement(IconComponent, { name: 'Search', size: 17 })),
                 React.createElement('input', {
                     key: 'input',
                     type: 'text',
-                    className: 'search-input with-icon',
+                    className: 'search-input',
                     placeholder: `Buscar cidade em ${folder.name}...`,
                     value: folderSearch,
                     onChange: (e) => { setFolderSearch(e.target.value); setActiveLetter(''); }
@@ -1394,11 +1398,11 @@
         ]);
         const content = visibleChildren.length > 0
             ? React.createElement('div', { key: 'grid', className: 'grid-apps' }, visibleChildren.map((item, idx) => React.createElement(AppCard, { key: `${item.name}-${idx}`, item, onFolderOpen: onOpenFolder })))
-            : React.createElement('div', { key: 'empty', className: 'city-empty' }, isSearchableFolder ? 'Pesquise uma cidade ou selecione uma letra.' : 'Nenhum item encontrado.');
+            : (isSearchableFolder ? null : React.createElement('div', { key: 'empty', className: 'city-empty' }, 'Nenhum item encontrado.'));
 
         return React.createElement(React.Fragment, null, [
             React.createElement('div', { key: 'nav', className: 'flex items-center gap-3 mb-6' }, [
-                React.createElement('button', { onClick: onBack, className: 'header-btn', title: 'Retornar', 'aria-label': 'Retornar' }, React.createElement(IconComponent, { name: 'RotateCcw', size: 20 })),
+                React.createElement('button', { onClick: onBack, className: 'back-emoji-btn', title: 'Retornar', 'aria-label': 'Retornar' }, '↩️'),
                 React.createElement('h2', { key: 'title', className: 'text-xl font-bold text-gray-700' }, folder.name)
             ]),
             folderTools,
@@ -1478,15 +1482,19 @@
                     React.createElement('div', { className: 'flex flex-col md:flex-row md:items-center md:justify-between gap-4' }, [
                         React.createElement('div', { key: 'brand', className: 'flex items-center gap-3' }, [
                             React.createElement('div', { className: 'w-12 h-12 flex items-center justify-center' }, React.createElement('span', { className: 'owl-logo', 'aria-hidden': 'true' }, '🦉')),
-                            React.createElement('div', {}, React.createElement('h1', { className: 'text-2xl font-bold text-red-700' }, 'SIM'))
+                            React.createElement('div', { className: 'brand-copy' }, [
+                                React.createElement('h1', { key: 'title', className: 'text-2xl font-bold text-red-700' }, 'SIM'),
+                                React.createElement('p', { key: 'subtitle', className: 'text-xs font-semibold text-gray-600' }, 'Sistema Integrado Madrugada'),
+                                React.createElement('p', { key: 'welcome', className: 'text-xs text-gray-500' }, `Bem vinda, ${user.displayName}`)
+                            ])
                         ]),
                         React.createElement('div', { key: 'actions', className: 'flex items-center gap-3 flex-1 md:max-w-xl' }, [
                             React.createElement('div', { key: 'search', className: 'relative flex-1' }, [
-                                React.createElement('span', { key: 'icon', className: 'search-leading-icon' }, React.createElement(IconComponent, { name: 'Search', size: 17 })),
-                                React.createElement('input', { type: 'text', className: 'search-input with-icon', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
+                                React.createElement('input', { type: 'text', className: 'search-input', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
                                 searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(IconComponent, { name: 'X', size: 18 }))
                             ]),
-                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn', title: 'Login', 'aria-label': 'Login' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '🔐')),
+                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn', title: 'Login', 'aria-label': 'Login' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '📩')),
+                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '☰')),
                             React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '❌'))
                         ])
                     ])
