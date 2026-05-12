@@ -23,7 +23,7 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.06);
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.13), 0 5px 12px rgba(15, 23, 42, 0.08);
             position: relative;
             font-family: inherit;
         }
@@ -31,7 +31,7 @@
             background: #fff7f7;
             border-color: #d32f2f;
             transform: translateY(-3px);
-            box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12), 0 8px 18px rgba(211, 47, 47, 0.12);
+            box-shadow: 0 22px 38px rgba(15, 23, 42, 0.17), 0 10px 24px rgba(211, 47, 47, 0.15);
         }
         .app-card:active, .folder-card:active {
             transform: translateY(1px) scale(0.98);
@@ -175,19 +175,20 @@
             padding: 32px 20px;
         }
         .top-shell {
-            max-width: 1040px;
+            width: calc(100% - 40px);
+            max-width: 1000px;
             margin: 14px auto 0;
             padding: 16px 22px;
             background: rgba(255, 255, 255, 0.96);
             border: 1px solid #e5e7eb;
             border-radius: 20px;
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+            box-shadow: 0 20px 46px rgba(15, 23, 42, 0.17), 0 7px 18px rgba(15, 23, 42, 0.08);
         }
         .content-tray {
             background: rgba(255, 255, 255, 0.94);
             border: 1px solid #e5e7eb;
             border-radius: 22px;
-            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.13);
+            box-shadow: 0 28px 64px rgba(15, 23, 42, 0.20), 0 12px 28px rgba(15, 23, 42, 0.11);
             padding: 22px;
             min-height: 220px;
         }
@@ -282,7 +283,7 @@
             .content-tray { padding: 16px; border-radius: 18px; }
             .custom-image-icon { width: 48px; height: 48px; }
             .main-shell { padding: 24px 14px; }
-            .top-shell { margin: 10px 14px 0; padding: 14px 16px; border-radius: 18px; }
+            .top-shell { width: auto; margin: 10px 14px 0; padding: 14px 16px; border-radius: 18px; }
             .signature { margin-top: 14px; }
         }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -398,9 +399,15 @@
                                         { "name": "Aparecida de Goiânia", "url": "http://xpertrak.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Aracaju", "url": "http://xpertrak.aju.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Araraquara", "url": "http://xpertrak.arq.virtua.com.br/pathtrak/login/view.html#/login", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
-                                        { "name": "Barra Mansa, Volta Redonda", "url": "http://xpertrak.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Barra Mansa", "url": "http://xpertrak.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Volta Redonda", "url": "http://xpertrak.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Belém", "url": "http://xpertrak.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
-                                        { "name": "Belford Roxo, Duque de Caxias, Mesquita, Nilópolis, Nova Iguaçu, São João de Meriti", "url": "https://xpertrak.bero.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Belford Roxo", "url": "https://xpertrak.bero.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Duque de Caxias", "url": "https://xpertrak.bero.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Mesquita", "url": "https://xpertrak.bero.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Nilópolis", "url": "https://xpertrak.bero.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Nova Iguaçu", "url": "https://xpertrak.bero.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "São João de Meriti", "url": "https://xpertrak.bero.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Belo Horizonte", "url": "http://xpertrak.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Betim", "url": "http://xpertrak.bet.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Blumenau", "url": "http://xpertrak.bnu.virtua.com.br/pathtrak/login/view.html#/login", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
@@ -411,7 +418,10 @@
                                         { "name": "Campinas", "url": "http://xpertrak.cps.virtua.com.br/pathtrak/login/view.html#/login", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Campo Grande", "url": "http://xpertrak.cpe.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Campos dos Goytacazes", "url": "http://xpertrak.cpdg.virtua.com.br/pathtrak/main/view.html#/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
-                                        { "name": "Cariacica, Serra, Vila Velha, Vitória", "url": "http://xpertrak.vta.virtua.com.br/pathtrak/main/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Cariacica", "url": "http://xpertrak.vta.virtua.com.br/pathtrak/main/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Serra", "url": "http://xpertrak.vta.virtua.com.br/pathtrak/main/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Vila Velha", "url": "http://xpertrak.vta.virtua.com.br/pathtrak/main/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Vitória", "url": "http://xpertrak.vta.virtua.com.br/pathtrak/main/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Caruaru", "url": "http://xpertrak.cru.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Contagem", "url": "http://xpertrak.cem.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Cuiabá", "url": "http://xpertrak.cba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
@@ -426,7 +436,8 @@
                                         { "name": "Juíz de Fora", "url": "http://xpertrak.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Lauro de Freitas", "url": "http://xpertrak.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Macaé", "url": "https://xpertrak.mce.virtua.com.br/pathtrak/main/view.html#/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
-                                        { "name": "Macaé, Rio das Ostras", "url": "http://xpertrak.mce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Macaé", "url": "http://xpertrak.mce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
+                                        { "name": "Rio das Ostras", "url": "http://xpertrak.mce.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Maceió", "url": "http://xpertrak.mco.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Manaus", "url": "http://xpertrak.mns.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
                                         { "name": "Mesquita", "url": "https://xpertrak.mesq.virtua.com.br/pathtrak/main/view.html#/dashboard", "icon": "Link", "type": "link", "emoji": "📡", "image": "assets/icons/icons8-line-chart-100.png" },
@@ -577,7 +588,7 @@
                                         { "name": "Maceió", "url": "http://gerenciaRJO:durh%40m@gerencia.mco.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Manaus", "url": "http://gerenciaRJO:durh%40m@gerencia.mns.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Manhuaçu", "url": "http://gerenciaRJO:durh%40m@gerencia.gvs.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
-                                        { "name": "Marabá (habilitar proxy)", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
+                                        { "name": "Marabá", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Mariana", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Maricá", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Mata de São João", "url": "http://gerenciaRJO:durh%40m@gerencia.sdr.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
@@ -606,7 +617,7 @@
                                         { "name": "Paragominas", "url": "http://gerenciaRJO:durh%40m@gerencia.blm.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Paraíba do Sul", "url": "http://gerenciaRJO:durh%40m@gerencia.vrd.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Paraíso do Tocantins", "url": "http://gerenciaRJO:durh%40m@gerencia.pmj.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
-                                        { "name": "Parauapebas (habilitar proxy)", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
+                                        { "name": "Parauapebas", "url": "http://gerencia.mba.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Parnaíba", "url": "http://gerenciaRJO:durh%40m@gerencia.tsa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Parnamirim", "url": "http://gerenciaRJO:durh%40m@gerencia.ntl.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Passos", "url": "http://gerenciaRJO:durh%40m@gerencia.vga.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
@@ -638,7 +649,7 @@
                                         { "name": "Santa Helena de Goiás", "url": "http://gerenciaRJO:durh%40m@gerencia.goi.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Santa Luzia", "url": "http://gerenciaRJO:durh%40m@gerencia.bhz.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "Santa Rita do Sapucaí", "url": "http://falta%20link/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
-                                        { "name": "Santana (habilitar proxy)", "url": "http://gerencia.mpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
+                                        { "name": "Santana", "url": "http://gerencia.mpa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "São Gonçalo", "url": "http://gerenciaRJO:durh%40m@gerencia.sgo.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "São João de Meriti", "url": "http://gerenciaRJO:durh%40m@gerencia.mesq.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
                                         { "name": "São João del Rei", "url": "http://gerenciaRJO:durh%40m@gerencia.jfa.virtua.com.br/", "icon": "Link", "type": "link", "emoji": "📈", "image": "assets/icons/icons8-increase-100.png" },
