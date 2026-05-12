@@ -48,6 +48,22 @@
         }
         .emoji-icon { font-size: 34px; line-height: 1; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; }
         .app-card:hover .emoji-icon, .folder-card:hover .emoji-icon { transform: scale(1.08); }
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 20px;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.16);
+        }
+        .teams-logo { background: linear-gradient(135deg, #464775, #6264a7 55%, #8b8cc7); }
+        .copilot-logo { background: conic-gradient(from 120deg, #16a34a, #06b6d4, #6366f1, #a855f7, #16a34a); font-size: 0; }
+        .copilot-logo::after { content: ""; width: 22px; height: 22px; border-radius: 9px; background: rgba(255,255,255,0.9); box-shadow: inset 0 0 0 5px rgba(99,102,241,0.55); }
+        .app-card:hover .brand-icon, .folder-card:hover .brand-icon { transform: scale(1.08); }
         .app-name { font-size: 13px; font-weight: 600; color: #2c3e50; text-align: center; line-height: 1.3; padding: 0 8px; word-break: break-word; }
         .folder-badge {
             position: absolute;
@@ -137,6 +153,7 @@
         .grid-apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; }
         .login-card { background: white; border: 1px solid #e0e0e0; border-radius: 24px; box-shadow: 0 18px 45px rgba(44, 62, 80, 0.18); }
         .owl-logo { font-size: 34px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.16)); }
+        .top-emoji { font-size: 20px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; }
         .city-tools { display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px; }
         .letter-filter { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 3px; }
         .letter-btn {
@@ -225,7 +242,7 @@
                 "emoji": "💬",
                 "children": [
                         { "name": "Nice", "url": "https://cc.claro.com.br/", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "Teams", "url": "https://teams.microsoft.com/v2/", "icon": "Link", "type": "link", "emoji": "👥" },
+                        { "name": "Teams", "url": "https://teams.microsoft.com/v2/", "icon": "Link", "type": "link", "emoji": "👥", "brandIcon": "teams" },
                         { "name": "Outlook", "url": "https://outlook.office365.com/mail/", "icon": "Link", "type": "link", "emoji": "✉️" },
                         { "name": "WhatsApp", "url": "https://web.whatsapp.com/", "icon": "WhatsApp", "type": "link", "emoji": "💬" },
                         { "name": "Oportunidades", "url": "https://projetos.plural-edtech.com/clientes/claro/implementacao-gupy/recrutamento-e-selecao-gestor-e-bp/", "icon": "Link", "type": "link", "emoji": "🔗" }
@@ -1211,12 +1228,12 @@
                 "type": "folder",
                 "emoji": "🏢",
                 "children": [
-                        { "name": "SIT", "url": "http://arcos.nocclarobrasil.com.br/Arcos/SitDefault.aspx", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "SIR", "url": "http://10.13.54.150:20020/index.cfm?nofoc=yes", "icon": "Link", "type": "link", "emoji": "📈" },
-                        { "name": "GRB", "url": "http://200.255.253.12/grb/topologia_rede/www/index.php", "icon": "Link", "type": "link", "emoji": "📈" },
-                        { "name": "Critel", "url": "http://www-critel.embratel.net.br/critel/", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "Atena", "url": "http://atena/Olimpo/Consulta.aspx", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "New Monitor", "url": "http://newmonitor.virtua.com.br/user/login.php#", "icon": "Link", "type": "link", "emoji": "🖥️" }
+                        { "name": "SIT", "url": "http://arcos.nocclarobrasil.com.br/Arcos/SitDefault.aspx", "icon": "Link", "type": "link", "emoji": "📊" },
+                        { "name": "SIR", "url": "http://10.13.54.150:20020/index.cfm?nofoc=yes", "icon": "Link", "type": "link", "emoji": "📊" },
+                        { "name": "GRB", "url": "http://200.255.253.12/grb/topologia_rede/www/index.php", "icon": "Link", "type": "link", "emoji": "📊" },
+                        { "name": "Critel", "url": "http://www-critel.embratel.net.br/critel/", "icon": "Link", "type": "link", "emoji": "📊" },
+                        { "name": "Atena", "url": "http://atena/Olimpo/Consulta.aspx", "icon": "Link", "type": "link", "emoji": "📊" },
+                        { "name": "New Monitor", "url": "http://newmonitor.virtua.com.br/user/login.php#", "icon": "Link", "type": "link", "emoji": "📊" }
                 ]
         },
         {
@@ -1225,10 +1242,10 @@
                 "type": "folder",
                 "emoji": "📁",
                 "children": [
-                        { "name": "Copilot", "url": "https://m365.cloud.microsoft/chat", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "Cursos e trilhas", "url": "https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "Conexão Aprender", "url": "https://hdim.fa.us2.oraclecloud.com/fscmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "Hub de conhecimento", "url": "https://nlsoarez.github.io/Hubdeconhecimento/", "icon": "Link", "type": "link", "emoji": "🔗" }
+                        { "name": "Copilot", "url": "https://m365.cloud.microsoft/chat", "icon": "Link", "type": "link", "emoji": "🔗", "brandIcon": "copilot" },
+                        { "name": "Cursos e trilhas", "url": "https://hdim.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "✏️" },
+                        { "name": "Conexão Aprender", "url": "https://hdim.fa.us2.oraclecloud.com/fscmUI/faces/FuseWelcome", "icon": "Link", "type": "link", "emoji": "✏️" },
+                        { "name": "Hub de conhecimento", "url": "https://nlsoarez.github.io/Hubdeconhecimento/", "icon": "Link", "type": "link", "emoji": "✏️" }
                 ]
         }
     ];
@@ -1276,6 +1293,8 @@
     };
 
     const EmojiComponent = ({ item }) => {
+        if (item.brandIcon === 'teams') return React.createElement('span', { className: 'brand-icon teams-logo', 'aria-hidden': 'true' }, 'T');
+        if (item.brandIcon === 'copilot') return React.createElement('span', { className: 'brand-icon copilot-logo', 'aria-hidden': 'true' });
         return React.createElement('span', { className: 'emoji-icon', 'aria-hidden': 'true' }, item.emoji || (item.type === 'folder' ? '📁' : '🔗'));
     };
 
@@ -1385,7 +1404,7 @@
 
         return React.createElement(React.Fragment, null, [
             React.createElement('div', { key: 'nav', className: 'flex items-center gap-3 mb-6' }, [
-                React.createElement('button', { onClick: onBack, className: 'header-btn' }, [React.createElement(IconComponent, { key: 'icon', name: 'ArrowLeft', size: 18 }), React.createElement('span', { key: 'text', className: 'ml-2 font-semibold' }, 'Voltar')]),
+                React.createElement('button', { onClick: onBack, className: 'header-btn', title: 'Voltar', 'aria-label': 'Voltar' }, React.createElement(IconComponent, { name: 'ArrowLeft', size: 20 })),
                 React.createElement('h2', { key: 'title', className: 'text-xl font-bold text-gray-700' }, folder.name)
             ]),
             folderTools,
@@ -1465,7 +1484,7 @@
                     React.createElement('div', { className: 'flex flex-col md:flex-row md:items-center md:justify-between gap-4' }, [
                         React.createElement('div', { key: 'brand', className: 'flex items-center gap-3' }, [
                             React.createElement('div', { className: 'w-12 h-12 flex items-center justify-center' }, React.createElement('span', { className: 'owl-logo', 'aria-hidden': 'true' }, '🦉')),
-                            React.createElement('div', {}, [React.createElement('h1', { className: 'text-2xl font-bold text-red-700' }, 'SIM'), React.createElement('p', { className: 'text-xs text-gray-500' }, `Bem-vindo, ${user.displayName}`)])
+                            React.createElement('div', {}, React.createElement('h1', { className: 'text-2xl font-bold text-red-700' }, 'SIM'))
                         ]),
                         React.createElement('div', { key: 'actions', className: 'flex items-center gap-3 flex-1 md:max-w-xl' }, [
                             React.createElement('div', { key: 'search', className: 'relative flex-1' }, [
@@ -1473,8 +1492,8 @@
                                 React.createElement('input', { type: 'text', className: 'search-input with-icon', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
                                 searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(IconComponent, { name: 'X', size: 18 }))
                             ]),
-                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn', title: 'Login' }, React.createElement(IconComponent, { name: 'LogIn', size: 18 })),
-                            React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn', title: 'Sair' }, React.createElement(IconComponent, { name: 'X', size: 18 }))
+                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn', title: 'Login', 'aria-label': 'Login' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '🔐')),
+                            React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('span', { className: 'top-emoji', 'aria-hidden': 'true' }, '❌'))
                         ])
                     ])
                 )
