@@ -164,6 +164,11 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.25s ease-out; }
         .grid-apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 18px; }
+        .category-grid {
+            grid-template-columns: repeat(auto-fit, 150px);
+            justify-content: center;
+            justify-items: stretch;
+        }
         .main-shell {
             max-width: 1040px;
             margin: 0 auto;
@@ -263,6 +268,7 @@
         .modal-card { background: white; border-radius: 22px; width: min(500px, 100%); max-height: 85vh; overflow: auto; box-shadow: 0 22px 60px rgba(0, 0, 0, 0.25); }
         @media (max-width: 640px) {
             .grid-apps { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 12px; }
+            .category-grid { grid-template-columns: repeat(auto-fit, 122px); }
             .app-name { font-size: 11px; }
             .icon-wrapper { width: 48px; height: 48px; }
             .tab-button { min-width: 120px; font-size: 12px; padding: 8px 12px; }
@@ -1512,7 +1518,7 @@
             if (!currentCategory) return React.createElement('div', null, 'Categoria não encontrada');
             return React.createElement('div', { className: 'tray-inner category-layout' }, [
                 React.createElement(CategoryTabs, { key: 'tabs', categories: bookmarkData, activeCategory, onSelect: selectCategory }),
-                React.createElement('div', { key: 'grid', className: 'grid-apps' }, currentCategory.children.map((item, idx) => React.createElement(AppCard, { key: `${item.name}-${idx}`, item, onFolderOpen: openFolder })))
+                React.createElement('div', { key: 'grid', className: 'grid-apps category-grid' }, currentCategory.children.map((item, idx) => React.createElement(AppCard, { key: `${item.name}-${idx}`, item, onFolderOpen: openFolder })))
             ]);
         };
 
