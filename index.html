@@ -17,7 +17,7 @@
             border-radius: 20px;
             transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
             cursor: pointer;
-            aspect-ratio: 1 / 0.9;
+            aspect-ratio: 1 / 0.95;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -80,8 +80,8 @@
         .onedrive-logo { color: #2563eb; font-size: 40px; text-shadow: 0 5px 10px rgba(37, 99, 235, 0.18); }
         .onedrive-logo::before { content: "\2601"; }
         .custom-image-icon {
-            width: 46px;
-            height: 46px;
+            width: 54px;
+            height: 54px;
             object-fit: contain;
             position: relative;
             z-index: 1;
@@ -151,33 +151,7 @@
         .search-button:hover { background: #ffebee; color: #d32f2f; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.25s ease-out; }
-        .grid-apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; }
-        .content-title-bar {
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
-            padding: 18px 22px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .content-title-mark {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #d32f2f;
-            border-radius: 6px 10px 7px 11px;
-            transform: rotate(-8deg);
-            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.18);
-            flex: 0 0 auto;
-        }
-        .content-title-text {
-            color: #d32f2f;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
+        .grid-apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 18px; }
         .content-tray {
             background: rgba(255, 255, 255, 0.94);
             border: 1px solid #e5e7eb;
@@ -186,6 +160,8 @@
             padding: 22px;
             min-height: 220px;
         }
+        .tray-inner { max-width: 990px; }
+        .tray-inner.category-layout { max-width: 960px; }
         .login-card { background: white; border: 1px solid #e0e0e0; border-radius: 24px; box-shadow: 0 18px 45px rgba(44, 62, 80, 0.18); }
         .owl-logo { font-size: 34px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; filter: drop-shadow(0 5px 8px rgba(15, 23, 42, 0.16)); }
         .top-emoji { font-size: 20px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; }
@@ -238,13 +214,12 @@
         }
         .modal-card { background: white; border-radius: 22px; width: min(500px, 100%); max-height: 85vh; overflow: auto; box-shadow: 0 22px 60px rgba(0, 0, 0, 0.25); }
         @media (max-width: 640px) {
-            .grid-apps { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 12px; }
+            .grid-apps { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 12px; }
             .app-name { font-size: 11px; }
             .icon-wrapper { width: 48px; height: 48px; }
             .tab-button { min-width: 120px; font-size: 12px; padding: 8px 12px; }
-            .content-title-bar { padding: 14px 16px; border-radius: 16px; }
-            .content-title-text { font-size: 17px; }
             .content-tray { padding: 16px; border-radius: 18px; }
+            .custom-image-icon { width: 48px; height: 48px; }
         }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
@@ -309,12 +284,12 @@
                 "type": "folder",
                 "emoji": "🌐",
                 "children": [
-                        { "name": "Orhganiza", "url": "https://pontodigital.claro.com.br/entrar", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "Rhevolution", "url": "https://portalrh.claro.com.br/ords/rhportal/rhlgweb.show", "icon": "Link", "type": "link", "emoji": "🔗" },
-                        { "name": "Portal SCR", "url": "http://10.29.5.216/scr/ui-newsletter.php", "icon": "Link", "type": "link", "emoji": "🌐" },
-                        { "name": "Portal Claro", "url": "http://portalclarobrasil/", "icon": "Link", "type": "link", "emoji": "🌐" },
-                        { "name": "OneDrive", "url": "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?client_id=4765445b-32c6-49b0-83e6-1d93765276ca&redirect_uri=https%3A%2F%2Fm365.cloud.microsoft%2Flandingv2&response_type=code%20id_token&scope=openid%20profile%20https%3A%2F%2Fwww.office.com%2Fv2%2FOfficeHome.All&response_mode=form_post&nonce=639141526875211009&ui_locales=pt-BR&mkt=pt-BR", "icon": "Link", "type": "link", "emoji": "☁", "brandIcon": "onedrive" },
-                        { "name": "Jira Service Desk", "url": "https://clarobr.atlassian.net/servicedesk/customer/user/login?destination=portals", "icon": "Link", "type": "link", "emoji": "🎫" }
+                        { "name": "Portal SCR", "url": "http://10.29.5.216/scr/ui-newsletter.php", "icon": "Link", "type": "link", "emoji": "🌐", "image": "assets/icons/icons8-geography-100.png" },
+                        { "name": "Portal Claro", "url": "http://portalclarobrasil/", "icon": "Link", "type": "link", "emoji": "🌐", "image": "assets/icons/icons8-geography-100.png" },
+                        { "name": "Orhganiza", "url": "https://pontodigital.claro.com.br/entrar", "icon": "Link", "type": "link", "emoji": "🔗", "image": "assets/icons/icons8-time-machine-100.png" },
+                        { "name": "Rhevolution", "url": "https://portalrh.claro.com.br/ords/rhportal/rhlgweb.show", "icon": "Link", "type": "link", "emoji": "🔗", "image": "assets/icons/icons8-services-100.png" },
+                        { "name": "OneDrive", "url": "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?client_id=4765445b-32c6-49b0-83e6-1d93765276ca&redirect_uri=https%3A%2F%2Fm365.cloud.microsoft%2Flandingv2&response_type=code%20id_token&scope=openid%20profile%20https%3A%2F%2Fwww.office.com%2Fv2%2FOfficeHome.All&response_mode=form_post&nonce=639141526875211009&ui_locales=pt-BR&mkt=pt-BR", "icon": "Link", "type": "link", "emoji": "☁", "image": "assets/icons/icons8-microsoft-onedrive-2019-100.png" },
+                        { "name": "Jira Service Desk", "url": "https://clarobr.atlassian.net/servicedesk/customer/user/login?destination=portals", "icon": "Link", "type": "link", "emoji": "🎫", "image": "assets/icons/icons8-ticket-100.png" }
                 ]
         },
         {
@@ -1398,7 +1373,9 @@
                 React.createElement('p', { key: 'text', className: 'text-gray-500' }, `Nenhum resultado encontrado para "${searchTerm}"`)
             ]);
         }
-        return React.createElement('div', { className: 'grid-apps fade-in' }, results.map((result, idx) => React.createElement(AppCard, { key: `${result.name}-${idx}`, item: result })));
+        return React.createElement('div', { className: 'tray-inner' },
+            React.createElement('div', { className: 'grid-apps fade-in' }, results.map((result, idx) => React.createElement(AppCard, { key: `${result.name}-${idx}`, item: result })))
+        );
     };
 
     const FolderView = ({ folder, onOpenFolder, onBack }) => {
@@ -1443,7 +1420,7 @@
             ? React.createElement('div', { key: 'grid', className: 'grid-apps' }, visibleChildren.map((item, idx) => React.createElement(AppCard, { key: `${item.name}-${idx}`, item, onFolderOpen: onOpenFolder })))
             : (isSearchableFolder ? null : React.createElement('div', { key: 'empty', className: 'city-empty' }, 'Nenhum item encontrado.'));
 
-        return React.createElement(React.Fragment, null, [
+        return React.createElement('div', { className: 'tray-inner' }, [
             React.createElement('div', { key: 'nav', className: 'flex items-center gap-3 mb-6' }, [
                 React.createElement('button', { onClick: onBack, className: 'back-emoji-btn', title: 'Retornar', 'aria-label': 'Retornar' }, '↩️'),
                 React.createElement('h2', { key: 'title', className: 'text-xl font-bold text-gray-700' }, folder.name)
@@ -1477,12 +1454,11 @@
             if (searchTerm) return React.createElement(SearchResults, { searchTerm });
             if (currentFolder) return React.createElement(FolderView, { folder: currentFolder, onOpenFolder: openFolder, onBack: goBack });
             if (!currentCategory) return React.createElement('div', null, 'Categoria não encontrada');
-            return React.createElement(React.Fragment, null, [
+            return React.createElement('div', { className: 'tray-inner category-layout' }, [
                 React.createElement(CategoryTabs, { key: 'tabs', categories: bookmarkData, activeCategory, onSelect: selectCategory }),
                 React.createElement('div', { key: 'grid', className: 'grid-apps' }, currentCategory.children.map((item, idx) => React.createElement(AppCard, { key: `${item.name}-${idx}`, item, onFolderOpen: openFolder })))
             ]);
         };
-        const contentTitle = searchTerm ? 'Resultados da busca' : activeCategory;
 
         const MessageCenter = ({ user, messages, setMessages, onClose }) => {
             const [target, setTarget] = React.useState('todos');
@@ -1544,13 +1520,9 @@
                     ])
                 )
             ),
-            React.createElement('main', { key: 'main', className: 'max-w-7xl mx-auto px-5 py-8' }, [
-                React.createElement('section', { key: 'title', className: 'content-title-bar fade-in' }, [
-                    React.createElement('span', { key: 'mark', className: 'content-title-mark', 'aria-hidden': 'true' }),
-                    React.createElement('h2', { key: 'text', className: 'content-title-text' }, contentTitle)
-                ]),
+            React.createElement('main', { key: 'main', className: 'max-w-7xl mx-auto px-5 py-8' },
                 React.createElement('section', { key: 'tray', className: 'content-tray fade-in' }, displayContent())
-            ]),
+            ),
             showMessages && React.createElement(MessageCenter, { key: 'messages', user, messages, setMessages, onClose: () => setShowMessages(false) })
         ]);
     };
