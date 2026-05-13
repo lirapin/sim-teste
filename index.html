@@ -1614,9 +1614,38 @@
                                 React.createElement('input', { type: 'text', className: 'search-input', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
                                 searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(IconComponent, { name: 'X', size: 18 }))
                             ]),
-                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn header-icon-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement(IconComponent, { name: 'Menu', size: 20, className: 'top-line-icon' })),
+                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn header-icon-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('svg', {
+                                className: 'top-line-icon',
+                                width: 22,
+                                height: 22,
+                                viewBox: '0 0 24 24',
+                                fill: 'none',
+                                stroke: 'currentColor',
+                                strokeWidth: 2.2,
+                                strokeLinecap: 'round',
+                                strokeLinejoin: 'round',
+                                'aria-hidden': 'true'
+                            }, [
+                                React.createElement('path', { key: 'top', d: 'M5 7h14' }),
+                                React.createElement('path', { key: 'middle', d: 'M5 12h14' }),
+                                React.createElement('path', { key: 'bottom', d: 'M5 17h14' })
+                            ])),
                             React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn header-icon-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/message-envelope.svg', alt: '', 'aria-hidden': 'true' })),
-                            React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement(IconComponent, { name: 'X', size: 20, className: 'top-line-icon' }))
+                            React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('svg', {
+                                className: 'top-line-icon',
+                                width: 22,
+                                height: 22,
+                                viewBox: '0 0 24 24',
+                                fill: 'none',
+                                stroke: 'currentColor',
+                                strokeWidth: 2.4,
+                                strokeLinecap: 'round',
+                                strokeLinejoin: 'round',
+                                'aria-hidden': 'true'
+                            }, [
+                                React.createElement('path', { key: 'one', d: 'M7 7l10 10' }),
+                                React.createElement('path', { key: 'two', d: 'M17 7L7 17' })
+                            ]))
                         ])
                     ])
                 )
