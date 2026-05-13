@@ -125,7 +125,7 @@
             overflow: hidden;
         }
         .header-btn:hover { background: #ffebee; border-color: #d32f2f; }
-        .message-btn::before {
+        .header-icon-btn::before {
             content: "";
             position: absolute;
             width: 30px;
@@ -225,6 +225,7 @@
         }
         .top-emoji { font-size: 20px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; }
         .top-image-icon { width: 24px; height: 24px; object-fit: contain; display: block; position: relative; z-index: 1; }
+        .top-line-icon { color: #ef4444; position: relative; z-index: 1; stroke-width: 2; }
         .back-emoji-btn {
             border: none;
             background: transparent;
@@ -1594,9 +1595,9 @@
                                 React.createElement('input', { type: 'text', className: 'search-input', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
                                 searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(IconComponent, { name: 'X', size: 18 }))
                             ]),
-                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/icons8-cardapio-100.png', alt: '', 'aria-hidden': 'true' })),
-                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn message-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/message-envelope.svg', alt: '', 'aria-hidden': 'true' })),
-                            React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/icons8-cancel-100.png', alt: '', 'aria-hidden': 'true' }))
+                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn header-icon-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement(IconComponent, { name: 'Menu', size: 20, className: 'top-line-icon' })),
+                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn header-icon-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/message-envelope.svg', alt: '', 'aria-hidden': 'true' })),
+                            React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement(IconComponent, { name: 'X', size: 20, className: 'top-line-icon' }))
                         ])
                     ])
                 )
