@@ -152,7 +152,7 @@ const App = () => {
 
     const currentCategory = bookmarkData.find(c => c.name === activeCategory);
     const displayContent = () => {
-        if (activeToolPage === 'contacts') return React.createElement(ContactsPage, { contactStore: contacts });
+        if (activeToolPage === 'contacts') return React.createElement(ContactsPage, { contactStore: contacts, onBack: goHome });
         if (searchTerm) return React.createElement(SearchResults, { searchTerm });
         if (currentFolder) return React.createElement(FolderView, { folder: currentFolder, onOpenFolder: openFolder, onBack: goBack });
         if (!currentCategory) return React.createElement('div', null, 'Categoria não encontrada');

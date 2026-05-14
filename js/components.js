@@ -126,7 +126,7 @@ const PhoneIcon = ({ size = 26, className = '' }) => React.createElement('svg', 
     'aria-hidden': 'true'
 }, React.createElement('path', { d: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.77.63 2.61a2 2 0 0 1-.45 2.11L8.09 9.64a16 16 0 0 0 6.27 6.27l1.2-1.2a2 2 0 0 1 2.11-.45c.84.3 1.71.51 2.61.63A2 2 0 0 1 22 16.92Z' }));
 
-const ContactsPage = ({ contactStore }) => {
+const ContactsPage = ({ contactStore, onBack }) => {
     const store = ensureContactStore(contactStore);
     const [activeCluster, setActiveCluster] = React.useState('');
     const [activeArea, setActiveArea] = React.useState('');
@@ -197,7 +197,7 @@ const ContactsPage = ({ contactStore }) => {
 
     return React.createElement('div', { className: 'tray-inner contacts-page fade-in' }, [
         React.createElement('div', { key: 'nav', className: 'flex items-center gap-3' }, [
-            React.createElement('div', { key: 'icon', className: 'contact-phone-logo', style: { width: 48, height: 48, borderRadius: 16 } }, React.createElement(PhoneIcon, { size: 24 })),
+            React.createElement('button', { key: 'back', type: 'button', onClick: onBack, className: 'back-emoji-btn', title: 'Retornar', 'aria-label': 'Retornar' }, React.createElement('img', { className: 'back-image-icon', src: 'assets/icons/icons8-undo-100.png', alt: '', 'aria-hidden': 'true' })),
             React.createElement('h2', { key: 'title', className: 'text-xl text-gray-700' }, 'Contatos por cluster')
         ]),
         React.createElement('div', { key: 'clusters', className: 'cluster-tabs' }, CONTACT_CLUSTERS.map(cluster => React.createElement('button', {
