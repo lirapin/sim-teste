@@ -145,6 +145,15 @@ const ContactsPage = ({ contactStore, onBack }) => {
     const areaOptions = usesAreaTabs ? Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean)))
         .filter(area => !(['NE', 'NO', 'CO', 'MG'].includes(activeCluster) && normalizeText(area) === normalizeText(activeCluster)))
         .sort((a, b) => areaSortWeight(a) - areaSortWeight(b)) : [];
+    React.useEffect(() => {
+        if (!usesAreaTabs) return;
+        if (!areaOptions.length) {
+            if (activeArea) setActiveArea('');
+            return;
+        }
+        const hasActiveArea = areaOptions.some(area => normalizeText(area) === normalizeText(activeArea));
+        if (!hasActiveArea) setActiveArea(areaOptions[0]);
+    }, [activeCluster, areaOptions.join('|')]);
     const normalizedArea = normalizeText(activeArea);
     const shouldShowAll = !!activeCluster && !activeArea && defaultAllClusters.includes(activeCluster);
     const shouldShowMgEmpty = activeCluster === 'MG' && !activeArea;
@@ -201,11 +210,10 @@ const ContactsPage = ({ contactStore, onBack }) => {
                 key: area,
                 type: 'button',
                 className: `area-filter-btn contact-file-tab ${activeArea === area ? 'active' : ''}`,
-                onClick: () => { setActiveArea(activeArea === area ? '' : area); setOpenNote(''); }
+                onClick: () => { setActiveArea(area); setOpenNote(''); }
             }, area))),
-            usesAreaTabs && !activeArea ? React.createElement('div', { key: 'empty', className: 'city-empty contact-tab-empty' }, 'Selecione uma aba.') :
-                (visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, activeArea ? 'Nenhum contato encontrado para esta aba.' : 'Selecione uma área.') :
-                    (usesAreaTabs ? React.createElement('div', { key: 'panel', className: 'contact-tab-panel' }, renderTable(visibleContacts, `${activeCluster}-${activeArea || 'todos'}`)) : renderTable(visibleContacts, activeCluster)))
+            visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, activeArea ? 'Nenhum contato encontrado para esta aba.' : 'Selecione uma área.') :
+                (usesAreaTabs ? React.createElement('div', { key: 'panel', className: 'contact-tab-panel' }, renderTable(visibleContacts, `${activeCluster}-${activeArea || 'todos'}`)) : renderTable(visibleContacts, activeCluster))
         ]
     ]);
 };
