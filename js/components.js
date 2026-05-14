@@ -132,7 +132,7 @@ const ContactsPage = ({ contactStore, onBack }) => {
     const [activeArea, setActiveArea] = React.useState('');
     const [openNote, setOpenNote] = React.useState('');
     const sheetContacts = activeCluster ? (store.sheets?.[activeCluster] || []) : [];
-    const sheetNote = activeCluster ? (store.sheetNotes?.[activeCluster] || '') : '';
+    const sheetNote = activeCluster === 'CO' ? (store.sheetNotes?.[activeCluster] || '') : '';
     const noSubfilterClusters = ['BA', 'ES'];
     const defaultAllClusters = ['BA', 'ES', 'NE', 'NO', 'CO'];
     const usesSubfilters = activeCluster && !noSubfilterClusters.includes(activeCluster);
