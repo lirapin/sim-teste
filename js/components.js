@@ -135,21 +135,19 @@ const ContactsPage = ({ contactStore, onBack }) => {
     const sheetNote = activeCluster === 'CO' ? (store.sheetNotes?.[activeCluster] || '') : '';
     const noSubfilterClusters = ['BA', 'ES'];
     const defaultAllClusters = ['BA', 'ES', 'NE', 'NO', 'CO'];
-    const usesSubfilters = activeCluster && !noSubfilterClusters.includes(activeCluster);
-    const areaOptions = usesSubfilters ? Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean))) : [];
+    const usesAreaTabs = activeCluster && !noSubfilterClusters.includes(activeCluster);
+    const areaOptions = usesAreaTabs ? Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean))) : [];
     const normalizedArea = normalizeText(activeArea);
     const shouldShowAll = !!activeCluster && !activeArea && defaultAllClusters.includes(activeCluster);
     const shouldShowMgEmpty = activeCluster === 'MG' && !activeArea;
     const baseVisibleContacts = shouldShowMgEmpty ? [] : sheetContacts.filter(contact => {
         if (shouldShowAll) return true;
-        if (!activeArea) return activeCluster === 'RJ';
+        if (!activeArea) return false;
         if (isAlwaysVisibleContact(activeCluster, contact)) return true;
         if (normalizedArea && normalizeText(contact.area) === normalizedArea) return true;
         return false;
     });
-    const visibleContacts = activeCluster === 'RJ' && activeArea
-        ? baseVisibleContacts.filter(contact => normalizeText(contact.area) === normalizedArea || isAlwaysVisibleContact('RJ', contact))
-        : baseVisibleContacts;
+    const visibleContacts = baseVisibleContacts;
     const tableHeaders = activeCluster === 'RJ'
         ? ['Área', 'Topologia', 'Nome', 'Cargo', 'Telefone', 'Nível', '']
         : ['Área', 'Topologia', 'Nome', 'Cargo', 'Telefone', ''];
@@ -179,13 +177,6 @@ const ContactsPage = ({ contactStore, onBack }) => {
     const renderTable = (contacts, keyPrefix) => React.createElement('div', { key: `table-${keyPrefix}`, className: 'contacts-table-wrap' },
         React.createElement('table', { className: 'contacts-table' }, [renderHeader(), renderRows(contacts, keyPrefix)])
     );
-    const rjAreaOptions = activeCluster === 'RJ' && activeArea ? [activeArea] : areaOptions;
-    const rjGroups = activeCluster === 'RJ' ? rjAreaOptions.map(area => {
-        const normalizedGroupArea = normalizeText(area);
-        const contacts = visibleContacts.filter(contact => normalizeText(contact.area) === normalizedGroupArea || (activeArea && isAlwaysVisibleContact('RJ', contact)));
-        return { area, contacts };
-    }).filter(group => group.contacts.length > 0) : [];
-
     return React.createElement('div', { className: 'tray-inner contacts-page fade-in' }, [
         React.createElement('div', { key: 'nav', className: 'flex items-center gap-3' }, [
             React.createElement('button', { key: 'back', type: 'button', onClick: onBack, className: 'back-emoji-btn', title: 'Retornar', 'aria-label': 'Retornar' }, React.createElement('img', { className: 'back-image-icon', src: 'assets/icons/icons8-undo-100.png', alt: '', 'aria-hidden': 'true' })),
@@ -198,16 +189,15 @@ const ContactsPage = ({ contactStore, onBack }) => {
             onClick: () => { setActiveCluster(cluster); setActiveArea(''); setOpenNote(''); }
         }, cluster))),
         !activeCluster ? React.createElement('div', { key: 'empty-logo', className: 'contact-hero' }, React.createElement('div', { className: 'contact-phone-logo' }, React.createElement(PhoneIcon, { size: 44 }))) : [
-            usesSubfilters && React.createElement('div', { key: 'areas', className: 'area-filter-tabs' }, areaOptions.map(area => React.createElement('button', {
+            usesAreaTabs && React.createElement('div', { key: 'areas', className: 'area-filter-tabs contact-file-tabs' }, areaOptions.map(area => React.createElement('button', {
                 key: area,
                 type: 'button',
-                className: `area-filter-btn ${activeArea === area ? 'active' : ''}`,
+                className: `area-filter-btn contact-file-tab ${activeArea === area ? 'active' : ''}`,
                 onClick: () => { setActiveArea(activeArea === area ? '' : area); setOpenNote(''); }
             }, area))),
-            activeCluster === 'RJ' ? (rjGroups.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, 'Nenhum contato encontrado para este filtro.') : React.createElement('div', { key: 'rj-groups', className: 'contact-accordion-list' }, rjGroups.map(group => React.createElement('details', { key: group.area, className: 'contact-accordion' }, [
-                React.createElement('summary', { key: 'summary' }, group.area),
-                renderTable(group.contacts, `RJ-${group.area}`)
-            ])))) : (visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, activeArea ? 'Nenhum contato encontrado para este filtro.' : 'Selecione uma área.') : renderTable(visibleContacts, activeCluster))
+            usesAreaTabs && !activeArea ? React.createElement('div', { key: 'empty', className: 'city-empty contact-tab-empty' }, 'Selecione uma aba.') :
+                (visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, activeArea ? 'Nenhum contato encontrado para esta aba.' : 'Selecione uma área.') :
+                    (usesAreaTabs ? React.createElement('div', { key: 'panel', className: 'contact-tab-panel' }, renderTable(visibleContacts, `${activeCluster}-${activeArea || 'todos'}`)) : renderTable(visibleContacts, activeCluster)))
         ]
     ]);
 };

@@ -570,27 +570,44 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     color: #b91c1c;
     box-shadow: 0 12px 24px rgba(220, 38, 38, 0.13);
 }
-.contact-accordion-list { display: flex; flex-direction: column; gap: 10px; }
-.contact-accordion {
+.contact-file-tabs {
+    justify-content: center;
+    gap: 0;
+    margin: -2px auto 0;
+    padding: 0 8px;
+    max-width: 100%;
+    overflow-x: auto;
+}
+.contact-file-tab {
+    border-radius: 14px 14px 0 0;
+    min-width: 122px;
+    margin-left: -1px;
+    border-bottom-color: #fecaca;
+    box-shadow: 0 -2px 12px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+.contact-file-tab.active {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
+    box-shadow: 0 14px 24px rgba(220, 38, 38, 0.18);
+    position: relative;
+    z-index: 2;
+}
+.contact-tab-panel {
     border: 1px solid #e5e7eb;
-    border-radius: 16px;
     background: #ffffff;
-    overflow: visible;
-    box-shadow: 0 13px 28px rgba(15, 23, 42, 0.08);
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 18px 34px rgba(15, 23, 42, 0.10);
+    padding-top: 0;
 }
-.contact-accordion summary {
-    cursor: pointer;
-    list-style: none;
-    color: #b91c1c;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 12px 14px;
-}
-.contact-accordion summary::-webkit-details-marker { display: none; }
-.contact-accordion .contacts-table-wrap {
-    border-width: 1px 0 0;
-    border-radius: 0 0 16px 16px;
+.contact-tab-panel .contacts-table-wrap {
+    border: 0;
+    border-radius: 0 0 18px 18px;
     box-shadow: none;
+}
+.contact-tab-empty {
+    border-radius: 0 0 18px 18px;
+    border-top-style: solid;
 }
 .contact-hero {
     min-height: 210px;
