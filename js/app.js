@@ -169,7 +169,6 @@ const App = () => {
         const [attachments, setAttachments] = React.useState([]);
         const [successMessage, setSuccessMessage] = React.useState('');
         const [checkedMessages, setCheckedMessages] = React.useState({});
-        const [activeMessageTab, setActiveMessageTab] = React.useState('mensagens');
         const [deleteMode, setDeleteMode] = React.useState(false);
         const [selectedMessageIds, setSelectedMessageIds] = React.useState([]);
         const getTargetLabel = (targetValue) => {
@@ -187,18 +186,6 @@ const App = () => {
         const readNotifications = messages.flatMap(m => (m.readBy || [])
             .map(receipt => ({ message: m, receipt, id: `${m.id}-${receipt.username}-${receipt.date}` }))
             .filter(item => !seenReadIds.includes(item.id)));
-        const formatMessageDay = (dateText) => String(dateText || '').split(',')[0].trim() || 'Sem data';
-        const dailyConfirmations = messages
-            .filter(m => m.from === user.username)
-            .reduce((groups, message) => {
-                const day = formatMessageDay(message.date);
-                const current = groups[day] || { sent: 0, answered: 0, receipts: [] };
-                current.sent += 1;
-                if ((message.readBy || []).length > 0) current.answered += 1;
-                current.receipts.push(...(message.readBy || []).map(receipt => ({ message, receipt })));
-                groups[day] = current;
-                return groups;
-            }, {});
         const sendMessage = () => {
             if (!title.trim() && !text.trim() && attachments.length === 0) return;
             const newMessage = { id: Date.now(), from: user.username, to: target, title: title.trim(), text: text.trim(), attachments, readBy: [], date: new Date().toLocaleString('pt-BR') };
@@ -293,9 +280,27 @@ const App = () => {
                         ]))
                     ])
                 ]),
-                user.role === 'admin' && React.createElement('div', { key: 'message-tabs', className: 'message-tabs' }, [
-                    React.createElement('button', { key: 'mensagens', type: 'button', className: `message-tab ${activeMessageTab === 'mensagens' ? 'active' : ''}`, onClick: () => setActiveMessageTab('mensagens') }, 'Mensagens'),
-                    React.createElement('button', { key: 'confirmacoes', type: 'button', className: `message-tab ${activeMessageTab === 'confirmacoes' ? 'active' : ''}`, onClick: () => setActiveMessageTab('confirmacoes') }, 'Confirmações')
+                user.role === 'admin' && React.createElement('div', { key: 'message-tabs', className: 'message-tabs message-tabs-single' }, [
+                    React.createElement('button', { key: 'mensagens', type: 'button', className: 'message-tab active' }, 'Mensagens'),
+                    React.createElement('button', { key: 'pdf', type: 'button', className: 'pdf-btn', onClick: exportConfirmationsPdf, title: 'Extrair confirmações em PDF' }, [
+                        React.createElement('svg', {
+                            key: 'icon',
+                            width: 16,
+                            height: 16,
+                            viewBox: '0 0 24 24',
+                            fill: 'none',
+                            stroke: 'currentColor',
+                            strokeWidth: 2,
+                            strokeLinecap: 'round',
+                            strokeLinejoin: 'round',
+                            'aria-hidden': 'true'
+                        }, [
+                            React.createElement('path', { key: 'arrow', d: 'M12 3v12' }),
+                            React.createElement('path', { key: 'chevron', d: 'M7 10l5 5 5-5' }),
+                            React.createElement('path', { key: 'base', d: 'M5 21h14' })
+                        ]),
+                        React.createElement('span', { key: 'label' }, 'PDF')
+                    ])
                 ]),
                 user.role === 'admin' && React.createElement('div', { key: 'admin-area', className: 'border rounded-2xl p-4 mb-4 bg-gray-50' }, [
                     React.createElement('p', { className: 'text-sm font-semibold mb-2' }, 'Enviar mensagem'),
@@ -327,24 +332,11 @@ const App = () => {
                     attachments.length > 0 && React.createElement('p', { key: 'attachments', className: 'attachment-list' }, `Anexo(s): ${attachments.join(', ')}`),
                     React.createElement('button', { onClick: sendMessage, className: 'bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl px-3 py-1.5 text-sm transition-all' }, 'Enviar mensagem')
                 ]),
-                user.role === 'admin' && deleteMode && activeMessageTab === 'mensagens' && React.createElement('div', { key: 'delete-bar', className: 'delete-bar' }, [
+                user.role === 'admin' && deleteMode && React.createElement('div', { key: 'delete-bar', className: 'delete-bar' }, [
                     React.createElement('span', { key: 'text' }, `${selectedMessageIds.length} mensagem(ns) selecionada(s)`),
                     React.createElement('button', { key: 'delete', type: 'button', className: 'delete-confirm-btn', disabled: selectedMessageIds.length === 0, onClick: deleteSelectedMessages }, 'Apagar selecionadas')
                 ]),
-                activeMessageTab === 'confirmacoes' && user.role === 'admin' ? React.createElement('div', { key: 'confirmations', className: 'message-list overflow-y-auto' },
-                    [
-                        React.createElement('div', { key: 'pdf', className: 'flex justify-end mb-3' }, React.createElement('button', { type: 'button', className: 'pdf-btn', onClick: exportConfirmationsPdf }, 'Extrair PDF')),
-                        Object.keys(dailyConfirmations).length === 0 ?
-                            React.createElement('p', { key: 'empty', className: 'text-gray-500 text-center py-8' }, 'Nenhuma confirmação registrada.') :
-                            Object.entries(dailyConfirmations).map(([day, data], index) => React.createElement('details', { key: day, className: 'daily-summary', open: index === 0 }, [
-                                React.createElement('summary', { key: 'summary' }, `${day} - enviei ${data.sent} mensagem(ns) e ${data.answered} foram respondida(s)`),
-                                React.createElement('div', { key: 'body', className: 'daily-summary-body' }, data.receipts.length === 0 ?
-                                    React.createElement('p', null, 'Ainda não houve confirmação de leitura neste dia.') :
-                                    data.receipts.map(({ message, receipt }) => React.createElement('p', { key: `${message.id}-${receipt.username}-${receipt.date}` }, `${receipt.displayName} confirmou "${message.title || 'Sem título'}" em ${receipt.date}.`))
-                                )
-                            ]))
-                    ]
-                ) : React.createElement('div', { className: 'space-y-3 message-list overflow-y-auto' }, visibleMessages.length === 0 ?
+                React.createElement('div', { className: 'space-y-3 message-list overflow-y-auto' }, visibleMessages.length === 0 ?
                     React.createElement('p', { className: 'text-gray-500 text-center py-8' }, 'Nenhuma mensagem disponível') :
                     visibleMessages.map(m => {
                         const userReadReceipt = (m.readBy || []).find(receipt => receipt.username === user.username);

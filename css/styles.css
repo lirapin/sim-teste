@@ -299,8 +299,12 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
 }
 .message-tabs {
     display: flex;
+    align-items: center;
     gap: 8px;
     margin-bottom: 14px;
+}
+.message-tabs-single {
+    justify-content: space-between;
 }
 .message-tab {
     border: 1px solid #e5e7eb;
@@ -462,7 +466,24 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     flex: 0 0 auto;
     margin-top: 2px;
 }
-.pdf-btn, .delete-confirm-btn {
+.pdf-btn {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: #dc2626;
+    cursor: pointer;
+    display: inline-flex;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 2px;
+    transition: color 0.16s ease, transform 0.16s ease;
+}
+.pdf-btn:hover {
+    color: #b91c1c;
+    transform: translateY(-1px);
+}
+.delete-confirm-btn {
     border: 0;
     border-radius: 10px;
     background: #dc2626;
@@ -472,7 +493,7 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     font-weight: 800;
     padding: 8px 12px;
 }
-.pdf-btn:hover, .delete-confirm-btn:not(:disabled):hover { background: #b91c1c; }
+.delete-confirm-btn:not(:disabled):hover { background: #b91c1c; }
 .delete-confirm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .top-menu-wrap { position: relative; }
 .top-menu-popover {
