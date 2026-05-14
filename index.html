@@ -482,10 +482,12 @@
         .hidden-file-input { display: none; }
         .contacts-page { display: flex; flex-direction: column; gap: 18px; }
         .cluster-tabs {
-            display: grid;
-            grid-template-columns: repeat(7, minmax(0, 1fr));
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 8px;
             width: 100%;
+            flex-wrap: wrap;
         }
         .cluster-btn {
             border: 1px solid #e5e7eb;
@@ -494,7 +496,9 @@
             color: #334155;
             cursor: pointer;
             font-weight: 800;
+            min-width: 132px;
             height: 44px;
+            padding: 0 18px;
             transition: all 0.16s ease;
         }
         .cluster-btn.active, .cluster-btn:hover {
@@ -523,11 +527,52 @@
             justify-content: center;
             box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
         }
-        .contacts-table-wrap { overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 18px; background: #ffffff; }
-        .contacts-table { width: 100%; border-collapse: collapse; min-width: 760px; }
+        .contact-search-wrap { position: relative; width: 100%; }
+        .contacts-table-wrap {
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.11);
+        }
+        .contacts-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 900px; }
         .contacts-table th, .contacts-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #eef2f7; font-size: 13px; vertical-align: middle; }
-        .contacts-table th { color: #991b1b; background: #fff5f5; font-size: 12px; text-transform: uppercase; }
+        .contacts-table th { color: #b91c1c; background: #fff5f5; font-size: 12px; text-transform: uppercase; font-weight: 900; }
+        .contacts-table th:first-child { border-top-left-radius: 18px; }
+        .contacts-table th:last-child { border-top-right-radius: 18px; }
         .contacts-table tr:last-child td { border-bottom: 0; }
+        .contacts-table .contact-info-cell { text-align: center; width: 72px; }
+        .contact-note-wrap { position: relative; display: inline-flex; justify-content: center; }
+        .contact-note-btn {
+            border: 1px solid #fecaca;
+            border-radius: 999px;
+            background: #fff5f5;
+            color: #dc2626;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            box-shadow: 0 7px 16px rgba(220, 38, 38, 0.12);
+        }
+        .contact-note-pop {
+            position: absolute;
+            right: 50%;
+            top: calc(100% + 8px);
+            transform: translateX(50%);
+            width: min(260px, 70vw);
+            border: 1px solid #fecaca;
+            border-radius: 14px;
+            background: #ffffff;
+            color: #334155;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
+            padding: 10px 12px;
+            text-align: left;
+            line-height: 1.35;
+            z-index: 8;
+        }
         .whatsapp-link { color: #047857; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
         .back-emoji-btn {
             border: none;
@@ -581,7 +626,7 @@
         @media (max-width: 640px) {
             .grid-apps { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 12px; }
             .category-grid { grid-template-columns: repeat(auto-fit, 122px); }
-            .cluster-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .cluster-btn { flex: 1 1 96px; min-width: 96px; }
             .app-name { font-size: 11px; }
             .icon-wrapper { width: 48px; height: 48px; }
             .tab-button { min-width: 120px; font-size: 12px; padding: 8px 12px; }
@@ -620,13 +665,22 @@
         { id: 'residencial', name: 'Residencial' }
     ];
 
-    const CONTACT_CLUSTERS = ['RJ', 'ES', 'BA', 'NO', 'NE', 'CO', 'MG'];
+    const CONTACT_CLUSTERS = ['BA', 'NE', 'NO', 'CO', 'MG', 'ES', 'RJ'];
+    const CONTACT_GLOBAL_AREA_RULES = {
+        BA: ['BA/SE'],
+        NO: ['NO'],
+        CO: ['CO'],
+        MG: ['MG']
+    };
     const CONTACT_FIELDS = {
-        cluster: ['cluster'],
-        topologia: ['topologia', 'cidade', 'municipio', 'localidade'],
+        area: ['area', 'área', 'estado'],
+        topologia: ['topologia', 'cidade', 'municipio', 'município', 'localidade'],
         nome: ['nome', 'responsavel', 'responsável'],
         cargo: ['cargo', 'funcao', 'função'],
-        telefone: ['telefone', 'celular', 'whatsapp', 'contato']
+        telefone: ['telefone', 'celular', 'whatsapp', 'contato'],
+        nivel: ['nivel', 'nível'],
+        observacoes: ['observacoes', 'observações', 'observacao', 'observação', 'comentario', 'comentário'],
+        cluster: ['cluster']
     };
 
     const getPhoneDigits = (phone) => String(phone || '').replace(/\D/g, '');
@@ -635,31 +689,50 @@
         if (digits.length < 10) return phone || '';
         const ddd = digits.slice(0, 2);
         const body = digits.slice(2);
-        return `(${ddd}) ${body.slice(0, 5)} ${body.slice(5)}`;
+        return `(${ddd}) ${body.slice(0, 5)} ${body.slice(5, 9)}`;
     };
     const firstTwoNames = (name) => String(name || '').trim().split(/\s+/).slice(0, 2).join(' ');
-    const normalizeCargo = (cargo) => {
-        const value = normalizeText(cargo);
-        if (value.includes('coord') && (value.includes('ii') || value.includes('2'))) return 'Coord. técnico II';
-        if (value.includes('coord')) return 'Coord. técnico I';
-        if (value.includes('super')) return 'Supervisor';
-        if (value.includes('ger')) return 'Gerente';
-        return 'Ponto focal';
-    };
     const getRowValue = (row, field) => {
         const entries = Object.entries(row || {});
         const aliases = CONTACT_FIELDS[field];
         const match = entries.find(([key]) => aliases.some(alias => normalizeText(key).includes(normalizeText(alias))));
         return match ? match[1] : '';
     };
-    const normalizeContactRow = (row) => ({
-        cluster: String(getRowValue(row, 'cluster')).trim().toUpperCase(),
+    const normalizeContactRow = (row, sheetName) => ({
+        sheet: sheetName,
+        area: String(getRowValue(row, 'area')).trim(),
         topologia: String(getRowValue(row, 'topologia')).trim(),
         nome: firstTwoNames(getRowValue(row, 'nome')),
-        cargo: normalizeCargo(getRowValue(row, 'cargo')),
+        cargo: String(getRowValue(row, 'cargo')).trim(),
         telefone: formatPhone(getRowValue(row, 'telefone')),
-        phoneDigits: getPhoneDigits(getRowValue(row, 'telefone')).replace(/^55/, '')
+        phoneDigits: getPhoneDigits(getRowValue(row, 'telefone')).replace(/^55/, ''),
+        nivel: String(getRowValue(row, 'nivel')).trim(),
+        observacoes: String(getRowValue(row, 'observacoes')).trim(),
+        note: String(row.__note || '').trim()
     });
+    const normalizeReferenceRow = (row, sheetName) => ({
+        sheet: sheetName,
+        area: String(getRowValue(row, 'area')).trim(),
+        cluster: String(getRowValue(row, 'cluster')).trim(),
+        cidade: String(getRowValue(row, 'topologia')).trim()
+    });
+    const makeContactStore = (sheets = {}, references = {}) => ({ sheets, references });
+    const ensureContactStore = (value) => {
+        if (Array.isArray(value)) {
+            return makeContactStore(CONTACT_CLUSTERS.reduce((acc, cluster) => {
+                acc[cluster] = value.filter(contact => contact.sheet === cluster || contact.cluster === cluster);
+                return acc;
+            }, {}), {});
+        }
+        return makeContactStore(value?.sheets || {}, value?.references || {});
+    };
+    const isAlwaysVisibleContact = (cluster, contact) => {
+        const normalizedArea = normalizeText(contact.area);
+        const normalizedCargo = normalizeText(contact.cargo);
+        if ((CONTACT_GLOBAL_AREA_RULES[cluster] || []).some(rule => normalizedArea === normalizeText(rule))) return true;
+        if ((cluster === 'ES' || cluster === 'RJ') && (normalizedCargo.includes('gerente') || (normalizedCargo.includes('coord') && (normalizedCargo.includes('iii') || normalizedCargo.includes('3'))))) return true;
+        return false;
+    };
 
     const CustomIcons = {
         WhatsApp: ({ size = 28, className = "" }) => React.createElement('svg', {
@@ -1904,14 +1977,27 @@
         'aria-hidden': 'true'
     }, React.createElement('path', { d: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.77.63 2.61a2 2 0 0 1-.45 2.11L8.09 9.64a16 16 0 0 0 6.27 6.27l1.2-1.2a2 2 0 0 1 2.11-.45c.84.3 1.71.51 2.61.63A2 2 0 0 1 22 16.92Z' }));
 
-    const ContactsPage = ({ contacts }) => {
+    const ContactsPage = ({ contactStore }) => {
+        const store = ensureContactStore(contactStore);
         const [activeCluster, setActiveCluster] = React.useState('');
-        const [activeLetter, setActiveLetter] = React.useState('');
-        const clusterContacts = contacts.filter(contact => contact.cluster === activeCluster);
-        const availableLetters = new Set(clusterContacts.map(contact => getFirstLetter(contact.topologia)));
-        const visibleContacts = activeLetter
-            ? clusterContacts.filter(contact => getFirstLetter(contact.topologia) === activeLetter)
-            : clusterContacts;
+        const [citySearch, setCitySearch] = React.useState('');
+        const [openNote, setOpenNote] = React.useState('');
+        const sheetContacts = activeCluster ? (store.sheets?.[activeCluster] || []) : [];
+        const references = activeCluster ? (store.references?.[activeCluster] || []) : [];
+        const normalizedSearch = normalizeText(citySearch);
+        const matchedReferences = normalizedSearch
+            ? references.filter(ref => [ref.cidade, ref.area, ref.cluster].some(value => normalizeText(value).includes(normalizedSearch)))
+            : [];
+        const matchedAreas = new Set(matchedReferences.map(ref => normalizeText(ref.area)).filter(Boolean));
+        const visibleContacts = !normalizedSearch ? sheetContacts : sheetContacts.filter(contact => {
+            if (isAlwaysVisibleContact(activeCluster, contact)) return true;
+            if (matchedAreas.size > 0 && matchedAreas.has(normalizeText(contact.area))) return true;
+            if (activeCluster === 'MG' && normalizeText(contact.topologia).includes(normalizedSearch)) return true;
+            return false;
+        });
+        const tableHeaders = activeCluster === 'RJ'
+            ? ['Área', 'Topologia', 'Nome', 'Cargo', 'Telefone', 'Nível', '']
+            : ['Área', 'Topologia', 'Nome', 'Cargo', 'Telefone', ''];
 
         return React.createElement('div', { className: 'tray-inner contacts-page fade-in' }, [
             React.createElement('div', { key: 'nav', className: 'flex items-center gap-3' }, [
@@ -1922,30 +2008,43 @@
                 key: cluster,
                 type: 'button',
                 className: `cluster-btn ${activeCluster === cluster ? 'active' : ''}`,
-                onClick: () => { setActiveCluster(cluster); setActiveLetter(''); }
+                onClick: () => { setActiveCluster(cluster); setCitySearch(''); setOpenNote(''); }
             }, cluster))),
             !activeCluster ? React.createElement('div', { key: 'empty-logo', className: 'contact-hero' }, React.createElement('div', { className: 'contact-phone-logo' }, React.createElement(PhoneIcon, { size: 44 }))) : [
-                React.createElement('div', { key: 'letters', className: 'letter-filter scrollbar-hide' }, alphabet.map(letter => React.createElement('button', {
-                    key: letter,
-                    type: 'button',
-                    className: `letter-btn ${activeLetter === letter ? 'active' : ''}`,
-                    disabled: !availableLetters.has(letter),
-                    onClick: () => setActiveLetter(activeLetter === letter ? '' : letter)
-                }, letter))),
+                React.createElement('div', { key: 'search', className: 'contact-search-wrap' }, [
+                    React.createElement('input', {
+                        key: 'input',
+                        type: 'text',
+                        className: 'search-input',
+                        placeholder: `Buscar cidade em ${activeCluster}...`,
+                        value: citySearch,
+                        onChange: (e) => { setCitySearch(e.target.value); setOpenNote(''); }
+                    }),
+                    citySearch && React.createElement('button', { key: 'clear', className: 'search-button', onClick: () => setCitySearch(''), 'aria-label': 'Limpar busca' }, React.createElement(ClearSearchIcon))
+                ]),
                 visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, 'Nenhum contato encontrado para este filtro.') :
                     React.createElement('div', { key: 'table', className: 'contacts-table-wrap' },
                         React.createElement('table', { className: 'contacts-table' }, [
-                            React.createElement('thead', { key: 'head' }, React.createElement('tr', null, ['Cluster', 'Topologia', 'Nome', 'Cargo', 'Telefone'].map(label => React.createElement('th', { key: label }, label)))),
-                            React.createElement('tbody', { key: 'body' }, visibleContacts.map((contact, index) => React.createElement('tr', { key: `${contact.cluster}-${contact.topologia}-${contact.nome}-${index}` }, [
-                                React.createElement('td', { key: 'cluster' }, contact.cluster),
+                            React.createElement('thead', { key: 'head' }, React.createElement('tr', null, tableHeaders.map(label => React.createElement('th', { key: label || 'info' }, label)))),
+                            React.createElement('tbody', { key: 'body' }, visibleContacts.map((contact, index) => {
+                                const noteText = [contact.observacoes, contact.note].filter(Boolean).join('\n');
+                                const noteKey = `${activeCluster}-${index}`;
+                                return React.createElement('tr', { key: `${activeCluster}-${contact.area}-${contact.topologia}-${contact.nome}-${index}` }, [
+                                React.createElement('td', { key: 'area' }, contact.area),
                                 React.createElement('td', { key: 'topologia' }, contact.topologia),
                                 React.createElement('td', { key: 'nome' }, contact.nome),
                                 React.createElement('td', { key: 'cargo' }, contact.cargo),
                                 React.createElement('td', { key: 'telefone' }, React.createElement('a', { className: 'whatsapp-link', href: `https://wa.me/55${contact.phoneDigits}`, target: '_blank', rel: 'noopener noreferrer' }, [
                                     React.createElement('img', { key: 'wa', src: 'assets/icons/icons8-whatsapp-100.png', alt: '', 'aria-hidden': 'true', style: { width: 18, height: 18 } }),
                                     React.createElement('span', { key: 'number' }, contact.telefone)
-                                ]))
-                            ])))
+                                ])),
+                                activeCluster === 'RJ' && React.createElement('td', { key: 'nivel' }, contact.nivel),
+                                React.createElement('td', { key: 'info', className: 'contact-info-cell' }, noteText ? React.createElement('span', { className: 'contact-note-wrap' }, [
+                                    React.createElement('button', { key: 'btn', type: 'button', className: 'contact-note-btn', onClick: () => setOpenNote(openNote === noteKey ? '' : noteKey), title: 'Ver observação', 'aria-label': 'Ver observação' }, 'i'),
+                                    openNote === noteKey && React.createElement('span', { key: 'pop', className: 'contact-note-pop' }, noteText)
+                                ]) : null)
+                            ]);
+                            }))
                         ])
                     )
             ]
@@ -1966,14 +2065,14 @@
         const [showMessages, setShowMessages] = React.useState(false);
         const [messages, setMessagesState] = React.useState(() => { const saved = localStorage.getItem('sim_messages'); return saved ? JSON.parse(saved) : []; });
         const [seenReadIds, setSeenReadIdsState] = React.useState(() => { const saved = localStorage.getItem('sim_seen_read_ids'); return saved ? JSON.parse(saved) : []; });
-        const [contacts, setContactsState] = React.useState(() => { const saved = localStorage.getItem('sim_contacts'); return saved ? JSON.parse(saved) : []; });
+        const [contacts, setContactsState] = React.useState(() => { const saved = localStorage.getItem('sim_contacts'); return saved ? ensureContactStore(JSON.parse(saved)) : makeContactStore(); });
         const [activeToolPage, setActiveToolPage] = React.useState('');
         const [showTopMenu, setShowTopMenu] = React.useState(false);
         const contactUploadRef = React.useRef(null);
 
         const setMessages = (newMessages) => { setMessagesState(newMessages); localStorage.setItem('sim_messages', JSON.stringify(newMessages)); };
         const setSeenReadIds = (ids) => { setSeenReadIdsState(ids); localStorage.setItem('sim_seen_read_ids', JSON.stringify(ids)); };
-        const setContacts = (newContacts) => { setContactsState(newContacts); localStorage.setItem('sim_contacts', JSON.stringify(newContacts)); };
+        const setContacts = (newContacts) => { const nextContacts = ensureContactStore(newContacts); setContactsState(nextContacts); localStorage.setItem('sim_contacts', JSON.stringify(nextContacts)); };
 
         const handleLogin = (userData) => { setUser(userData); localStorage.setItem('sim_user', JSON.stringify(userData)); };
         const handleLogout = () => { localStorage.removeItem('sim_user'); setUser(null); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
@@ -1987,22 +2086,74 @@
             const headers = rows.shift() || [];
             return rows.map(row => Object.fromEntries(headers.map((header, index) => [header, row[index] || ''])));
         };
+        const worksheetToRows = (sheet) => {
+            if (!window.XLSX || !sheet?.['!ref']) return [];
+            const range = window.XLSX.utils.decode_range(sheet['!ref']);
+            const headers = [];
+            for (let col = range.s.c; col <= range.e.c; col++) {
+                const cell = sheet[window.XLSX.utils.encode_cell({ r: range.s.r, c: col })];
+                headers.push(String(cell?.v || '').trim());
+            }
+            const rows = [];
+            for (let rowIndex = range.s.r + 1; rowIndex <= range.e.r; rowIndex++) {
+                const row = {};
+                const notes = [];
+                headers.forEach((header, offset) => {
+                    if (!header) return;
+                    const cell = sheet[window.XLSX.utils.encode_cell({ r: rowIndex, c: range.s.c + offset })];
+                    row[header] = cell?.v ?? '';
+                    if (cell?.c?.length) {
+                        notes.push(cell.c.map(comment => comment.t).filter(Boolean).join(' '));
+                    }
+                });
+                row.__note = notes.filter(Boolean).join('\n');
+                if (Object.values(row).some(value => String(value || '').trim())) rows.push(row);
+            }
+            return rows;
+        };
+        const parseContactWorkbook = (workbook) => {
+            const sheets = {};
+            const references = {};
+            workbook.SheetNames.slice(0, 7).forEach((sheetName, index) => {
+                const cluster = CONTACT_CLUSTERS[index];
+                const rows = worksheetToRows(workbook.Sheets[sheetName]);
+                sheets[cluster] = rows
+                    .map(row => normalizeContactRow(row, cluster))
+                    .filter(contact => contact.area && contact.nome && contact.telefone);
+            });
+            workbook.SheetNames.slice(7, 14).forEach((sheetName, index) => {
+                const fallbackCluster = CONTACT_CLUSTERS[index];
+                const rows = worksheetToRows(workbook.Sheets[sheetName]);
+                rows.map(row => normalizeReferenceRow(row, fallbackCluster))
+                    .filter(ref => ref.area && ref.cidade)
+                    .forEach(ref => {
+                        const clusterFromRow = String(ref.cluster || '').trim().toUpperCase();
+                        const cluster = CONTACT_CLUSTERS.includes(clusterFromRow) ? clusterFromRow : fallbackCluster;
+                        references[cluster] = references[cluster] || [];
+                        references[cluster].push({ ...ref, sheet: cluster });
+                    });
+            });
+            CONTACT_CLUSTERS.forEach(cluster => {
+                sheets[cluster] = sheets[cluster] || [];
+                references[cluster] = references[cluster] || [];
+            });
+            return makeContactStore(sheets, references);
+        };
         const handleContactUpload = (event) => {
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = (loadEvent) => {
                 const data = loadEvent.target.result;
-                let rows = [];
+                let nextContacts = makeContactStore();
                 if (window.XLSX && /\.(xlsx|xls)$/i.test(file.name)) {
-                    const workbook = window.XLSX.read(data, { type: 'array' });
-                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                    rows = window.XLSX.utils.sheet_to_json(sheet, { defval: '' });
+                    const workbook = window.XLSX.read(data, { type: 'array', cellComments: true });
+                    nextContacts = parseContactWorkbook(workbook);
                 } else {
-                    rows = parseCsv(data);
+                    const rows = parseCsv(data);
+                    nextContacts = makeContactStore({ BA: rows.map(row => normalizeContactRow(row, 'BA')).filter(contact => contact.area && contact.nome && contact.telefone) }, {});
                 }
-                const normalized = rows.map(normalizeContactRow).filter(contact => contact.cluster && contact.topologia && contact.nome && contact.telefone);
-                setContacts(normalized);
+                setContacts(nextContacts);
                 setActiveToolPage('contacts');
                 setShowTopMenu(false);
                 event.target.value = '';
@@ -2034,7 +2185,7 @@
 
         const currentCategory = bookmarkData.find(c => c.name === activeCategory);
         const displayContent = () => {
-            if (activeToolPage === 'contacts') return React.createElement(ContactsPage, { contacts });
+            if (activeToolPage === 'contacts') return React.createElement(ContactsPage, { contactStore: contacts });
             if (searchTerm) return React.createElement(SearchResults, { searchTerm });
             if (currentFolder) return React.createElement(FolderView, { folder: currentFolder, onOpenFolder: openFolder, onBack: goBack });
             if (!currentCategory) return React.createElement('div', null, 'Categoria não encontrada');
