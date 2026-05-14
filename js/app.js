@@ -246,6 +246,21 @@ const App = () => {
                 React.createElement('div', { key: 'header', className: 'flex items-center justify-between mb-4' }, [
                     React.createElement('h2', { className: 'text-xl font-bold text-red-700' }, 'Central de Mensagens'),
                     React.createElement('div', { key: 'actions', className: 'modal-header-actions' }, [
+                        user.role === 'admin' && React.createElement('button', { key: 'trash', onClick: () => { setDeleteMode(!deleteMode); setSelectedMessageIds([]); }, className: 'header-btn header-icon-btn', title: 'Selecionar mensagens para apagar', 'aria-label': 'Selecionar mensagens para apagar' }, React.createElement('svg', {
+                            className: 'danger-line-icon',
+                            width: 22,
+                            height: 22,
+                            viewBox: '0 0 24 24',
+                            fill: 'none',
+                            stroke: 'currentColor',
+                            strokeWidth: 2,
+                            strokeLinecap: 'round',
+                            strokeLinejoin: 'round',
+                            'aria-hidden': 'true'
+                        }, [
+                            React.createElement('path', { key: 'lid', d: 'M3 6h18' }),
+                            React.createElement('path', { key: 'can', d: 'M8 6V4h8v2m-1 5v6M9 11v6M6 6l1 15h10l1-15' })
+                        ])),
                         user.role === 'admin' && React.createElement('button', { key: 'back', onClick: onClose, className: 'header-btn header-icon-btn', title: 'Voltar', 'aria-label': 'Voltar' }, React.createElement('svg', {
                             className: 'danger-line-icon',
                             width: 22,
