@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif; }
@@ -150,6 +151,23 @@
             overflow: hidden;
         }
         .header-btn:hover { background: #ffebee; border-color: #d32f2f; }
+        .notification-badge {
+            position: absolute;
+            right: -5px;
+            top: -6px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: #dc2626;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 18px;
+            text-align: center;
+            z-index: 2;
+            box-shadow: 0 6px 12px rgba(220, 38, 38, 0.28);
+        }
         .header-icon-btn::before {
             content: "";
             position: absolute;
@@ -297,6 +315,28 @@
             font-size: 13px;
             font-weight: 600;
         }
+        .message-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .message-tab {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #ffffff;
+            color: #334155;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 12px;
+            transition: all 0.16s ease;
+        }
+        .message-tab.active {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(220, 38, 38, 0.22);
+        }
         .read-notice {
             background: #fff7ed;
             border: 1px solid #fed7aa;
@@ -353,6 +393,142 @@
             margin-top: 10px;
         }
         .message-list { max-height: min(560px, 62vh); }
+        .daily-summary {
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+        .daily-summary + .daily-summary { margin-top: 10px; }
+        .daily-summary summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 12px 14px;
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: 800;
+        }
+        .daily-summary summary::-webkit-details-marker { display: none; }
+        .daily-summary-body {
+            border-top: 1px solid #e5e7eb;
+            padding: 12px 14px;
+            color: #475569;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+        .modal-header-actions { display: flex; align-items: center; gap: 8px; }
+        .danger-line-icon { color: #dc2626; position: relative; z-index: 1; }
+        .delete-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid #fecaca;
+            border-radius: 14px;
+            background: #fff5f5;
+            color: #991b1b;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+        }
+        .delete-check {
+            width: 18px;
+            height: 18px;
+            accent-color: #dc2626;
+            flex: 0 0 auto;
+            margin-top: 2px;
+        }
+        .pdf-btn, .delete-confirm-btn {
+            border: 0;
+            border-radius: 10px;
+            background: #dc2626;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 8px 12px;
+        }
+        .pdf-btn:hover, .delete-confirm-btn:not(:disabled):hover { background: #b91c1c; }
+        .delete-confirm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .top-menu-wrap { position: relative; }
+        .top-menu-popover {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            width: 210px;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
+            padding: 8px;
+            z-index: 20;
+        }
+        .top-menu-item {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            background: transparent;
+            color: #334155;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 10px 12px;
+        }
+        .top-menu-item:hover { background: #fff5f5; color: #dc2626; }
+        .hidden-file-input { display: none; }
+        .contacts-page { display: flex; flex-direction: column; gap: 18px; }
+        .cluster-tabs {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 8px;
+            width: 100%;
+        }
+        .cluster-btn {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            background: #ffffff;
+            color: #334155;
+            cursor: pointer;
+            font-weight: 800;
+            height: 44px;
+            transition: all 0.16s ease;
+        }
+        .cluster-btn.active, .cluster-btn:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #ffffff;
+            box-shadow: 0 10px 22px rgba(220, 38, 38, 0.2);
+        }
+        .contact-hero {
+            min-height: 210px;
+            border: 1px dashed #d1d5db;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.68);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-phone-logo {
+            width: 96px;
+            height: 96px;
+            border-radius: 28px;
+            background: #fff5f5;
+            color: #dc2626;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+        }
+        .contacts-table-wrap { overflow-x: auto; border: 1px solid #e5e7eb; border-radius: 18px; background: #ffffff; }
+        .contacts-table { width: 100%; border-collapse: collapse; min-width: 760px; }
+        .contacts-table th, .contacts-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #eef2f7; font-size: 13px; vertical-align: middle; }
+        .contacts-table th { color: #991b1b; background: #fff5f5; font-size: 12px; text-transform: uppercase; }
+        .contacts-table tr:last-child td { border-bottom: 0; }
+        .whatsapp-link { color: #047857; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
         .back-emoji-btn {
             border: none;
             background: transparent;
@@ -405,6 +581,7 @@
         @media (max-width: 640px) {
             .grid-apps { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 12px; }
             .category-grid { grid-template-columns: repeat(auto-fit, 122px); }
+            .cluster-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
             .app-name { font-size: 11px; }
             .icon-wrapper { width: 48px; height: 48px; }
             .tab-button { min-width: 120px; font-size: 12px; padding: 8px 12px; }
@@ -442,6 +619,47 @@
     const USER_GROUPS = [
         { id: 'residencial', name: 'Residencial' }
     ];
+
+    const CONTACT_CLUSTERS = ['RJ', 'ES', 'BA', 'NO', 'NE', 'CO', 'MG'];
+    const CONTACT_FIELDS = {
+        cluster: ['cluster'],
+        topologia: ['topologia', 'cidade', 'municipio', 'localidade'],
+        nome: ['nome', 'responsavel', 'responsável'],
+        cargo: ['cargo', 'funcao', 'função'],
+        telefone: ['telefone', 'celular', 'whatsapp', 'contato']
+    };
+
+    const getPhoneDigits = (phone) => String(phone || '').replace(/\D/g, '');
+    const formatPhone = (phone) => {
+        const digits = getPhoneDigits(phone).replace(/^55/, '');
+        if (digits.length < 10) return phone || '';
+        const ddd = digits.slice(0, 2);
+        const body = digits.slice(2);
+        return `(${ddd}) ${body.slice(0, 5)} ${body.slice(5)}`;
+    };
+    const firstTwoNames = (name) => String(name || '').trim().split(/\s+/).slice(0, 2).join(' ');
+    const normalizeCargo = (cargo) => {
+        const value = normalizeText(cargo);
+        if (value.includes('coord') && (value.includes('ii') || value.includes('2'))) return 'Coord. técnico II';
+        if (value.includes('coord')) return 'Coord. técnico I';
+        if (value.includes('super')) return 'Supervisor';
+        if (value.includes('ger')) return 'Gerente';
+        return 'Ponto focal';
+    };
+    const getRowValue = (row, field) => {
+        const entries = Object.entries(row || {});
+        const aliases = CONTACT_FIELDS[field];
+        const match = entries.find(([key]) => aliases.some(alias => normalizeText(key).includes(normalizeText(alias))));
+        return match ? match[1] : '';
+    };
+    const normalizeContactRow = (row) => ({
+        cluster: String(getRowValue(row, 'cluster')).trim().toUpperCase(),
+        topologia: String(getRowValue(row, 'topologia')).trim(),
+        nome: firstTwoNames(getRowValue(row, 'nome')),
+        cargo: normalizeCargo(getRowValue(row, 'cargo')),
+        telefone: formatPhone(getRowValue(row, 'telefone')),
+        phoneDigits: getPhoneDigits(getRowValue(row, 'telefone')).replace(/^55/, '')
+    });
 
     const CustomIcons = {
         WhatsApp: ({ size = 28, className = "" }) => React.createElement('svg', {
@@ -1572,10 +1790,15 @@
 
     const LoginPage = ({ onLogin }) => {
         const [username, setUsername] = React.useState('');
+        const [password, setPassword] = React.useState('');
         const [error, setError] = React.useState('');
         const handleSubmit = (e) => {
             e.preventDefault();
             const loginName = normalizeText(username.trim());
+            if (!loginName || !password.trim()) {
+                setError('Informe login e senha');
+                return;
+            }
             const user = USERS.find(u => normalizeText(u.username) === loginName);
             if (user) onLogin(user);
             else setError('Usuário não encontrado');
@@ -1585,8 +1808,8 @@
                 React.createElement('div', { key: 'logo', className: 'mx-auto w-16 h-16 flex items-center justify-center mb-4' }, React.createElement('img', { className: 'login-logo', src: 'assets/icons/icons8-owl-100.png', alt: 'SIM' })),
                 React.createElement('h1', { key: 'title', className: 'text-2xl font-bold text-center text-red-700 mb-1' }, 'SIM'),
                 React.createElement('p', { key: 'sub', className: 'text-center text-sm text-gray-500 mb-6' }, 'Sistema Integrado Madrugada'),
-                React.createElement('input', { key: 'user', type: 'text', className: 'search-input mb-3', placeholder: 'Digite seu nome', value: username, onChange: (e) => setUsername(e.target.value), list: 'login-users' }),
-                React.createElement('datalist', { key: 'user-list', id: 'login-users' }, USERS.map(u => React.createElement('option', { key: u.username, value: u.username }))),
+                React.createElement('input', { key: 'user', type: 'text', className: 'search-input mb-3', placeholder: 'Login', value: username, onChange: (e) => setUsername(e.target.value) }),
+                React.createElement('input', { key: 'pass', type: 'password', className: 'search-input mb-3', placeholder: 'Senha', value: password, onChange: (e) => setPassword(e.target.value) }),
                 error && React.createElement('p', { key: 'error', className: 'text-sm text-red-600 mb-3 text-center' }, error),
                 React.createElement('button', { key: 'btn', type: 'submit', className: 'w-full bg-red-600 hover:bg-red-700 text-white font-semibold rounded-2xl py-3 transition-all' }, 'Entrar')
             ])
@@ -1668,6 +1891,67 @@
         ]);
     };
 
+    const PhoneIcon = ({ size = 26, className = '' }) => React.createElement('svg', {
+        width: size,
+        height: size,
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 2,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        className,
+        'aria-hidden': 'true'
+    }, React.createElement('path', { d: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.77.63 2.61a2 2 0 0 1-.45 2.11L8.09 9.64a16 16 0 0 0 6.27 6.27l1.2-1.2a2 2 0 0 1 2.11-.45c.84.3 1.71.51 2.61.63A2 2 0 0 1 22 16.92Z' }));
+
+    const ContactsPage = ({ contacts }) => {
+        const [activeCluster, setActiveCluster] = React.useState('');
+        const [activeLetter, setActiveLetter] = React.useState('');
+        const clusterContacts = contacts.filter(contact => contact.cluster === activeCluster);
+        const availableLetters = new Set(clusterContacts.map(contact => getFirstLetter(contact.topologia)));
+        const visibleContacts = activeLetter
+            ? clusterContacts.filter(contact => getFirstLetter(contact.topologia) === activeLetter)
+            : clusterContacts;
+
+        return React.createElement('div', { className: 'tray-inner contacts-page fade-in' }, [
+            React.createElement('div', { key: 'nav', className: 'flex items-center gap-3' }, [
+                React.createElement('div', { key: 'icon', className: 'contact-phone-logo', style: { width: 48, height: 48, borderRadius: 16 } }, React.createElement(PhoneIcon, { size: 24 })),
+                React.createElement('h2', { key: 'title', className: 'text-xl font-bold text-gray-700' }, 'Contatos por cluster')
+            ]),
+            React.createElement('div', { key: 'clusters', className: 'cluster-tabs' }, CONTACT_CLUSTERS.map(cluster => React.createElement('button', {
+                key: cluster,
+                type: 'button',
+                className: `cluster-btn ${activeCluster === cluster ? 'active' : ''}`,
+                onClick: () => { setActiveCluster(cluster); setActiveLetter(''); }
+            }, cluster))),
+            !activeCluster ? React.createElement('div', { key: 'empty-logo', className: 'contact-hero' }, React.createElement('div', { className: 'contact-phone-logo' }, React.createElement(PhoneIcon, { size: 44 }))) : [
+                React.createElement('div', { key: 'letters', className: 'letter-filter scrollbar-hide' }, alphabet.map(letter => React.createElement('button', {
+                    key: letter,
+                    type: 'button',
+                    className: `letter-btn ${activeLetter === letter ? 'active' : ''}`,
+                    disabled: !availableLetters.has(letter),
+                    onClick: () => setActiveLetter(activeLetter === letter ? '' : letter)
+                }, letter))),
+                visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, 'Nenhum contato encontrado para este filtro.') :
+                    React.createElement('div', { key: 'table', className: 'contacts-table-wrap' },
+                        React.createElement('table', { className: 'contacts-table' }, [
+                            React.createElement('thead', { key: 'head' }, React.createElement('tr', null, ['Cluster', 'Topologia', 'Nome', 'Cargo', 'Telefone'].map(label => React.createElement('th', { key: label }, label)))),
+                            React.createElement('tbody', { key: 'body' }, visibleContacts.map((contact, index) => React.createElement('tr', { key: `${contact.cluster}-${contact.topologia}-${contact.nome}-${index}` }, [
+                                React.createElement('td', { key: 'cluster' }, contact.cluster),
+                                React.createElement('td', { key: 'topologia' }, contact.topologia),
+                                React.createElement('td', { key: 'nome' }, contact.nome),
+                                React.createElement('td', { key: 'cargo' }, contact.cargo),
+                                React.createElement('td', { key: 'telefone' }, React.createElement('a', { className: 'whatsapp-link', href: `https://wa.me/55${contact.phoneDigits}`, target: '_blank', rel: 'noopener noreferrer' }, [
+                                    React.createElement('img', { key: 'wa', src: 'assets/icons/icons8-whatsapp-100.png', alt: '', 'aria-hidden': 'true', style: { width: 18, height: 18 } }),
+                                    React.createElement('span', { key: 'number' }, contact.telefone)
+                                ]))
+                            ])))
+                        ])
+                    )
+            ]
+        ]);
+    };
+
     const App = () => {
         const [user, setUser] = React.useState(() => {
             const saved = localStorage.getItem('sim_user');
@@ -1681,20 +1965,76 @@
         const [currentFolder, setCurrentFolder] = React.useState(null);
         const [showMessages, setShowMessages] = React.useState(false);
         const [messages, setMessagesState] = React.useState(() => { const saved = localStorage.getItem('sim_messages'); return saved ? JSON.parse(saved) : []; });
+        const [seenReadIds, setSeenReadIdsState] = React.useState(() => { const saved = localStorage.getItem('sim_seen_read_ids'); return saved ? JSON.parse(saved) : []; });
+        const [contacts, setContactsState] = React.useState(() => { const saved = localStorage.getItem('sim_contacts'); return saved ? JSON.parse(saved) : []; });
+        const [activeToolPage, setActiveToolPage] = React.useState('');
+        const [showTopMenu, setShowTopMenu] = React.useState(false);
+        const contactUploadRef = React.useRef(null);
 
         const setMessages = (newMessages) => { setMessagesState(newMessages); localStorage.setItem('sim_messages', JSON.stringify(newMessages)); };
+        const setSeenReadIds = (ids) => { setSeenReadIdsState(ids); localStorage.setItem('sim_seen_read_ids', JSON.stringify(ids)); };
+        const setContacts = (newContacts) => { setContactsState(newContacts); localStorage.setItem('sim_contacts', JSON.stringify(newContacts)); };
 
         const handleLogin = (userData) => { setUser(userData); localStorage.setItem('sim_user', JSON.stringify(userData)); };
         const handleLogout = () => { localStorage.removeItem('sim_user'); setUser(null); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
-        const openFolder = (folder) => { setNavigationStack(prev => [...prev, currentFolder || bookmarkData.find(c => c.name === activeCategory)]); setCurrentFolder(folder); setSearchTerm(''); };
+        const openFolder = (folder) => { setActiveToolPage(''); setNavigationStack(prev => [...prev, currentFolder || bookmarkData.find(c => c.name === activeCategory)]); setCurrentFolder(folder); setSearchTerm(''); };
         const goBack = () => { const previous = navigationStack[navigationStack.length - 1]; setNavigationStack(prev => prev.slice(0, -1)); setCurrentFolder(previous); };
-        const selectCategory = (categoryName) => { setActiveCategory(categoryName); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
-        const goHome = () => { setActiveCategory('SIM'); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
+        const selectCategory = (categoryName) => { setActiveToolPage(''); setActiveCategory(categoryName); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
+        const goHome = () => { setActiveToolPage(''); setActiveCategory('SIM'); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
+        const openContactsPage = () => { setActiveToolPage('contacts'); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
+        const parseCsv = (text) => {
+            const rows = String(text || '').trim().split(/\r?\n/).map(line => line.split(/;|,/).map(value => value.trim()));
+            const headers = rows.shift() || [];
+            return rows.map(row => Object.fromEntries(headers.map((header, index) => [header, row[index] || ''])));
+        };
+        const handleContactUpload = (event) => {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                const data = loadEvent.target.result;
+                let rows = [];
+                if (window.XLSX && /\.(xlsx|xls)$/i.test(file.name)) {
+                    const workbook = window.XLSX.read(data, { type: 'array' });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    rows = window.XLSX.utils.sheet_to_json(sheet, { defval: '' });
+                } else {
+                    rows = parseCsv(data);
+                }
+                const normalized = rows.map(normalizeContactRow).filter(contact => contact.cluster && contact.topologia && contact.nome && contact.telefone);
+                setContacts(normalized);
+                setActiveToolPage('contacts');
+                setShowTopMenu(false);
+                event.target.value = '';
+            };
+            if (window.XLSX && /\.(xlsx|xls)$/i.test(file.name)) reader.readAsArrayBuffer(file);
+            else reader.readAsText(file, 'utf-8');
+        };
 
         if (!user) return React.createElement(LoginPage, { onLogin: handleLogin });
 
+        const isMessageVisibleToUser = (message, currentUser) => {
+            if (currentUser.role === 'admin') return true;
+            return message.to === 'todos' || message.to === currentUser.username || message.to === `group:${currentUser.group}`;
+        };
+        const unreadMessageCount = user.role === 'admin'
+            ? 0
+            : messages.filter(m => isMessageVisibleToUser(m, user) && !(m.readBy || []).some(receipt => receipt.username === user.username)).length;
+        const readReceiptIds = messages.flatMap(m => (m.readBy || []).map(receipt => `${m.id}-${receipt.username}-${receipt.date}`));
+        const unreadReadReceiptCount = user.role === 'admin'
+            ? readReceiptIds.filter(id => !seenReadIds.includes(id)).length
+            : 0;
+        const messageNotificationCount = unreadMessageCount + unreadReadReceiptCount;
+        const openMessageCenter = () => {
+            setShowMessages(true);
+            if (user.role === 'admin' && readReceiptIds.length > 0) {
+                setSeenReadIds(Array.from(new Set([...seenReadIds, ...readReceiptIds])));
+            }
+        };
+
         const currentCategory = bookmarkData.find(c => c.name === activeCategory);
         const displayContent = () => {
+            if (activeToolPage === 'contacts') return React.createElement(ContactsPage, { contacts });
             if (searchTerm) return React.createElement(SearchResults, { searchTerm });
             if (currentFolder) return React.createElement(FolderView, { folder: currentFolder, onOpenFolder: openFolder, onBack: goBack });
             if (!currentCategory) return React.createElement('div', null, 'Categoria não encontrada');
@@ -1706,10 +2046,14 @@
 
         const MessageCenter = ({ user, messages, setMessages, onClose }) => {
             const [target, setTarget] = React.useState('todos');
+            const [title, setTitle] = React.useState('');
             const [text, setText] = React.useState('');
             const [attachments, setAttachments] = React.useState([]);
             const [successMessage, setSuccessMessage] = React.useState('');
             const [checkedMessages, setCheckedMessages] = React.useState({});
+            const [activeMessageTab, setActiveMessageTab] = React.useState('mensagens');
+            const [deleteMode, setDeleteMode] = React.useState(false);
+            const [selectedMessageIds, setSelectedMessageIds] = React.useState([]);
             const getTargetLabel = (targetValue) => {
                 if (targetValue === 'todos') return 'Todos';
                 if (String(targetValue).startsWith('group:')) {
@@ -1723,10 +2067,23 @@
                 ? messages
                 : messages.filter(m => m.to === 'todos' || m.to === user.username || m.to === `group:${user.group}`);
             const readNotifications = messages.flatMap(m => (m.readBy || []).map(receipt => ({ message: m, receipt })));
+            const formatMessageDay = (dateText) => String(dateText || '').split(',')[0].trim() || 'Sem data';
+            const dailyConfirmations = messages
+                .filter(m => m.from === user.username)
+                .reduce((groups, message) => {
+                    const day = formatMessageDay(message.date);
+                    const current = groups[day] || { sent: 0, answered: 0, receipts: [] };
+                    current.sent += 1;
+                    if ((message.readBy || []).length > 0) current.answered += 1;
+                    current.receipts.push(...(message.readBy || []).map(receipt => ({ message, receipt })));
+                    groups[day] = current;
+                    return groups;
+                }, {});
             const sendMessage = () => {
-                if (!text.trim() && attachments.length === 0) return;
-                const newMessage = { id: Date.now(), from: user.username, to: target, text: text.trim(), attachments, readBy: [], date: new Date().toLocaleString('pt-BR') };
+                if (!title.trim() && !text.trim() && attachments.length === 0) return;
+                const newMessage = { id: Date.now(), from: user.username, to: target, title: title.trim(), text: text.trim(), attachments, readBy: [], date: new Date().toLocaleString('pt-BR') };
                 setMessages([newMessage, ...messages]);
+                setTitle('');
                 setText('');
                 setAttachments([]);
                 setSuccessMessage('Sua mensagem foi enviada com sucesso!');
@@ -1739,29 +2096,75 @@
                 setMessages(messages.map(m => m.id === message.id ? { ...m, readBy: [...(m.readBy || []), readReceipt] } : m));
                 setCheckedMessages(prev => ({ ...prev, [message.id]: false }));
             };
+            const toggleSelectedMessage = (id) => {
+                setSelectedMessageIds(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
+            };
+            const deleteSelectedMessages = () => {
+                if (selectedMessageIds.length === 0) return;
+                setMessages(messages.filter(message => !selectedMessageIds.includes(message.id)));
+                setSelectedMessageIds([]);
+                setDeleteMode(false);
+            };
+            const exportConfirmationsPdf = () => {
+                const escapeHtml = (value) => String(value || '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+                const rows = messages.flatMap(message => (message.readBy || []).map(receipt => ({
+                    name: receipt.displayName,
+                    date: String(receipt.date || '').split(',')[0] || '',
+                    time: String(receipt.date || '').split(',')[1]?.trim() || '',
+                    title: message.title || 'Sem título'
+                })));
+                const htmlRows = rows.map(row => `<tr><td>${escapeHtml(row.name)}</td><td>${escapeHtml(row.date)}</td><td>${escapeHtml(row.time)}</td><td>${escapeHtml(row.title)}</td></tr>`).join('');
+                const report = window.open('', '_blank');
+                if (!report) return;
+                report.document.write(`<html><head><title>Histórico de confirmações</title><style>body{font-family:Segoe UI,Arial,sans-serif;padding:24px;color:#111827}h1{color:#b91c1c}table{width:100%;border-collapse:collapse}th,td{border:1px solid #e5e7eb;padding:10px;text-align:left;font-size:13px}th{background:#fff5f5;color:#991b1b}</style></head><body><h1>Histórico de confirmações</h1><table><thead><tr><th>Nome</th><th>Data</th><th>Hora</th><th>Título da mensagem</th></tr></thead><tbody>${htmlRows || '<tr><td colspan="4">Nenhuma confirmação registrada.</td></tr>'}</tbody></table></body></html>`);
+                report.document.close();
+                report.focus();
+                report.print();
+            };
             return React.createElement('div', { className: 'modal-overlay', onClick: (e) => { if (e.target === e.currentTarget) onClose(); } }, 
                 React.createElement('div', { className: 'modal-card p-5' }, [
                     React.createElement('div', { key: 'header', className: 'flex items-center justify-between mb-4' }, [
                         React.createElement('h2', { className: 'text-xl font-bold text-red-700' }, 'Central de Mensagens'),
-                        React.createElement('button', { onClick: onClose, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('svg', {
-                            className: 'top-line-icon',
-                            width: 22,
-                            height: 22,
-                            viewBox: '0 0 24 24',
-                            fill: 'none',
-                            stroke: 'currentColor',
-                            strokeWidth: 2.4,
-                            strokeLinecap: 'round',
-                            strokeLinejoin: 'round',
-                            'aria-hidden': 'true'
-                        }, [
-                            React.createElement('path', { key: 'one', d: 'M7 7l10 10' }),
-                            React.createElement('path', { key: 'two', d: 'M17 7L7 17' })
-                        ]))
+                        React.createElement('div', { key: 'actions', className: 'modal-header-actions' }, [
+                            user.role === 'admin' && React.createElement('button', { key: 'trash', onClick: () => { setDeleteMode(!deleteMode); setSelectedMessageIds([]); }, className: 'header-btn header-icon-btn', title: 'Selecionar mensagens para apagar', 'aria-label': 'Selecionar mensagens para apagar' }, React.createElement('svg', {
+                                className: 'danger-line-icon',
+                                width: 22,
+                                height: 22,
+                                viewBox: '0 0 24 24',
+                                fill: 'none',
+                                stroke: 'currentColor',
+                                strokeWidth: 2,
+                                strokeLinecap: 'round',
+                                strokeLinejoin: 'round',
+                                'aria-hidden': 'true'
+                            }, [
+                                React.createElement('path', { key: 'lid', d: 'M3 6h18' }),
+                                React.createElement('path', { key: 'can', d: 'M8 6V4h8v2m-1 5v6M9 11v6M6 6l1 15h10l1-15' })
+                            ])),
+                            React.createElement('button', { key: 'close', onClick: onClose, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('svg', {
+                                className: 'top-line-icon',
+                                width: 22,
+                                height: 22,
+                                viewBox: '0 0 24 24',
+                                fill: 'none',
+                                stroke: 'currentColor',
+                                strokeWidth: 2.4,
+                                strokeLinecap: 'round',
+                                strokeLinejoin: 'round',
+                                'aria-hidden': 'true'
+                            }, [
+                                React.createElement('path', { key: 'one', d: 'M7 7l10 10' }),
+                                React.createElement('path', { key: 'two', d: 'M17 7L7 17' })
+                            ]))
+                        ])
                     ]),
                     user.role === 'admin' && readNotifications.length > 0 && React.createElement('div', { key: 'read-notifications', className: 'read-notice' },
                         readNotifications.map(({ message, receipt }) => React.createElement('div', { key: `${message.id}-${receipt.username}` }, `${receipt.displayName} recebeu e leu a mensagem em ${receipt.date}.`))
                     ),
+                    user.role === 'admin' && React.createElement('div', { key: 'message-tabs', className: 'message-tabs' }, [
+                        React.createElement('button', { key: 'mensagens', type: 'button', className: `message-tab ${activeMessageTab === 'mensagens' ? 'active' : ''}`, onClick: () => setActiveMessageTab('mensagens') }, 'Mensagens'),
+                        React.createElement('button', { key: 'confirmacoes', type: 'button', className: `message-tab ${activeMessageTab === 'confirmacoes' ? 'active' : ''}`, onClick: () => setActiveMessageTab('confirmacoes') }, 'Confirmações')
+                    ]),
                     user.role === 'admin' && React.createElement('div', { key: 'admin-area', className: 'border rounded-2xl p-4 mb-4 bg-gray-50' }, [
                         React.createElement('p', { className: 'text-sm font-semibold mb-2' }, 'Enviar mensagem'),
                         successMessage && React.createElement('p', { key: 'success', className: 'message-success' }, successMessage),
@@ -1770,6 +2173,7 @@
                             ...USER_GROUPS.map(group => React.createElement('option', { key: `group-${group.id}`, value: `group:${group.id}` }, `Grupo ${group.name}`)),
                             ...USERS.map(u => React.createElement('option', { key: u.username, value: u.username }, u.displayName))
                         ]),
+                        React.createElement('input', { key: 'title', type: 'text', className: 'search-input mb-2', placeholder: 'Título da mensagem', value: title, onChange: (e) => { setTitle(e.target.value); setSuccessMessage(''); } }),
                         React.createElement('div', { key: 'message-field', className: 'message-field mb-2' }, [
                             React.createElement('textarea', { key: 'textarea', className: 'search-input', rows: 3, placeholder: 'Digite sua mensagem...', value: text, onChange: (e) => { setText(e.target.value); setSuccessMessage(''); } }),
                             React.createElement('label', { key: 'attach-label', className: 'attachment-btn', title: 'Anexar arquivo', 'aria-label': 'Anexar arquivo' }, [
@@ -1791,13 +2195,32 @@
                         attachments.length > 0 && React.createElement('p', { key: 'attachments', className: 'attachment-list' }, `Anexo(s): ${attachments.join(', ')}`),
                         React.createElement('button', { onClick: sendMessage, className: 'bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl px-3 py-1.5 text-sm transition-all' }, 'Enviar mensagem')
                     ]),
-                    React.createElement('div', { className: 'space-y-3 message-list overflow-y-auto' }, visibleMessages.length === 0 ?
+                    user.role === 'admin' && deleteMode && activeMessageTab === 'mensagens' && React.createElement('div', { key: 'delete-bar', className: 'delete-bar' }, [
+                        React.createElement('span', { key: 'text' }, `${selectedMessageIds.length} mensagem(ns) selecionada(s)`),
+                        React.createElement('button', { key: 'delete', type: 'button', className: 'delete-confirm-btn', disabled: selectedMessageIds.length === 0, onClick: deleteSelectedMessages }, 'Apagar selecionadas')
+                    ]),
+                    activeMessageTab === 'confirmacoes' && user.role === 'admin' ? React.createElement('div', { key: 'confirmations', className: 'message-list overflow-y-auto' },
+                        [
+                            React.createElement('div', { key: 'pdf', className: 'flex justify-end mb-3' }, React.createElement('button', { type: 'button', className: 'pdf-btn', onClick: exportConfirmationsPdf }, 'Extrair PDF')),
+                            Object.keys(dailyConfirmations).length === 0 ?
+                                React.createElement('p', { key: 'empty', className: 'text-gray-500 text-center py-8' }, 'Nenhuma confirmação registrada.') :
+                                Object.entries(dailyConfirmations).map(([day, data], index) => React.createElement('details', { key: day, className: 'daily-summary', open: index === 0 }, [
+                                    React.createElement('summary', { key: 'summary' }, `${day} - enviei ${data.sent} mensagem(ns) e ${data.answered} foram respondida(s)`),
+                                    React.createElement('div', { key: 'body', className: 'daily-summary-body' }, data.receipts.length === 0 ?
+                                        React.createElement('p', null, 'Ainda não houve confirmação de leitura neste dia.') :
+                                        data.receipts.map(({ message, receipt }) => React.createElement('p', { key: `${message.id}-${receipt.username}-${receipt.date}` }, `${receipt.displayName} confirmou "${message.title || 'Sem título'}" em ${receipt.date}.`))
+                                    )
+                                ]))
+                        ]
+                    ) : React.createElement('div', { className: 'space-y-3 message-list overflow-y-auto' }, visibleMessages.length === 0 ?
                         React.createElement('p', { className: 'text-gray-500 text-center py-8' }, 'Nenhuma mensagem disponível') :
                         visibleMessages.map(m => {
                             const userReadReceipt = (m.readBy || []).find(receipt => receipt.username === user.username);
                             const adminReadText = (m.readBy || []).map(receipt => `${receipt.displayName} em ${receipt.date}`).join(', ');
                             return React.createElement('div', { key: m.id, className: 'border rounded-2xl p-4' }, [
+                                user.role === 'admin' && deleteMode && React.createElement('input', { key: 'delete-check', type: 'checkbox', className: 'delete-check', checked: selectedMessageIds.includes(m.id), onChange: () => toggleSelectedMessage(m.id), 'aria-label': 'Selecionar mensagem para apagar' }),
                                 React.createElement('div', { key: 'meta', className: 'text-xs text-gray-500 mb-1' }, `${m.date} • De: ${m.from} • Para: ${getTargetLabel(m.to)}`),
+                                m.title && React.createElement('h3', { key: 'title', className: 'text-sm font-bold text-gray-900 mb-1' }, m.title),
                                 React.createElement('p', { key: 'text', className: 'text-sm text-gray-800' }, m.text),
                                 m.attachments && m.attachments.length > 0 && React.createElement('p', { key: 'files', className: 'text-xs text-gray-500 mt-2' }, `Anexo(s): ${m.attachments.join(', ')}`),
                                 user.role === 'admin' && adminReadText && React.createElement('p', { key: 'admin-read', className: 'read-confirmed' }, `Lida por: ${adminReadText}`),
@@ -1839,6 +2262,7 @@
         };
 
         return React.createElement('div', { className: 'min-h-screen', style: { background: '#d1d5db' } }, [
+            React.createElement('input', { key: 'contact-upload', ref: contactUploadRef, type: 'file', className: 'hidden-file-input', accept: '.xlsx,.xls,.csv,.txt', onChange: handleContactUpload }),
             React.createElement('header', { key: 'header', className: 'sticky top-0 z-10 py-1' },
                 React.createElement('div', { className: 'top-shell' },
                     React.createElement('div', { className: 'flex flex-col md:flex-row md:items-center md:justify-between gap-4' }, [
@@ -1855,23 +2279,35 @@
                                 React.createElement('input', { type: 'text', className: 'search-input', placeholder: 'Buscar ferramentas...', value: searchTerm, onChange: (e) => setSearchTerm(e.target.value) }),
                                 searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(ClearSearchIcon))
                             ]),
-                            React.createElement('button', { key: 'menu', onClick: () => {}, className: 'header-btn header-icon-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('svg', {
-                                className: 'top-line-icon',
-                                width: 22,
-                                height: 22,
-                                viewBox: '0 0 24 24',
-                                fill: 'none',
-                                stroke: 'currentColor',
-                                strokeWidth: 2.2,
-                                strokeLinecap: 'round',
-                                strokeLinejoin: 'round',
-                                'aria-hidden': 'true'
-                            }, [
-                                React.createElement('path', { key: 'top', d: 'M5 7h14' }),
-                                React.createElement('path', { key: 'middle', d: 'M5 12h14' }),
-                                React.createElement('path', { key: 'bottom', d: 'M5 17h14' })
-                            ])),
-                            React.createElement('button', { key: 'messages', onClick: () => setShowMessages(true), className: 'header-btn header-icon-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, React.createElement('img', { className: 'top-image-icon', src: 'assets/icons/message-envelope.svg', alt: '', 'aria-hidden': 'true' })),
+                            React.createElement('button', { key: 'phone', onClick: openContactsPage, className: 'header-btn header-icon-btn', title: 'Contatos', 'aria-label': 'Contatos' }, React.createElement(PhoneIcon, { size: 22, className: 'top-line-icon' })),
+                            React.createElement('div', { key: 'menu-wrap', className: 'top-menu-wrap' }, [
+                                React.createElement('button', { key: 'menu', onClick: () => setShowTopMenu(!showTopMenu), className: 'header-btn header-icon-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('svg', {
+                                    className: 'top-line-icon',
+                                    width: 22,
+                                    height: 22,
+                                    viewBox: '0 0 24 24',
+                                    fill: 'none',
+                                    stroke: 'currentColor',
+                                    strokeWidth: 2.2,
+                                    strokeLinecap: 'round',
+                                    strokeLinejoin: 'round',
+                                    'aria-hidden': 'true'
+                                }, [
+                                    React.createElement('path', { key: 'top', d: 'M5 7h14' }),
+                                    React.createElement('path', { key: 'middle', d: 'M5 12h14' }),
+                                    React.createElement('path', { key: 'bottom', d: 'M5 17h14' })
+                                ])),
+                                showTopMenu && user.role === 'admin' && React.createElement('div', { key: 'popover', className: 'top-menu-popover' },
+                                    React.createElement('button', { type: 'button', className: 'top-menu-item', onClick: () => contactUploadRef.current && contactUploadRef.current.click() }, [
+                                        React.createElement('span', { key: 'text' }, 'Planilha de contatos'),
+                                        React.createElement('span', { key: 'arrow', 'aria-hidden': 'true' }, '↑')
+                                    ])
+                                )
+                            ]),
+                            React.createElement('button', { key: 'messages', onClick: openMessageCenter, className: 'header-btn header-icon-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, [
+                                React.createElement('img', { key: 'icon', className: 'top-image-icon', src: 'assets/icons/message-envelope.svg', alt: '', 'aria-hidden': 'true' }),
+                                messageNotificationCount > 0 && React.createElement('span', { key: 'badge', className: 'notification-badge' }, messageNotificationCount > 99 ? '99+' : messageNotificationCount)
+                            ]),
                             React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('svg', {
                                 className: 'top-line-icon',
                                 width: 22,
