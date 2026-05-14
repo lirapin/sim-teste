@@ -25,6 +25,7 @@ const normalizeContactRow = (row, sheetName) => ({
     sheet: sheetName,
     area: String(getRowValue(row, 'area')).trim(),
     topologia: String(getRowValue(row, 'topologia')).trim(),
+    rawNome: String(getRowValue(row, 'nome')).trim(),
     nome: firstTwoNames(getRowValue(row, 'nome')),
     cargo: String(getRowValue(row, 'cargo')).trim(),
     telefone: formatPhone(getRowValue(row, 'telefone')),

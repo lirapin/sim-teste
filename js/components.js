@@ -164,7 +164,7 @@ const ContactsPage = ({ contactStore, onBack }) => {
         return React.createElement('tr', { key: `${keyPrefix}-${contact.area}-${contact.topologia}-${contact.nome}-${index}` }, [
             React.createElement('td', { key: 'area' }, contact.area),
             React.createElement('td', { key: 'topologia' }, contact.topologia),
-            React.createElement('td', { key: 'nome' }, contact.nome),
+            React.createElement('td', { key: 'nome' }, firstTwoNames(contact.rawNome || contact.nome)),
             React.createElement('td', { key: 'cargo' }, contact.cargo),
             React.createElement('td', { key: 'telefone' }, React.createElement('a', { className: 'whatsapp-link', href: `https://wa.me/55${contact.phoneDigits}`, target: '_blank', rel: 'noopener noreferrer' }, contact.telefone)),
             activeCluster === 'RJ' && React.createElement('td', { key: 'nivel' }, contact.nivel),
