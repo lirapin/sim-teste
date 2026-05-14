@@ -606,11 +606,11 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
 .contact-file-tabs {
     justify-content: center;
     gap: 0;
-    margin: -2px auto 0;
-    padding: 0;
+    margin: 4px auto 0;
+    padding: 6px 0 0;
     max-width: 100%;
     overflow-x: visible;
-    overflow-y: hidden;
+    overflow-y: visible;
     white-space: normal;
     width: 100%;
 }
