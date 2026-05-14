@@ -154,6 +154,16 @@ const ContactsPage = ({ contactStore, onBack }) => {
         const hasActiveArea = areaOptions.some(area => normalizeText(area) === normalizeText(activeArea));
         if (!hasActiveArea) setActiveArea(areaOptions[0]);
     }, [activeCluster, areaOptions.join('|')]);
+    React.useEffect(() => {
+        if (!openNote) return undefined;
+        const handleOutsideClick = (event) => {
+            const target = event.target;
+            if (target && typeof target.closest === 'function' && (target.closest('.contact-note-wrap') || target.closest('.contact-header-note'))) return;
+            setOpenNote('');
+        };
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => document.removeEventListener('mousedown', handleOutsideClick);
+    }, [openNote]);
     const normalizedArea = normalizeText(activeArea);
     const shouldShowAll = !!activeCluster && !activeArea && defaultAllClusters.includes(activeCluster);
     const shouldShowMgEmpty = activeCluster === 'MG' && !activeArea;
