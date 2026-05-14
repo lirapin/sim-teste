@@ -130,30 +130,21 @@ const ContactsPage = ({ contactStore, onBack }) => {
     const store = ensureContactStore(contactStore);
     const [activeCluster, setActiveCluster] = React.useState('');
     const [activeArea, setActiveArea] = React.useState('');
-    const [citySearch, setCitySearch] = React.useState('');
     const [openNote, setOpenNote] = React.useState('');
     const sheetContacts = activeCluster ? (store.sheets?.[activeCluster] || []) : [];
-    const references = activeCluster ? (store.references?.[activeCluster] || []) : [];
     const sheetNote = activeCluster ? (store.sheetNotes?.[activeCluster] || '') : '';
     const noSubfilterClusters = ['BA', 'ES'];
     const defaultAllClusters = ['BA', 'ES', 'NE', 'NO', 'CO'];
     const usesSubfilters = activeCluster && !noSubfilterClusters.includes(activeCluster);
     const areaOptions = usesSubfilters ? Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean))) : [];
-    const normalizedSearch = normalizeText(citySearch);
     const normalizedArea = normalizeText(activeArea);
-    const matchedReferences = normalizedSearch
-        ? references.filter(ref => [ref.cidade, ref.area, ref.cluster].some(value => normalizeText(value).includes(normalizedSearch)))
-        : [];
-    const matchedAreas = new Set(matchedReferences.map(ref => normalizeText(ref.area)).filter(Boolean));
-    const shouldShowAll = !!activeCluster && !normalizedSearch && !activeArea && defaultAllClusters.includes(activeCluster);
-    const shouldShowMgEmpty = activeCluster === 'MG' && !normalizedSearch && !activeArea;
+    const shouldShowAll = !!activeCluster && !activeArea && defaultAllClusters.includes(activeCluster);
+    const shouldShowMgEmpty = activeCluster === 'MG' && !activeArea;
     const baseVisibleContacts = shouldShowMgEmpty ? [] : sheetContacts.filter(contact => {
         if (shouldShowAll) return true;
-        if (!normalizedSearch && !activeArea) return activeCluster === 'RJ';
+        if (!activeArea) return activeCluster === 'RJ';
         if (isAlwaysVisibleContact(activeCluster, contact)) return true;
         if (normalizedArea && normalizeText(contact.area) === normalizedArea) return true;
-        if (matchedAreas.size > 0 && matchedAreas.has(normalizeText(contact.area))) return true;
-        if (activeCluster === 'MG' && normalizeText(contact.topologia).includes(normalizedSearch)) return true;
         return false;
     });
     const visibleContacts = activeCluster === 'RJ' && activeArea
@@ -204,7 +195,7 @@ const ContactsPage = ({ contactStore, onBack }) => {
             key: cluster,
             type: 'button',
             className: `cluster-btn ${activeCluster === cluster ? 'active' : ''}`,
-            onClick: () => { setActiveCluster(cluster); setActiveArea(''); setCitySearch(''); setOpenNote(''); }
+            onClick: () => { setActiveCluster(cluster); setActiveArea(''); setOpenNote(''); }
         }, cluster))),
         !activeCluster ? React.createElement('div', { key: 'empty-logo', className: 'contact-hero' }, React.createElement('div', { className: 'contact-phone-logo' }, React.createElement(PhoneIcon, { size: 44 }))) : [
             usesSubfilters && React.createElement('div', { key: 'areas', className: 'area-filter-tabs' }, areaOptions.map(area => React.createElement('button', {
@@ -213,21 +204,10 @@ const ContactsPage = ({ contactStore, onBack }) => {
                 className: `area-filter-btn ${activeArea === area ? 'active' : ''}`,
                 onClick: () => { setActiveArea(activeArea === area ? '' : area); setOpenNote(''); }
             }, area))),
-            React.createElement('div', { key: 'search', className: 'contact-search-wrap' }, [
-                React.createElement('input', {
-                    key: 'input',
-                    type: 'text',
-                    className: 'search-input',
-                    placeholder: `Buscar cidade em ${activeCluster}...`,
-                    value: citySearch,
-                    onChange: (e) => { setCitySearch(e.target.value); setActiveArea(''); setOpenNote(''); }
-                }),
-                citySearch && React.createElement('button', { key: 'clear', className: 'search-button', onClick: () => setCitySearch(''), 'aria-label': 'Limpar busca' }, React.createElement(ClearSearchIcon))
-            ]),
             activeCluster === 'RJ' ? (rjGroups.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, 'Nenhum contato encontrado para este filtro.') : React.createElement('div', { key: 'rj-groups', className: 'contact-accordion-list' }, rjGroups.map(group => React.createElement('details', { key: group.area, className: 'contact-accordion' }, [
                 React.createElement('summary', { key: 'summary' }, group.area),
                 renderTable(group.contacts, `RJ-${group.area}`)
-            ])))) : (visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, activeArea || citySearch ? 'Nenhum contato encontrado para este filtro.' : 'Selecione uma área ou pesquise uma cidade.') : renderTable(visibleContacts, activeCluster))
+            ])))) : (visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, activeArea ? 'Nenhum contato encontrado para este filtro.' : 'Selecione uma área.') : renderTable(visibleContacts, activeCluster))
         ]
     ]);
 };
