@@ -6,7 +6,15 @@ const formatPhone = (phone) => {
     const body = digits.slice(2);
     return `(${ddd}) ${body.slice(0, 5)} ${body.slice(5, 9)}`;
 };
-const firstTwoNames = (name) => String(name || '').trim().split(/\s+/).slice(0, 2).join(' ');
+const firstTwoNames = (name) => {
+    const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+    const keep = parts.slice(0, 2);
+    const looseConnectors = ['de', 'da', 'do', 'das', 'dos'];
+    if (keep.length === 2 && looseConnectors.includes(normalizeText(keep[1])) && parts[2]) {
+        keep.push(parts[2]);
+    }
+    return keep.join(' ');
+};
 const getRowValue = (row, field) => {
     const entries = Object.entries(row || {});
     const aliases = CONTACT_FIELDS[field];
