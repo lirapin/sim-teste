@@ -143,7 +143,7 @@ const ContactsPage = ({ contactStore, onBack }) => {
         return 0;
     };
     const areaOptions = usesAreaTabs ? Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean)))
-        .filter(area => !(activeCluster === 'NE' && normalizeText(area) === 'ne'))
+        .filter(area => !(['NE', 'NO'].includes(activeCluster) && normalizeText(area) === normalizeText(activeCluster)))
         .sort((a, b) => areaSortWeight(a) - areaSortWeight(b)) : [];
     const normalizedArea = normalizeText(activeArea);
     const shouldShowAll = !!activeCluster && !activeArea && defaultAllClusters.includes(activeCluster);
