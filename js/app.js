@@ -246,7 +246,7 @@ const App = () => {
                 React.createElement('div', { key: 'header', className: 'flex items-center justify-between mb-4' }, [
                     React.createElement('h2', { className: 'text-xl font-bold text-red-700' }, 'Central de Mensagens'),
                     React.createElement('div', { key: 'actions', className: 'modal-header-actions' }, [
-                        user.role === 'admin' && React.createElement('button', { key: 'trash', onClick: () => { setDeleteMode(!deleteMode); setSelectedMessageIds([]); }, className: 'header-btn header-icon-btn', title: 'Selecionar mensagens para apagar', 'aria-label': 'Selecionar mensagens para apagar' }, React.createElement('svg', {
+                        user.role === 'admin' && React.createElement('button', { key: 'back', onClick: onClose, className: 'header-btn header-icon-btn', title: 'Voltar', 'aria-label': 'Voltar' }, React.createElement('svg', {
                             className: 'danger-line-icon',
                             width: 22,
                             height: 22,
@@ -258,8 +258,8 @@ const App = () => {
                             strokeLinejoin: 'round',
                             'aria-hidden': 'true'
                         }, [
-                            React.createElement('path', { key: 'lid', d: 'M3 6h18' }),
-                            React.createElement('path', { key: 'can', d: 'M8 6V4h8v2m-1 5v6M9 11v6M6 6l1 15h10l1-15' })
+                            React.createElement('path', { key: 'curve', d: 'M9 14l-5-5 5-5' }),
+                            React.createElement('path', { key: 'line', d: 'M4 9h10a6 6 0 0 1 6 6v1' })
                         ])),
                         React.createElement('button', { key: 'close', onClick: onClose, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('svg', {
                             className: 'top-line-icon',
@@ -278,9 +278,6 @@ const App = () => {
                         ]))
                     ])
                 ]),
-                user.role === 'admin' && readNotifications.length > 0 && React.createElement('div', { key: 'read-notifications', className: 'read-notice' },
-                    readNotifications.map(({ message, receipt }) => React.createElement('div', { key: `${message.id}-${receipt.username}` }, `${receipt.displayName} recebeu e leu a mensagem em ${receipt.date}.`))
-                ),
                 user.role === 'admin' && React.createElement('div', { key: 'message-tabs', className: 'message-tabs' }, [
                     React.createElement('button', { key: 'mensagens', type: 'button', className: `message-tab ${activeMessageTab === 'mensagens' ? 'active' : ''}`, onClick: () => setActiveMessageTab('mensagens') }, 'Mensagens'),
                     React.createElement('button', { key: 'confirmacoes', type: 'button', className: `message-tab ${activeMessageTab === 'confirmacoes' ? 'active' : ''}`, onClick: () => setActiveMessageTab('confirmacoes') }, 'Confirmações')
@@ -336,15 +333,34 @@ const App = () => {
                     React.createElement('p', { className: 'text-gray-500 text-center py-8' }, 'Nenhuma mensagem disponível') :
                     visibleMessages.map(m => {
                         const userReadReceipt = (m.readBy || []).find(receipt => receipt.username === user.username);
-                        const adminReadText = (m.readBy || []).map(receipt => `${receipt.displayName} em ${receipt.date}`).join(', ');
+                        const messageDateParts = String(m.date || '').split(',');
+                        const messageDate = messageDateParts[0]?.trim() || '';
+                        const messageTime = messageDateParts[1]?.trim() || '';
+                        if (user.role === 'admin') {
+                            return React.createElement('details', { key: m.id, className: 'message-summary-card' }, [
+                                React.createElement('summary', { key: 'summary' }, React.createElement('span', { className: 'message-summary-line' }, [
+                                    React.createElement('span', { key: 'date' }, messageDate),
+                                    React.createElement('span', { key: 'time' }, messageTime),
+                                    React.createElement('span', { key: 'title', className: 'message-summary-title' }, m.title || 'Sem título')
+                                ])),
+                                React.createElement('div', { key: 'detail', className: 'message-detail-body' }, [
+                                    user.role === 'admin' && deleteMode && React.createElement('input', { key: 'delete-check', type: 'checkbox', className: 'delete-check', checked: selectedMessageIds.includes(m.id), onChange: () => toggleSelectedMessage(m.id), 'aria-label': 'Selecionar mensagem para apagar' }),
+                                    React.createElement('p', { key: 'meta', className: 'text-xs text-gray-500 mb-2' }, `De: ${m.from} • Para: ${getTargetLabel(m.to)}`),
+                                    React.createElement('p', { key: 'text' }, m.text),
+                                    m.attachments && m.attachments.length > 0 && React.createElement('p', { key: 'files', className: 'text-xs text-gray-500 mt-2' }, `Anexo(s): ${m.attachments.join(', ')}`),
+                                    React.createElement('div', { key: 'receipts', className: 'message-receipts' }, (m.readBy || []).length === 0 ?
+                                        React.createElement('p', null, 'Nenhuma confirmação de leitura ainda.') :
+                                        (m.readBy || []).map(receipt => React.createElement('p', { key: `${receipt.username}-${receipt.date}` }, `Lida por: ${receipt.displayName} em ${receipt.date}`))
+                                    )
+                                ])
+                            ]);
+                        }
                         return React.createElement('div', { key: m.id, className: 'border rounded-2xl p-4' }, [
-                            user.role === 'admin' && deleteMode && React.createElement('input', { key: 'delete-check', type: 'checkbox', className: 'delete-check', checked: selectedMessageIds.includes(m.id), onChange: () => toggleSelectedMessage(m.id), 'aria-label': 'Selecionar mensagem para apagar' }),
                             React.createElement('div', { key: 'meta', className: 'text-xs text-gray-500 mb-1' }, `${m.date} • De: ${m.from} • Para: ${getTargetLabel(m.to)}`),
                             m.title && React.createElement('h3', { key: 'title', className: 'text-sm font-bold text-gray-900 mb-1' }, m.title),
                             React.createElement('p', { key: 'text', className: 'text-sm text-gray-800' }, m.text),
                             m.attachments && m.attachments.length > 0 && React.createElement('p', { key: 'files', className: 'text-xs text-gray-500 mt-2' }, `Anexo(s): ${m.attachments.join(', ')}`),
-                            user.role === 'admin' && adminReadText && React.createElement('p', { key: 'admin-read', className: 'read-confirmed' }, `Lida por: ${adminReadText}`),
-                            user.role !== 'admin' && (userReadReceipt ?
+                            userReadReceipt ?
                                 React.createElement('p', { key: 'read-done', className: 'read-confirmed' }, `Recebida e lida em ${userReadReceipt.date}`) :
                                 React.createElement('div', { key: 'read-actions', className: 'read-actions' }, [
                                     React.createElement('button', {
@@ -373,7 +389,6 @@ const App = () => {
                                         onClick: () => confirmRead(m)
                                     }, 'Confirmar')
                                 ])
-                            )
                         ]);
                     })
                 )

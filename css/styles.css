@@ -375,6 +375,47 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     margin-top: 10px;
 }
 .message-list { max-height: min(560px, 62vh); }
+.message-summary-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+}
+.message-summary-card + .message-summary-card { margin-top: 10px; }
+.message-summary-card summary {
+    cursor: pointer;
+    list-style: none;
+    color: #334155;
+    font-size: 13px;
+    padding: 12px 14px;
+}
+.message-summary-card summary::-webkit-details-marker { display: none; }
+.message-summary-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    white-space: nowrap;
+}
+.message-summary-title {
+    color: #111827;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.message-detail-body {
+    border-top: 1px solid #eef2f7;
+    padding: 12px 14px;
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.45;
+}
+.message-receipts {
+    margin-top: 10px;
+    color: #047857;
+    font-size: 12px;
+    line-height: 1.5;
+}
 .daily-summary {
     border: 1px solid #e5e7eb;
     border-radius: 16px;
@@ -528,6 +569,28 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     border-color: #ef4444;
     color: #b91c1c;
     box-shadow: 0 12px 24px rgba(220, 38, 38, 0.13);
+}
+.contact-accordion-list { display: flex; flex-direction: column; gap: 10px; }
+.contact-accordion {
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: visible;
+    box-shadow: 0 13px 28px rgba(15, 23, 42, 0.08);
+}
+.contact-accordion summary {
+    cursor: pointer;
+    list-style: none;
+    color: #b91c1c;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 12px 14px;
+}
+.contact-accordion summary::-webkit-details-marker { display: none; }
+.contact-accordion .contacts-table-wrap {
+    border-width: 1px 0 0;
+    border-radius: 0 0 16px 16px;
+    box-shadow: none;
 }
 .contact-hero {
     min-height: 210px;

@@ -18,6 +18,7 @@ const USER_GROUPS = [
 const CONTACT_CLUSTERS = ['BA', 'NE', 'NO', 'CO', 'MG', 'ES', 'RJ'];
 const CONTACT_GLOBAL_AREA_RULES = {
     BA: ['BA/SE'],
+    NE: ['NE'],
     NO: ['NO'],
     CO: ['CO'],
     MG: ['MG']
