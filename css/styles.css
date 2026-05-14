@@ -547,7 +547,7 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     justify-content: center;
     align-items: center;
     gap: 8px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     margin-top: -2px;
 }
 .area-filter-btn {
@@ -571,14 +571,17 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     box-shadow: 0 12px 24px rgba(220, 38, 38, 0.13);
 }
 .contact-file-tabs {
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0;
     margin: -2px auto 0;
     padding: 0 8px;
     max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
 .contact-file-tab {
+    flex: 0 0 auto;
     border-radius: 14px 14px 0 0;
     min-width: 122px;
     margin-left: -1px;

@@ -136,7 +136,14 @@ const ContactsPage = ({ contactStore, onBack }) => {
     const noSubfilterClusters = ['BA', 'ES'];
     const defaultAllClusters = ['BA', 'ES', 'NE', 'NO', 'CO'];
     const usesAreaTabs = activeCluster && !noSubfilterClusters.includes(activeCluster);
-    const areaOptions = usesAreaTabs ? Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean))) : [];
+    const areaSortWeight = (area) => {
+        const normalized = normalizeText(area);
+        if (normalized === 'central') return 98;
+        if (normalized === 'zona da mata') return 99;
+        return 0;
+    };
+    const areaOptions = usesAreaTabs ? Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean)))
+        .sort((a, b) => areaSortWeight(a) - areaSortWeight(b)) : [];
     const normalizedArea = normalizeText(activeArea);
     const shouldShowAll = !!activeCluster && !activeArea && defaultAllClusters.includes(activeCluster);
     const shouldShowMgEmpty = activeCluster === 'MG' && !activeArea;
