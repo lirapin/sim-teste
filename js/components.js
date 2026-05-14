@@ -129,17 +129,22 @@ const PhoneIcon = ({ size = 26, className = '' }) => React.createElement('svg', 
 const ContactsPage = ({ contactStore }) => {
     const store = ensureContactStore(contactStore);
     const [activeCluster, setActiveCluster] = React.useState('');
+    const [activeArea, setActiveArea] = React.useState('');
     const [citySearch, setCitySearch] = React.useState('');
     const [openNote, setOpenNote] = React.useState('');
     const sheetContacts = activeCluster ? (store.sheets?.[activeCluster] || []) : [];
     const references = activeCluster ? (store.references?.[activeCluster] || []) : [];
+    const sheetNote = activeCluster ? (store.sheetNotes?.[activeCluster] || '') : '';
+    const areaOptions = Array.from(new Set(sheetContacts.map(contact => contact.area).filter(Boolean)));
     const normalizedSearch = normalizeText(citySearch);
+    const normalizedArea = normalizeText(activeArea);
     const matchedReferences = normalizedSearch
         ? references.filter(ref => [ref.cidade, ref.area, ref.cluster].some(value => normalizeText(value).includes(normalizedSearch)))
         : [];
     const matchedAreas = new Set(matchedReferences.map(ref => normalizeText(ref.area)).filter(Boolean));
-    const visibleContacts = !normalizedSearch ? sheetContacts : sheetContacts.filter(contact => {
+    const visibleContacts = (!normalizedSearch && !activeArea) ? [] : sheetContacts.filter(contact => {
         if (isAlwaysVisibleContact(activeCluster, contact)) return true;
+        if (normalizedArea && normalizeText(contact.area) === normalizedArea) return true;
         if (matchedAreas.size > 0 && matchedAreas.has(normalizeText(contact.area))) return true;
         if (activeCluster === 'MG' && normalizeText(contact.topologia).includes(normalizedSearch)) return true;
         return false;
@@ -151,15 +156,21 @@ const ContactsPage = ({ contactStore }) => {
     return React.createElement('div', { className: 'tray-inner contacts-page fade-in' }, [
         React.createElement('div', { key: 'nav', className: 'flex items-center gap-3' }, [
             React.createElement('div', { key: 'icon', className: 'contact-phone-logo', style: { width: 48, height: 48, borderRadius: 16 } }, React.createElement(PhoneIcon, { size: 24 })),
-            React.createElement('h2', { key: 'title', className: 'text-xl font-bold text-gray-700' }, 'Contatos por cluster')
+            React.createElement('h2', { key: 'title', className: 'text-xl text-gray-700' }, 'Contatos por cluster')
         ]),
         React.createElement('div', { key: 'clusters', className: 'cluster-tabs' }, CONTACT_CLUSTERS.map(cluster => React.createElement('button', {
             key: cluster,
             type: 'button',
             className: `cluster-btn ${activeCluster === cluster ? 'active' : ''}`,
-            onClick: () => { setActiveCluster(cluster); setCitySearch(''); setOpenNote(''); }
+            onClick: () => { setActiveCluster(cluster); setActiveArea(''); setCitySearch(''); setOpenNote(''); }
         }, cluster))),
         !activeCluster ? React.createElement('div', { key: 'empty-logo', className: 'contact-hero' }, React.createElement('div', { className: 'contact-phone-logo' }, React.createElement(PhoneIcon, { size: 44 }))) : [
+            React.createElement('div', { key: 'areas', className: 'area-filter-tabs' }, areaOptions.map(area => React.createElement('button', {
+                key: area,
+                type: 'button',
+                className: `area-filter-btn ${activeArea === area ? 'active' : ''}`,
+                onClick: () => { setActiveArea(activeArea === area ? '' : area); setOpenNote(''); }
+            }, area))),
             React.createElement('div', { key: 'search', className: 'contact-search-wrap' }, [
                 React.createElement('input', {
                     key: 'input',
@@ -167,32 +178,35 @@ const ContactsPage = ({ contactStore }) => {
                     className: 'search-input',
                     placeholder: `Buscar cidade em ${activeCluster}...`,
                     value: citySearch,
-                    onChange: (e) => { setCitySearch(e.target.value); setOpenNote(''); }
+                    onChange: (e) => { setCitySearch(e.target.value); setActiveArea(''); setOpenNote(''); }
                 }),
                 citySearch && React.createElement('button', { key: 'clear', className: 'search-button', onClick: () => setCitySearch(''), 'aria-label': 'Limpar busca' }, React.createElement(ClearSearchIcon))
             ]),
-            visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, 'Nenhum contato encontrado para este filtro.') :
+            visibleContacts.length === 0 ? React.createElement('div', { key: 'empty', className: 'city-empty' }, activeArea || citySearch ? 'Nenhum contato encontrado para este filtro.' : 'Selecione uma área ou pesquise uma cidade.') :
                 React.createElement('div', { key: 'table', className: 'contacts-table-wrap' },
                     React.createElement('table', { className: 'contacts-table' }, [
-                        React.createElement('thead', { key: 'head' }, React.createElement('tr', null, tableHeaders.map(label => React.createElement('th', { key: label || 'info' }, label)))),
+                        React.createElement('thead', { key: 'head' }, React.createElement('tr', null, tableHeaders.map(label => React.createElement('th', { key: label || 'info' },
+                            label === 'Telefone' && sheetNote ? React.createElement('span', { className: 'contact-header-note' }, [
+                                React.createElement('span', { key: 'label' }, label),
+                                React.createElement('button', { key: 'btn', type: 'button', className: 'contact-note-btn', onClick: () => setOpenNote(openNote === 'header-note' ? '' : 'header-note'), title: 'Ver observação', 'aria-label': 'Ver observação' }, 'i'),
+                                openNote === 'header-note' && React.createElement('span', { key: 'pop', className: 'contact-note-pop' }, sheetNote)
+                            ]) : label
+                        )))),
                         React.createElement('tbody', { key: 'body' }, visibleContacts.map((contact, index) => {
                             const noteText = [contact.observacoes, contact.note].filter(Boolean).join('\n');
                             const noteKey = `${activeCluster}-${index}`;
                             return React.createElement('tr', { key: `${activeCluster}-${contact.area}-${contact.topologia}-${contact.nome}-${index}` }, [
-                            React.createElement('td', { key: 'area' }, contact.area),
-                            React.createElement('td', { key: 'topologia' }, contact.topologia),
-                            React.createElement('td', { key: 'nome' }, contact.nome),
-                            React.createElement('td', { key: 'cargo' }, contact.cargo),
-                            React.createElement('td', { key: 'telefone' }, React.createElement('a', { className: 'whatsapp-link', href: `https://wa.me/55${contact.phoneDigits}`, target: '_blank', rel: 'noopener noreferrer' }, [
-                                React.createElement('img', { key: 'wa', src: 'assets/icons/icons8-whatsapp-100.png', alt: '', 'aria-hidden': 'true', style: { width: 18, height: 18 } }),
-                                React.createElement('span', { key: 'number' }, contact.telefone)
-                            ])),
-                            activeCluster === 'RJ' && React.createElement('td', { key: 'nivel' }, contact.nivel),
-                            React.createElement('td', { key: 'info', className: 'contact-info-cell' }, noteText ? React.createElement('span', { className: 'contact-note-wrap' }, [
-                                React.createElement('button', { key: 'btn', type: 'button', className: 'contact-note-btn', onClick: () => setOpenNote(openNote === noteKey ? '' : noteKey), title: 'Ver observação', 'aria-label': 'Ver observação' }, 'i'),
-                                openNote === noteKey && React.createElement('span', { key: 'pop', className: 'contact-note-pop' }, noteText)
-                            ]) : null)
-                        ]);
+                                React.createElement('td', { key: 'area' }, contact.area),
+                                React.createElement('td', { key: 'topologia' }, contact.topologia),
+                                React.createElement('td', { key: 'nome' }, contact.nome),
+                                React.createElement('td', { key: 'cargo' }, contact.cargo),
+                                React.createElement('td', { key: 'telefone' }, React.createElement('a', { className: 'whatsapp-link', href: `https://wa.me/55${contact.phoneDigits}`, target: '_blank', rel: 'noopener noreferrer' }, contact.telefone)),
+                                activeCluster === 'RJ' && React.createElement('td', { key: 'nivel' }, contact.nivel),
+                                React.createElement('td', { key: 'info', className: 'contact-info-cell' }, noteText ? React.createElement('span', { className: 'contact-note-wrap' }, [
+                                    React.createElement('button', { key: 'btn', type: 'button', className: 'contact-note-btn', onClick: () => setOpenNote(openNote === noteKey ? '' : noteKey), title: 'Ver observação', 'aria-label': 'Ver observação' }, 'i'),
+                                    openNote === noteKey && React.createElement('span', { key: 'pop', className: 'contact-note-pop' }, noteText)
+                                ]) : null)
+                            ]);
                         }))
                     ])
                 )

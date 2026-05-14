@@ -141,20 +141,14 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
 .header-btn:hover { background: #ffebee; border-color: #d32f2f; }
 .notification-badge {
     position: absolute;
-    right: -5px;
-    top: -6px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
+    right: 7px;
+    bottom: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 999px;
     background: #dc2626;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 800;
-    line-height: 18px;
-    text-align: center;
     z-index: 2;
-    box-shadow: 0 6px 12px rgba(220, 38, 38, 0.28);
+    box-shadow: 0 0 0 2px #ffffff, 0 4px 10px rgba(220, 38, 38, 0.35);
 }
 .header-icon-btn::before {
     content: "";
@@ -463,19 +457,26 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     align-items: center;
     justify-content: space-between;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 400;
     padding: 10px 12px;
+}
+.menu-upload-icon {
+    width: 18px;
+    height: 18px;
+    color: #dc2626;
+    stroke-width: 2;
 }
 .top-menu-item:hover { background: #fff5f5; color: #dc2626; }
 .hidden-file-input { display: none; }
-.contacts-page { display: flex; flex-direction: column; gap: 18px; }
+.contacts-page { display: flex; flex-direction: column; gap: 18px; font-weight: 400; }
+.contacts-page h2 { font-weight: 500; }
 .cluster-tabs {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     width: 100%;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 .cluster-btn {
     border: 1px solid #e5e7eb;
@@ -483,17 +484,50 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     background: #ffffff;
     color: #334155;
     cursor: pointer;
-    font-weight: 800;
-    min-width: 132px;
+    flex: 1 1 0;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 0;
+    max-width: 132px;
     height: 44px;
-    padding: 0 18px;
+    padding: 0 12px;
     transition: all 0.16s ease;
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .cluster-btn.active, .cluster-btn:hover {
     background: #dc2626;
     border-color: #dc2626;
     color: #ffffff;
-    box-shadow: 0 10px 22px rgba(220, 38, 38, 0.2);
+    box-shadow: 0 16px 28px rgba(220, 38, 38, 0.22), inset 0 -2px 0 rgba(120, 20, 20, 0.12);
+}
+.cluster-btn:active { transform: translateY(1px); box-shadow: 0 8px 18px rgba(220, 38, 38, 0.18); }
+.area-filter-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: -2px;
+}
+.area-filter-btn {
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+    background: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    min-width: 116px;
+    height: 38px;
+    padding: 0 12px;
+    transition: all 0.16s ease;
+    box-shadow: 0 9px 18px rgba(15, 23, 42, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.area-filter-btn.active, .area-filter-btn:hover {
+    background: #fff5f5;
+    border-color: #ef4444;
+    color: #b91c1c;
+    box-shadow: 0 12px 24px rgba(220, 38, 38, 0.13);
 }
 .contact-hero {
     min-height: 210px;
@@ -517,15 +551,16 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
 }
 .contact-search-wrap { position: relative; width: 100%; }
 .contacts-table-wrap {
-    overflow-x: auto;
+    position: relative;
+    overflow: visible;
     border: 1px solid #e5e7eb;
     border-radius: 18px;
     background: #ffffff;
     box-shadow: 0 16px 34px rgba(15, 23, 42, 0.11);
 }
-.contacts-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 900px; }
+.contacts-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 0; }
 .contacts-table th, .contacts-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #eef2f7; font-size: 13px; vertical-align: middle; }
-.contacts-table th { color: #b91c1c; background: #fff5f5; font-size: 12px; text-transform: uppercase; font-weight: 900; }
+.contacts-table th { color: #b91c1c; background: #fff5f5; font-size: 12px; text-transform: uppercase; font-weight: 400; }
 .contacts-table th:first-child { border-top-left-radius: 18px; }
 .contacts-table th:last-child { border-top-right-radius: 18px; }
 .contacts-table tr:last-child td { border-bottom: 0; }
@@ -542,15 +577,14 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-weight: 900;
+    font-weight: 500;
     box-shadow: 0 7px 16px rgba(220, 38, 38, 0.12);
 }
 .contact-note-pop {
     position: absolute;
-    right: 50%;
+    right: 0;
     top: calc(100% + 8px);
-    transform: translateX(50%);
-    width: min(260px, 70vw);
+    width: min(280px, 62vw);
     border: 1px solid #fecaca;
     border-radius: 14px;
     background: #ffffff;
@@ -559,9 +593,12 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     padding: 10px 12px;
     text-align: left;
     line-height: 1.35;
-    z-index: 8;
+    z-index: 18;
+    animation: notePop 0.16s ease-out;
 }
-.whatsapp-link { color: #047857; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.contact-header-note { display: inline-flex; align-items: center; gap: 6px; position: relative; }
+@keyframes notePop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.whatsapp-link { color: #111827; font-weight: 400; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .back-emoji-btn {
     border: none;
     background: transparent;
@@ -614,7 +651,10 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
 @media (max-width: 640px) {
     .grid-apps { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 12px; }
     .category-grid { grid-template-columns: repeat(auto-fit, 122px); }
+    .cluster-tabs { flex-wrap: wrap; }
     .cluster-btn { flex: 1 1 96px; min-width: 96px; }
+    .contacts-table-wrap { overflow-x: auto; overflow-y: visible; }
+    .contacts-table { min-width: 820px; }
     .app-name { font-size: 11px; }
     .icon-wrapper { width: 48px; height: 48px; }
     .tab-button { min-width: 120px; font-size: 12px; padding: 8px 12px; }

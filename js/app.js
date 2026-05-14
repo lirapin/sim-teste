@@ -12,6 +12,7 @@ const App = () => {
     const [showMessages, setShowMessages] = React.useState(false);
     const [messages, setMessagesState] = React.useState(() => { const saved = localStorage.getItem('sim_messages'); return saved ? JSON.parse(saved) : []; });
     const [seenReadIds, setSeenReadIdsState] = React.useState(() => { const saved = localStorage.getItem('sim_seen_read_ids'); return saved ? JSON.parse(saved) : []; });
+    const [seenMessageIds, setSeenMessageIdsState] = React.useState(() => { const saved = localStorage.getItem('sim_seen_message_ids'); return saved ? JSON.parse(saved) : []; });
     const [contacts, setContactsState] = React.useState(() => { const saved = localStorage.getItem('sim_contacts'); return saved ? ensureContactStore(JSON.parse(saved)) : makeContactStore(); });
     const [activeToolPage, setActiveToolPage] = React.useState('');
     const [showTopMenu, setShowTopMenu] = React.useState(false);
@@ -19,6 +20,7 @@ const App = () => {
 
     const setMessages = (newMessages) => { setMessagesState(newMessages); localStorage.setItem('sim_messages', JSON.stringify(newMessages)); };
     const setSeenReadIds = (ids) => { setSeenReadIdsState(ids); localStorage.setItem('sim_seen_read_ids', JSON.stringify(ids)); };
+    const setSeenMessageIds = (ids) => { setSeenMessageIdsState(ids); localStorage.setItem('sim_seen_message_ids', JSON.stringify(ids)); };
     const setContacts = (newContacts) => { const nextContacts = ensureContactStore(newContacts); setContactsState(nextContacts); localStorage.setItem('sim_contacts', JSON.stringify(nextContacts)); };
 
     const handleLogin = (userData) => { setUser(userData); localStorage.setItem('sim_user', JSON.stringify(userData)); };
@@ -34,44 +36,58 @@ const App = () => {
         return rows.map(row => Object.fromEntries(headers.map((header, index) => [header, row[index] || ''])));
     };
     const worksheetToRows = (sheet) => {
-        if (!window.XLSX || !sheet?.['!ref']) return [];
+        if (!window.XLSX || !sheet?.['!ref']) return { rows: [], headerNotes: {} };
         const range = window.XLSX.utils.decode_range(sheet['!ref']);
         const headers = [];
+        const headerNotes = {};
         for (let col = range.s.c; col <= range.e.c; col++) {
             const cell = sheet[window.XLSX.utils.encode_cell({ r: range.s.r, c: col })];
-            headers.push(String(cell?.v || '').trim());
+            const header = String(cell?.v || '').trim();
+            headers.push(header);
+            if (cell?.c?.length) {
+                const field = Object.keys(CONTACT_FIELDS).find(key => CONTACT_FIELDS[key].some(alias => normalizeText(header).includes(normalizeText(alias))));
+                if (field) headerNotes[field] = cell.c.map(comment => comment.t).filter(Boolean).join('\n');
+            }
         }
         const rows = [];
         for (let rowIndex = range.s.r + 1; rowIndex <= range.e.r; rowIndex++) {
             const row = {};
             const notes = [];
+            const fieldNotes = {};
             headers.forEach((header, offset) => {
                 if (!header) return;
                 const cell = sheet[window.XLSX.utils.encode_cell({ r: rowIndex, c: range.s.c + offset })];
                 row[header] = cell?.v ?? '';
                 if (cell?.c?.length) {
-                    notes.push(cell.c.map(comment => comment.t).filter(Boolean).join(' '));
+                    const note = cell.c.map(comment => comment.t).filter(Boolean).join('\n');
+                    const field = Object.keys(CONTACT_FIELDS).find(key => CONTACT_FIELDS[key].some(alias => normalizeText(header).includes(normalizeText(alias))));
+                    if (field) fieldNotes[field] = note;
+                    notes.push(note);
                 }
             });
             row.__note = notes.filter(Boolean).join('\n');
+            row.__fieldNotes = fieldNotes;
             if (Object.values(row).some(value => String(value || '').trim())) rows.push(row);
         }
-        return rows;
+        return { rows, headerNotes };
     };
     const parseContactWorkbook = (workbook) => {
         const sheets = {};
         const references = {};
+        const sheetNotes = {};
         workbook.SheetNames.slice(0, 7).forEach((sheetName, index) => {
             const cluster = CONTACT_CLUSTERS[index];
-            const rows = worksheetToRows(workbook.Sheets[sheetName]);
-            sheets[cluster] = rows
+            const parsedSheet = worksheetToRows(workbook.Sheets[sheetName]);
+            sheets[cluster] = parsedSheet.rows
                 .map(row => normalizeContactRow(row, cluster))
                 .filter(contact => contact.area && contact.nome && contact.telefone);
+            const firstObservationNote = sheets[cluster].find(contact => contact.observacoes || contact.note);
+            sheetNotes[cluster] = parsedSheet.headerNotes?.observacoes || firstObservationNote?.note || firstObservationNote?.observacoes || '';
         });
         workbook.SheetNames.slice(7, 14).forEach((sheetName, index) => {
             const fallbackCluster = CONTACT_CLUSTERS[index];
-            const rows = worksheetToRows(workbook.Sheets[sheetName]);
-            rows.map(row => normalizeReferenceRow(row, fallbackCluster))
+            const parsedSheet = worksheetToRows(workbook.Sheets[sheetName]);
+            parsedSheet.rows.map(row => normalizeReferenceRow(row, fallbackCluster))
                 .filter(ref => ref.area && ref.cidade)
                 .forEach(ref => {
                     const clusterFromRow = String(ref.cluster || '').trim().toUpperCase();
@@ -83,8 +99,9 @@ const App = () => {
         CONTACT_CLUSTERS.forEach(cluster => {
             sheets[cluster] = sheets[cluster] || [];
             references[cluster] = references[cluster] || [];
+            sheetNotes[cluster] = sheetNotes[cluster] || '';
         });
-        return makeContactStore(sheets, references);
+        return makeContactStore(sheets, references, sheetNotes);
     };
     const handleContactUpload = (event) => {
         const file = event.target.files && event.target.files[0];
@@ -117,7 +134,7 @@ const App = () => {
     };
     const unreadMessageCount = user.role === 'admin'
         ? 0
-        : messages.filter(m => isMessageVisibleToUser(m, user) && !(m.readBy || []).some(receipt => receipt.username === user.username)).length;
+        : messages.filter(m => isMessageVisibleToUser(m, user) && !seenMessageIds.includes(m.id)).length;
     const readReceiptIds = messages.flatMap(m => (m.readBy || []).map(receipt => `${m.id}-${receipt.username}-${receipt.date}`));
     const unreadReadReceiptCount = user.role === 'admin'
         ? readReceiptIds.filter(id => !seenReadIds.includes(id)).length
@@ -127,6 +144,9 @@ const App = () => {
         setShowMessages(true);
         if (user.role === 'admin' && readReceiptIds.length > 0) {
             setSeenReadIds(Array.from(new Set([...seenReadIds, ...readReceiptIds])));
+        } else if (user.role !== 'admin') {
+            const visibleIds = messages.filter(m => isMessageVisibleToUser(m, user)).map(m => m.id);
+            setSeenMessageIds(Array.from(new Set([...seenMessageIds, ...visibleIds])));
         }
     };
 
@@ -142,7 +162,7 @@ const App = () => {
         ]);
     };
 
-    const MessageCenter = ({ user, messages, setMessages, onClose }) => {
+    const MessageCenter = ({ user, messages, setMessages, seenReadIds = [], onClose }) => {
         const [target, setTarget] = React.useState('todos');
         const [title, setTitle] = React.useState('');
         const [text, setText] = React.useState('');
@@ -164,7 +184,9 @@ const App = () => {
         const visibleMessages = user.role === 'admin'
             ? messages
             : messages.filter(m => m.to === 'todos' || m.to === user.username || m.to === `group:${user.group}`);
-        const readNotifications = messages.flatMap(m => (m.readBy || []).map(receipt => ({ message: m, receipt })));
+        const readNotifications = messages.flatMap(m => (m.readBy || [])
+            .map(receipt => ({ message: m, receipt, id: `${m.id}-${receipt.username}-${receipt.date}` }))
+            .filter(item => !seenReadIds.includes(item.id)));
         const formatMessageDay = (dateText) => String(dateText || '').split(',')[0].trim() || 'Sem data';
         const dailyConfirmations = messages
             .filter(m => m.from === user.username)
@@ -395,17 +417,30 @@ const App = () => {
                                 React.createElement('path', { key: 'middle', d: 'M5 12h14' }),
                                 React.createElement('path', { key: 'bottom', d: 'M5 17h14' })
                             ])),
-                            showTopMenu && user.role === 'admin' && React.createElement('div', { key: 'popover', className: 'top-menu-popover' },
-                                React.createElement('button', { type: 'button', className: 'top-menu-item', onClick: () => contactUploadRef.current && contactUploadRef.current.click() }, [
-                                    React.createElement('span', { key: 'text' }, 'Planilha de contatos'),
-                                    React.createElement('span', { key: 'arrow', 'aria-hidden': 'true' }, '↑')
-                                ])
-                            )
-                        ]),
-                        React.createElement('button', { key: 'messages', onClick: openMessageCenter, className: 'header-btn header-icon-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, [
-                            React.createElement('img', { key: 'icon', className: 'top-image-icon', src: 'assets/icons/message-envelope.svg', alt: '', 'aria-hidden': 'true' }),
-                            messageNotificationCount > 0 && React.createElement('span', { key: 'badge', className: 'notification-badge' }, messageNotificationCount > 99 ? '99+' : messageNotificationCount)
-                        ]),
+                                showTopMenu && user.role === 'admin' && React.createElement('div', { key: 'popover', className: 'top-menu-popover' },
+                                    React.createElement('button', { type: 'button', className: 'top-menu-item', onClick: () => contactUploadRef.current && contactUploadRef.current.click() }, [
+                                        React.createElement('span', { key: 'text' }, 'Planilha de contatos'),
+                                        React.createElement('svg', {
+                                            key: 'upload',
+                                            className: 'menu-upload-icon',
+                                            viewBox: '0 0 24 24',
+                                            fill: 'none',
+                                            stroke: 'currentColor',
+                                            strokeLinecap: 'round',
+                                            strokeLinejoin: 'round',
+                                            'aria-hidden': 'true'
+                                        }, [
+                                            React.createElement('path', { key: 'arrow', d: 'M12 16V4' }),
+                                            React.createElement('path', { key: 'head', d: 'M7 9l5-5 5 5' }),
+                                            React.createElement('path', { key: 'tray', d: 'M5 20h14' })
+                                        ])
+                                    ])
+                                )
+                            ]),
+                            React.createElement('button', { key: 'messages', onClick: openMessageCenter, className: 'header-btn header-icon-btn', title: 'Minhas mensagens', 'aria-label': 'Minhas mensagens' }, [
+                                React.createElement('img', { key: 'icon', className: 'top-image-icon', src: 'assets/icons/message-envelope.svg', alt: '', 'aria-hidden': 'true' }),
+                                messageNotificationCount > 0 && React.createElement('span', { key: 'badge', className: 'notification-badge', 'aria-hidden': 'true' })
+                            ]),
                         React.createElement('button', { key: 'logout', onClick: handleLogout, className: 'header-btn header-icon-btn', title: 'Sair', 'aria-label': 'Sair' }, React.createElement('svg', {
                             className: 'top-line-icon',
                             width: 22,
@@ -431,7 +466,7 @@ const App = () => {
                 React.createElement('p', { key: 'signature', className: 'signature' }, 'Desenvolvido por N5923221')
             ]
         ),
-        showMessages && React.createElement(MessageCenter, { key: 'messages', user, messages, setMessages, onClose: () => setShowMessages(false) })
+        showMessages && React.createElement(MessageCenter, { key: 'messages', user, messages, setMessages, seenReadIds, onClose: () => setShowMessages(false) })
     ]);
 };
 

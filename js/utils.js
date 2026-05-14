@@ -23,7 +23,7 @@ const normalizeContactRow = (row, sheetName) => ({
     phoneDigits: getPhoneDigits(getRowValue(row, 'telefone')).replace(/^55/, ''),
     nivel: String(getRowValue(row, 'nivel')).trim(),
     observacoes: String(getRowValue(row, 'observacoes')).trim(),
-    note: String(row.__note || '').trim()
+    note: String(row.__fieldNotes?.observacoes || row.__note || '').trim()
 });
 const normalizeReferenceRow = (row, sheetName) => ({
     sheet: sheetName,
@@ -31,7 +31,7 @@ const normalizeReferenceRow = (row, sheetName) => ({
     cluster: String(getRowValue(row, 'cluster')).trim(),
     cidade: String(getRowValue(row, 'topologia')).trim()
 });
-const makeContactStore = (sheets = {}, references = {}) => ({ sheets, references });
+const makeContactStore = (sheets = {}, references = {}, sheetNotes = {}) => ({ sheets, references, sheetNotes });
 const ensureContactStore = (value) => {
     if (Array.isArray(value)) {
         return makeContactStore(CONTACT_CLUSTERS.reduce((acc, cluster) => {
@@ -39,7 +39,7 @@ const ensureContactStore = (value) => {
             return acc;
         }, {}), {});
     }
-    return makeContactStore(value?.sheets || {}, value?.references || {});
+    return makeContactStore(value?.sheets || {}, value?.references || {}, value?.sheetNotes || {});
 };
 const isAlwaysVisibleContact = (cluster, contact) => {
     const normalizedArea = normalizeText(contact.area);
