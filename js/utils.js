@@ -51,9 +51,7 @@ const ensureContactStore = (value) => {
 };
 const isAlwaysVisibleContact = (cluster, contact) => {
     const normalizedArea = normalizeText(contact.area);
-    const normalizedCargo = normalizeText(contact.cargo);
     if ((CONTACT_GLOBAL_AREA_RULES[cluster] || []).some(rule => normalizedArea === normalizeText(rule))) return true;
-    if ((cluster === 'ES' || cluster === 'RJ') && (normalizedCargo.includes('gerente') || (normalizedCargo.includes('coord') && (normalizedCargo.includes('iii') || normalizedCargo.includes('3'))))) return true;
     return false;
 };
 
