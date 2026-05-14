@@ -554,15 +554,19 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     height: 44px;
     padding: 0 12px;
     transition: all 0.16s ease;
-    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 .cluster-btn.active, .cluster-btn:hover {
     background: #dc2626;
     border-color: #dc2626;
     color: #ffffff;
-    box-shadow: 0 16px 28px rgba(220, 38, 38, 0.22), inset 0 -2px 0 rgba(120, 20, 20, 0.12);
+    transform: translateY(-1px);
+    box-shadow: 0 22px 34px rgba(220, 38, 38, 0.28), 0 8px 16px rgba(153, 27, 27, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -3px 0 rgba(120, 20, 20, 0.16);
 }
-.cluster-btn:active { transform: translateY(1px); box-shadow: 0 8px 18px rgba(220, 38, 38, 0.18); }
+.cluster-btn:active {
+    transform: translateY(2px) scale(0.99);
+    box-shadow: 0 8px 14px rgba(220, 38, 38, 0.18), inset 0 3px 8px rgba(120, 20, 20, 0.18);
+}
 .area-filter-tabs {
     display: flex;
     justify-content: center;
@@ -583,13 +587,18 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     height: 38px;
     padding: 0 12px;
     transition: all 0.16s ease;
-    box-shadow: 0 9px 18px rgba(15, 23, 42, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    box-shadow: 0 12px 22px rgba(15, 23, 42, 0.11), 0 3px 8px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 .area-filter-btn.active, .area-filter-btn:hover {
     background: #fff5f5;
     border-color: #ef4444;
     color: #b91c1c;
-    box-shadow: 0 12px 24px rgba(220, 38, 38, 0.13);
+    transform: translateY(-1px);
+    box-shadow: 0 16px 28px rgba(220, 38, 38, 0.18), inset 0 -2px 0 rgba(220, 38, 38, 0.08);
+}
+.area-filter-btn:active {
+    transform: translateY(2px) scale(0.99);
+    box-shadow: 0 7px 14px rgba(220, 38, 38, 0.12), inset 0 3px 7px rgba(220, 38, 38, 0.12);
 }
 .contact-file-tabs {
     justify-content: flex-start;
@@ -618,16 +627,16 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     z-index: 2;
 }
 .contact-tab-panel {
-    border: 1px solid #e5e7eb;
-    background: #ffffff;
-    border-radius: 0 0 18px 18px;
-    box-shadow: 0 18px 34px rgba(15, 23, 42, 0.10);
-    padding-top: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 22px;
+    box-shadow: none;
+    padding-top: 10px;
 }
 .contact-tab-panel .contacts-table-wrap {
-    border: 0;
-    border-radius: 0 0 18px 18px;
-    box-shadow: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+    box-shadow: 0 22px 42px rgba(15, 23, 42, 0.14), 0 8px 18px rgba(15, 23, 42, 0.08);
 }
 .contact-tab-empty {
     border-radius: 0 0 18px 18px;
@@ -657,15 +666,17 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     position: relative;
     overflow: visible;
     border: 1px solid #e5e7eb;
-    border-radius: 18px;
+    border-radius: 22px;
     background: #ffffff;
-    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.11);
+    box-shadow: 0 22px 42px rgba(15, 23, 42, 0.14), 0 8px 18px rgba(15, 23, 42, 0.08);
 }
 .contacts-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 0; }
 .contacts-table th, .contacts-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #eef2f7; font-size: 13px; vertical-align: middle; }
 .contacts-table th { color: #b91c1c; background: #fff5f5; font-size: 12px; text-transform: uppercase; font-weight: 400; }
-.contacts-table th:first-child { border-top-left-radius: 18px; }
-.contacts-table th:last-child { border-top-right-radius: 18px; }
+.contacts-table th:first-child { border-top-left-radius: 22px; }
+.contacts-table th:last-child { border-top-right-radius: 22px; }
+.contacts-table tr:last-child td:first-child { border-bottom-left-radius: 22px; }
+.contacts-table tr:last-child td:last-child { border-bottom-right-radius: 22px; }
 .contacts-table tr:last-child td { border-bottom: 0; }
 .contacts-table .contact-info-cell { text-align: center; width: 72px; }
 .contact-note-wrap { position: relative; display: inline-flex; justify-content: center; }
