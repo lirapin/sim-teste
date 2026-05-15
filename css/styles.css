@@ -709,7 +709,8 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     position: absolute;
     right: 0;
     top: calc(100% + 8px);
-    width: min(360px, 76vw);
+    width: max-content;
+    max-width: min(420px, 76vw);
     max-height: min(430px, 58vh);
     overflow-y: auto;
     border: 1px solid #fecaca;
@@ -719,13 +720,14 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
     padding: 12px 14px;
     text-align: left;
+    text-transform: none;
     line-height: 1.42;
     z-index: 18;
     animation: notePop 0.16s ease-out;
 }
 .contact-note-pop-wide {
-    width: min(520px, 82vw);
-    right: -64px;
+    max-width: min(460px, 78vw);
+    right: -24px;
 }
 .contact-note-title,
 .contact-note-line {
