@@ -819,6 +819,9 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     body {
         overflow-x: hidden;
     }
+    header.sticky {
+        position: static !important;
+    }
     .top-shell {
         width: auto;
         margin: 10px 10px 0;
@@ -861,7 +864,7 @@ body { background: #d1d5db; font-family: 'Segoe UI', -apple-system, BlinkMacSyst
     }
     .main-shell {
         width: 100%;
-        padding: 46px 10px 22px;
+        padding: 18px 10px 22px;
     }
     .content-tray {
         padding: 14px;
