@@ -178,11 +178,24 @@ const ContactsPage = ({ contactStore, onBack }) => {
     const tableHeaders = activeCluster === 'RJ'
         ? ['Área', 'Topologia', 'Nome', 'Cargo', 'Telefone', 'Nível', '']
         : ['Área', 'Topologia', 'Nome', 'Cargo', 'Telefone', ''];
+    const getNoteLines = (noteText) => String(noteText || '')
+        .replace(/\r/g, '')
+        .split('\n')
+        .flatMap(line => line.split(/(?=\b\d{2}\/\d{2}\s*(?:a|à|A|À)\s*\d{2}\/\d{2})/))
+        .map(line => line.trim())
+        .filter(Boolean);
+    const renderNotePopover = (noteText, extraClass = '') => {
+        const lines = getNoteLines(noteText);
+        return React.createElement('span', { key: 'pop', className: `contact-note-pop ${extraClass}`.trim() }, lines.map((line, index) => React.createElement('span', {
+            key: `${index}-${line}`,
+            className: index === 0 && !/^\d{2}\/\d{2}/.test(line) ? 'contact-note-title' : 'contact-note-line'
+        }, line)));
+    };
     const renderHeader = () => React.createElement('thead', { key: 'head' }, React.createElement('tr', null, tableHeaders.map(label => React.createElement('th', { key: label || 'info' },
         label === 'Telefone' && sheetNote ? React.createElement('span', { className: 'contact-header-note' }, [
             React.createElement('span', { key: 'label' }, label),
             React.createElement('button', { key: 'btn', type: 'button', className: 'contact-note-btn', onClick: () => setOpenNote(openNote === 'header-note' ? '' : 'header-note'), title: 'Ver observação', 'aria-label': 'Ver observação' }, 'i'),
-            openNote === 'header-note' && React.createElement('span', { key: 'pop', className: 'contact-note-pop' }, sheetNote)
+            openNote === 'header-note' && renderNotePopover(sheetNote, 'contact-note-pop-wide')
         ]) : label
     ))));
     const renderRows = (contacts, keyPrefix = activeCluster) => React.createElement('tbody', { key: `body-${keyPrefix}` }, contacts.map((contact, index) => {
@@ -197,7 +210,7 @@ const ContactsPage = ({ contactStore, onBack }) => {
             activeCluster === 'RJ' && React.createElement('td', { key: 'nivel' }, contact.nivel),
             React.createElement('td', { key: 'info', className: 'contact-info-cell' }, noteText ? React.createElement('span', { className: 'contact-note-wrap' }, [
                 React.createElement('button', { key: 'btn', type: 'button', className: 'contact-note-btn', onClick: () => setOpenNote(openNote === noteKey ? '' : noteKey), title: 'Ver observação', 'aria-label': 'Ver observação' }, 'i'),
-                openNote === noteKey && React.createElement('span', { key: 'pop', className: 'contact-note-pop' }, noteText)
+                openNote === noteKey && renderNotePopover(noteText)
             ]) : null)
         ]);
     }));
