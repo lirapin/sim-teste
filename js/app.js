@@ -17,6 +17,7 @@ const App = () => {
     const [activeToolPage, setActiveToolPage] = React.useState('');
     const [showTopMenu, setShowTopMenu] = React.useState(false);
     const contactUploadRef = React.useRef(null);
+    const topMenuRef = React.useRef(null);
 
     const setMessages = (newMessages) => { setMessagesState(newMessages); localStorage.setItem('sim_messages', JSON.stringify(newMessages)); };
     const setSeenReadIds = (ids) => { setSeenReadIdsState(ids); localStorage.setItem('sim_seen_read_ids', JSON.stringify(ids)); };
@@ -30,6 +31,15 @@ const App = () => {
     const selectCategory = (categoryName) => { setActiveToolPage(''); setActiveCategory(categoryName); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
     const goHome = () => { setActiveToolPage(''); setActiveCategory('SIM'); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
     const openContactsPage = () => { setActiveToolPage('contacts'); setCurrentFolder(null); setNavigationStack([]); setSearchTerm(''); };
+    React.useEffect(() => {
+        if (!showTopMenu) return undefined;
+        const handleOutsideClick = (event) => {
+            if (topMenuRef.current && topMenuRef.current.contains(event.target)) return;
+            setShowTopMenu(false);
+        };
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => document.removeEventListener('mousedown', handleOutsideClick);
+    }, [showTopMenu]);
     const parseCsv = (text) => {
         const rows = String(text || '').trim().split(/\r?\n/).map(line => line.split(/;|,/).map(value => value.trim()));
         const headers = rows.shift() || [];
@@ -422,7 +432,7 @@ const App = () => {
                             searchTerm && React.createElement('button', { className: 'search-button', onClick: () => setSearchTerm('') }, React.createElement(ClearSearchIcon))
                         ]),
                         React.createElement('button', { key: 'phone', onClick: openContactsPage, className: 'header-btn header-icon-btn', title: 'Contatos', 'aria-label': 'Contatos' }, React.createElement(PhoneIcon, { size: 22, className: 'top-line-icon' })),
-                        React.createElement('div', { key: 'menu-wrap', className: 'top-menu-wrap' }, [
+                        React.createElement('div', { key: 'menu-wrap', ref: topMenuRef, className: 'top-menu-wrap' }, [
                             React.createElement('button', { key: 'menu', onClick: () => setShowTopMenu(!showTopMenu), className: 'header-btn header-icon-btn', title: 'Menu', 'aria-label': 'Menu' }, React.createElement('svg', {
                                 className: 'top-line-icon',
                                 width: 22,
